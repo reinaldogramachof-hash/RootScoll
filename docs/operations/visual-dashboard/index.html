@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CodeChat — Cérebro Operacional Visual no estilo Graphfy: governança executiva, mapa de trilhas e roadmap interligado."
+    />
+    <title>CodeChat — Cérebro Operacional Visual (Graphfy View)</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="executive-mode">
+    <div class="layout-container">
+      <!-- Sidebar de Navegação Guiada por Áreas (Graphfy Style) -->
+      <aside class="sidebar" id="mainSidebar">
+        <div class="brand">
+          <div class="brand-logo">
+            <span class="terminal-prompt">&gt;_</span>
+          </div>
+          <div class="brand-info">
+            <h1 class="brand-title">CodeChat</h1>
+            <span class="brand-subtitle">Cérebro Operacional</span>
+          </div>
+        </div>
+
+        <!-- Barra de Controle de Visão -->
+        <div class="view-toggle-container">
+          <div class="toggle-label-row">
+            <span class="toggle-label">Modo de Leitura</span>
+            <span class="view-indicator-pill" id="viewModeBadge">Executivo</span>
+          </div>
+          <div class="toggle-switch-wrapper">
+            <button
+              type="button"
+              class="view-btn active"
+              id="btnExecutiveView"
+              data-mode="executive"
+            >
+              Executivo
+            </button>
+            <button type="button" class="view-btn" id="btnTechnicalView" data-mode="technical">
+              Técnico
+            </button>
+          </div>
+        </div>
+
+        <!-- Navegação Agrupada por Áreas -->
+        <nav class="nav-menu" aria-label="Navegação do Cérebro Operacional">
+          <!-- Grupo 1: Estratégia & Produto -->
+          <div class="nav-group">
+            <div class="nav-group-title">Estratégia & Metodologia</div>
+            <a href="#visao-geral" class="nav-link active" id="navVisaoGeral">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Visão Geral</span>
+            </a>
+            <a href="#modo-raiz" class="nav-link" id="navModoRaiz">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Modo Raiz</span>
+            </a>
+            <a href="#ia-pedagogica" class="nav-link" id="navIaPedagogica">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">IA Pedagógica</span>
+            </a>
+          </div>
+
+          <!-- Grupo 2: Governança & Trilhas -->
+          <div class="nav-group">
+            <div class="nav-group-title">Governança & Conteúdo</div>
+            <a href="#governanca" class="nav-link" id="navGovernanca">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Governança dos Agentes</span>
+            </a>
+            <a href="#trilhas" class="nav-link" id="navTrilhas">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Trilhas Estratégicas</span>
+            </a>
+          </div>
+
+          <!-- Grupo 3: Engenharia & Roadmap -->
+          <div class="nav-group">
+            <div class="nav-group-title">Engenharia & Roadmap</div>
+            <a href="#fases" class="nav-link" id="navFases">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Linha do Tempo (Fases)</span>
+            </a>
+            <a href="#status-tecnico" class="nav-link" id="navStatusTecnico">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Status Técnico</span>
+            </a>
+            <a href="#validado-vs-pendente" class="nav-link" id="navValidado">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Validado vs. Pendente</span>
+            </a>
+          </div>
+
+          <!-- Grupo 4: Decisão & Apresentação -->
+          <div class="nav-group">
+            <div class="nav-group-title">Decisão Institucional</div>
+            <a href="#riscos" class="nav-link" id="navRiscos">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Riscos & Controles</span>
+            </a>
+            <a href="#apresentacao" class="nav-link" id="navApresentacao">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Apresentação à Direção</span>
+            </a>
+            <a href="#proxima-entrega" class="nav-link" id="navProximaEntrega">
+              <span class="nav-node-dot"></span>
+              <span class="nav-text">Próxima Entrega</span>
+            </a>
+          </div>
+        </nav>
+
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+          <button type="button" class="btn-print" id="btnPrintReport">
+            <span class="btn-icon">🖨️</span>
+            <span>Imprimir / Salvar PDF</span>
+          </button>
+          <div class="status-summary-mini">
+            <span class="pulse-indicator"></span>
+            <span>Fase 1 Ativa • 100% Offline</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Área Principal de Conteúdo -->
+      <div class="main-wrapper">
+        <!-- Topbar com Status do Projeto e Breadcrumb de Grafo -->
+        <header class="topbar-status">
+          <div class="topbar-left">
+            <button
+              type="button"
+              class="mobile-toggle-btn"
+              id="mobileMenuBtn"
+              aria-label="Abrir Menu"
+            >
+              ☰
+            </button>
+            <div class="graph-breadcrumb">
+              <span class="graph-step completed">Fundação (F0)</span>
+              <span class="graph-sep">→</span>
+              <span class="graph-step active">Fase 1: Contratos TS</span>
+              <span class="graph-sep">→</span>
+              <span class="graph-step next">Próximo: Learning Catalog</span>
+            </div>
+          </div>
+
+          <div class="topbar-right">
+            <div class="status-chip chip-success">
+              <span class="chip-dot"></span>
+              <span>Monorepo Íntegro</span>
+            </div>
+            <div class="status-chip chip-blue">
+              <span>Branch: main</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Conteúdo com Layout Guiado -->
+        <main class="main-content" id="mainContent">
+          <!-- 1. Visão Geral -->
+          <section class="graph-node-section" id="visao-geral">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 01</span>
+              <span class="node-category">Posicionamento & Proposta de Valor</span>
+            </div>
+
+            <div class="hero-card">
+              <div class="hero-header-row">
+                <span class="badge badge-success">Plataforma Educacional PWA</span>
+                <span class="badge badge-blue">Formação Prática Progressiva</span>
+              </div>
+              <h2 class="hero-title">Do zero ao dev pronto para o mercado</h2>
+              <p class="hero-lead">
+                O <strong>CodeChat</strong> é uma plataforma de aprendizagem técnica criada para
+                guiar o estudante desde o primeiro comando no terminal até a maturidade exigida pelo
+                mercado profissional de desenvolvimento de software.
+              </p>
+
+              <!-- Grafo Conceitual do Aluno -->
+              <div class="graph-flow-container">
+                <div class="flow-step-node">
+                  <div class="flow-icon">🎯</div>
+                  <div class="flow-title">Iniciante Zero</div>
+                  <div class="flow-sub">Sem pré-requisitos</div>
+                </div>
+                <div class="flow-connector">──▶</div>
+                <div class="flow-step-node">
+                  <div class="flow-icon">💻</div>
+                  <div class="flow-title">Prática no Terminal</div>
+                  <div class="flow-sub">Modo Raiz imersivo</div>
+                </div>
+                <div class="flow-connector">──▶</div>
+                <div class="flow-step-node">
+                  <div class="flow-icon">🔍</div>
+                  <div class="flow-title">Erros & Depuração</div>
+                  <div class="flow-sub">Raciocínio técnico</div>
+                </div>
+                <div class="flow-connector">──▶</div>
+                <div class="flow-step-node">
+                  <div class="flow-icon">🚀</div>
+                  <div class="flow-title">Dev de Mercado</div>
+                  <div class="flow-sub">Autonomia e prontidão</div>
+                </div>
+              </div>
+
+              <!-- Métricas Resumidas -->
+              <div class="metrics-grid">
+                <div class="metric-box">
+                  <span class="metric-num text-green">Modo Raiz</span>
+                  <span class="metric-desc">Prática real e terminal fullscreen</span>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-num text-blue">Mentor IA</span>
+                  <span class="metric-desc">Orientação pedagógica sem muleta</span>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-num text-purple">5 Trilhas</span>
+                  <span class="metric-desc">Do SO ao backend profissional</span>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-num text-amber">Fase 1</span>
+                  <span class="metric-desc">Contratos tipados e validados</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 2. Modo Raiz -->
+          <section class="graph-node-section" id="modo-raiz">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 02</span>
+              <span class="node-category">Metodologia Principal</span>
+            </div>
+
+            <div class="section-card">
+              <div class="card-header-icon">
+                <span class="header-icon">⚡</span>
+                <div>
+                  <h3 class="card-heading">O Diferencial: Modo Raiz</h3>
+                  <p class="card-subheading">
+                    Aprender desenvolvimento com ferramentas autênticas, não com simuladores
+                    artificiais.
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid-3-col">
+                <div class="feature-box">
+                  <div class="feature-title">🖥️ Terminal Realista</div>
+                  <p class="feature-text">
+                    Interface fullscreen imersiva, eliminando barras de ferramentas e distrações
+                    para foco 100% no fluxo de trabalho.
+                  </p>
+                </div>
+                <div class="feature-box">
+                  <div class="feature-title">⚠️ Erros Autênticos</div>
+                  <p class="feature-text">
+                    O aluno lida com saídas reais de erro, aprendendo a ler o terminal, diagnosticar
+                    o problema e buscar soluções.
+                  </p>
+                </div>
+                <div class="feature-box">
+                  <div class="feature-title">🧠 Raciocínio & Autonomia</div>
+                  <p class="feature-text">
+                    Superação do modelo de adivinhação; construção de modelos mentais sólidos para
+                    manipular arquivos e executar comandos.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. IA Pedagógica -->
+          <section class="graph-node-section" id="ia-pedagogica">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 03</span>
+              <span class="node-category">Diretrizes de Inteligência Artificial</span>
+            </div>
+
+            <div class="section-card">
+              <div class="card-header-icon">
+                <span class="header-icon">🧠</span>
+                <div>
+                  <h3 class="card-heading">IA: Mentor Pedagógico Controlado (Não Muleta)</h3>
+                  <p class="card-subheading">
+                    A IA estimula a reflexão e auxilia na depuração, sem nunca substituir o esforço
+                    prático do aluno.
+                  </p>
+                </div>
+              </div>
+
+              <div class="two-col-dual-rules">
+                <div class="rule-container allowed-rules">
+                  <div class="rule-header-chip badge-success">✓ Escopo Permitido (Mentor)</div>
+                  <ul class="rule-items">
+                    <li>Explicar a causa conceitual de um erro após a tentativa real do aluno.</li>
+                    <li>Oferecer dicas progressivas (Hints) orientadas à reflexão.</li>
+                    <li>Adaptar a curva de complexidade com base no ritmo individual.</li>
+                    <li>Simular sabatinas e entrevistas técnicas de prontidão para o mercado.</li>
+                  </ul>
+                </div>
+
+                <div class="rule-container forbidden-rules">
+                  <div class="rule-header-chip badge-red">✕ Escopo Proibido (Anti-Muleta)</div>
+                  <ul class="rule-items">
+                    <li>Resolver exercícios ou gerar o comando final diretamente para o aluno.</li>
+                    <li>Substituir a execução prática de qualquer etapa do desafio.</li>
+                    <li>Atuar como chat livre genérico desconectado da trilha pedagógica.</li>
+                    <li>Permitir aprovação de desafios sem validação determinística local.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. Governança dos Agentes -->
+          <section class="graph-node-section" id="governanca">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 04</span>
+              <span class="node-category">Engenharia & Papéis de Desenvolvimento</span>
+            </div>
+
+            <div class="section-card">
+              <div class="card-header-icon">
+                <span class="header-icon">👥</span>
+                <div>
+                  <h3 class="card-heading">Governança dos Agentes & Processo Decisório</h3>
+                  <p class="card-subheading">
+                    Fluxo rigoroso de responsabilidades, revisões cruzadas e integridade do código.
+                  </p>
+                </div>
+              </div>
+
+              <div class="agents-interactive-graph">
+                <div class="agent-node node-user">
+                  <span class="agent-tag">Decisão & Produto</span>
+                  <h4 class="agent-title">👤 Usuário / Direção</h4>
+                  <p class="agent-detail">
+                    Diretrizes de negócio, validação institucional e autorização formal para
+                    publicação de fases.
+                  </p>
+                </div>
+
+                <div class="agent-arrow-down">▼ Define diretrizes e escopo</div>
+
+                <div class="agent-node node-codex">
+                  <span class="agent-tag">Arquitetura & Revisão</span>
+                  <h4 class="agent-title">🧠 Codex (ChatGPT / Work)</h4>
+                  <p class="agent-detail">
+                    Arquiteto de software e Tech Lead. Modela contratos, fatias técnicas e conduz a
+                    revisão definitiva.
+                  </p>
+                </div>
+
+                <div class="agents-branch-row">
+                  <div class="agent-node node-claude">
+                    <span class="agent-tag">Execução Técnica</span>
+                    <h4 class="agent-title">⚡ Claude Code</h4>
+                    <p class="agent-detail">
+                      Dev Sênior executor. Implementa fatias modulares, tipagens e suítes de testes
+                      unitários isoladas.
+                    </p>
+                  </div>
+
+                  <div class="agent-node node-antigravity">
+                    <span class="agent-tag">Suporte & QA</span>
+                    <h4 class="agent-title">🛡️ Antigravity</h4>
+                    <p class="agent-detail">
+                      Validação local (typecheck, lint, test, format), inspeção de locks e
+                      relatórios executivos.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 5. Trilhas Estratégicas -->
+          <section class="graph-node-section" id="trilhas">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 05</span>
+              <span class="node-category">Currículo Modular de Formação</span>
+            </div>
+
+            <div class="section-card">
+              <div class="card-header-icon">
+                <span class="header-icon">🗺️</span>
+                <div>
+                  <h3 class="card-heading">Trilhas Estratégicas de Formação</h3>
+                  <p class="card-subheading">
+                    Mapeamento completo das competências técnicas desde a base até ferramentas
+                    avançadas.
+                  </p>
+                </div>
+              </div>
+
+              <div class="tracks-card-grid">
+                <!-- Trilha 1 -->
+                <div class="track-block">
+                  <div class="track-block-header">
+                    <span class="track-pill">Trilha 01</span>
+                    <h4 class="track-title-text">Terminal & Sistemas Operacionais</h4>
+                  </div>
+                  <p class="track-summary">
+                    Navegação, gerenciamento de arquivos, permissões, pipes, redirecionamentos e
+                    scripts.
+                  </p>
+                  <div class="tech-tags-list">
+                    <span class="tag-tech">Linux</span>
+                    <span class="tag-tech">macOS</span>
+                    <span class="tag-tech">Windows CMD</span>
+                    <span class="tag-tech">PowerShell</span>
+                  </div>
+                </div>
+
+                <!-- Trilha 2 -->
+                <div class="track-block">
+                  <div class="track-block-header">
+                    <span class="track-pill">Trilha 02</span>
+                    <h4 class="track-title-text">Git & GitHub Profissional</h4>
+                  </div>
+                  <p class="track-summary">
+                    Controle de versão rigoroso, branching, merging, resolução de conflitos e fluxo
+                    de Pull Requests.
+                  </p>
+                  <div class="tech-tags-list">
+                    <span class="tag-tech">Git CLI</span>
+                    <span class="tag-tech">GitHub</span>
+                    <span class="tag-tech">Branching</span>
+                    <span class="tag-tech">Code Review</span>
+                  </div>
+                </div>
+
+                <!-- Trilha 3 -->
+                <div class="track-block">
+                  <div class="track-block-header">
+                    <span class="track-pill">Trilha 03</span>
+                    <h4 class="track-title-text">Desenvolvimento Web</h4>
+                  </div>
+                  <p class="track-summary">
+                    Construção de aplicações modernas com semântica correta, estilos modulares e
+                    integração de APIs.
+                  </p>
+                  <div class="tech-tags-list">
+                    <span class="tag-tech">HTML5</span>
+                    <span class="tag-tech">CSS3</span>
+                    <span class="tag-tech">JavaScript (ES6+)</span>
+                    <span class="tag-tech">APIs REST</span>
+                  </div>
+                </div>
+
+                <!-- Trilha 4 -->
+                <div class="track-block">
+                  <div class="track-block-header">
+                    <span class="track-pill">Trilha 04</span>
+                    <h4 class="track-title-text">Linguagens & Programação</h4>
+                  </div>
+                  <p class="track-summary">
+                    Lógica de programação, estruturas de dados, algoritmos e boas práticas de
+                    desenvolvimento.
+                  </p>
+                  <div class="tech-tags-list">
+                    <span class="tag-tech">Python</span>
+                    <span class="tag-tech">Node.js</span>
+                    <span class="tag-tech">Java</span>
+                    <span class="tag-tech">PHP</span>
+                  </div>
+                </div>
+
+                <!-- Trilha 5 -->
+                <div class="track-block">
+                  <div class="track-block-header">
+                    <span class="track-pill">Trilha 05</span>
+                    <h4 class="track-title-text">Prática Profissional & Deploy</h4>
+                  </div>
+                  <p class="track-summary">
+                    Banco de dados, rotinas de depuração, testes unitários, automação de deploy e
+                    segurança básica.
+                  </p>
+                  <div class="tech-tags-list">
+                    <span class="tag-tech">SQL</span>
+                    <span class="tag-tech">Debugging</span>
+                    <span class="tag-tech">Testes Automatizados</span>
+                    <span class="tag-tech">Docker & CI/CD</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 6. Linha do Tempo das Fases -->
+          <section class="graph-node-section" id="fases">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 06</span>
+              <span class="node-category">Roadmap e Ciclo de Vida</span>
+            </div>
+
+            <div class="section-card">
+              <div class="card-header-icon">
+                <span class="header-icon">⏱️</span>
+                <div>
+                  <h3 class="card-heading">Linha do Tempo das Fases do Projeto</h3>
+                  <p class="card-subheading">
+                    Evolução por fatias incrementais com validações técnicas completas a cada marco.
+                  </p>
+                </div>
+              </div>
+
+              <div class="roadmap-timeline">
+                <!-- Fase 0 -->
+                <div class="roadmap-step step-done">
+                  <div class="step-marker-col">
+                    <div class="marker-circle">✓</div>
+                    <div class="marker-line"></div>
+                  </div>
+                  <div class="step-content-box">
+                    <div class="step-meta">
+                      <span class="badge badge-success">Concluída & Publicada</span>
+                      <span class="step-number">Fase 0</span>
+                    </div>
+                    <h4 class="step-title">Fundação do Monorepo & Protótipo Visual</h4>
+                    <p class="step-desc">
+                      Estrutura com pnpm workspaces, contratos de domínio iniciais, planejamento de
+                      banco/RLS, gramática de validação declarativa e protótipo visual em tela cheia
+                      aprovado.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Fase 1 -->
+                <div class="roadmap-step step-current">
+                  <div class="step-marker-col">
+                    <div class="marker-circle">●</div>
+                    <div class="marker-line"></div>
+                  </div>
+                  <div class="step-content-box">
+                    <div class="step-meta">
+                      <span class="badge badge-amber">Fase Atual (Em Andamento)</span>
+                      <span class="step-number">Fase 1</span>
+                    </div>
+                    <h4 class="step-title">Contratos TypeScript & Catálogo Pedagógico</h4>
+                    <p class="step-desc">
+                      Contratos de execução agnósticos publicados (`ExecutionResult`,
+                      `ValidationRule`), visão de produto oficializada e preparação do `Learning
+                      Catalog v1`.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Fase 2 -->
+                <div class="roadmap-step step-future">
+                  <div class="step-marker-col">
+                    <div class="marker-circle">○</div>
+                    <div class="marker-line"></div>
+                  </div>
+                  <div class="step-content-box">
+                    <div class="step-meta">
+                      <span class="badge badge-neutral">Planejada</span>
+                      <span class="step-number">Fase 2</span>
+                    </div>
+                    <h4 class="step-title">Engines Locais & Validação Prática</h4>
+                    <p class="step-desc">
+                      Implementação mínima do terminal-engine, adaptadores de execução
+                      (`virtual-shell`) e validação determinística de exercícios em ambiente
+                      simulado.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Fase 3 -->
+                <div class="roadmap-step step-future">
+                  <div class="step-marker-col">
+                    <div class="marker-circle">○</div>
+                    <div class="marker-line"></div>
+                  </div>
+                  <div class="step-content-box">
+                    <div class="step-meta">
+                      <span class="badge badge-neutral">Planejada</span>
+                      <span class="step-number">Fase 3</span>
+                    </div>
+                    <h4 class="step-title">Persistência, Supabase & PWA Offline</h4>
+                    <p class="step-desc">
+                      Persistência remota com Row Level Security (RLS), sincronização em nuvem e
+                      suporte a funcionamento offline no PWA.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Fase 4 -->
+                <div class="roadmap-step step-future">
+                  <div class="step-marker-col">
+                    <div class="marker-circle">○</div>
+                  </div>
+                  <div class="step-content-box">
+                    <div class="step-meta">
+                      <span class="badge badge-neutral">Planejada</span>
+                      <span class="step-number">Fase 4</span>
+                    </div>
+                    <h4 class="step-title">Mentoria IA & Painel Institucional</h4>
+                    <p class="step-desc">
+                      Integração do motor de mentoria inteligente, geração de sabatinas adaptativas
+                      e painel para professores e coordenadores da universidade.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 7. Status Técnico Atual -->
+          <section class="graph-node-section" id="status-tecnico">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 07</span>
+              <span class="node-category">Auditoria Técnica & Entregas</span>
+            </div>
+
+            <div class="section-card">
+              <div class="card-header-icon">
+                <span class="header-icon">📊</span>
+                <div>
+                  <h3 class="card-heading">Status Técnico das Entregas Publicadas</h3>
+                  <p class="card-subheading">
+                    Histórico de marcos homologados com commit no branch oficial (`main`).
+                  </p>
+                </div>
+              </div>
+
+              <div class="table-container">
+                <table class="graph-data-table">
+                  <thead>
+                    <tr>
+                      <th>Marco Técnico</th>
+                      <th>Commit / Ref</th>
+                      <th>Estado</th>
+                      <th>Impacto & Funcionalidade</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>Fundação do Monorepo</strong></td>
+                      <td><code class="code-ref">bc52763</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>Configuração de workspaces pnpm, TypeScript base, ESLint e Vitest.</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Domain Model v1 & Engine Contracts</strong></td>
+                      <td><code class="code-ref">e3ab4af</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>
+                        Definição formal das entidades pedagógicas e fronteiras técnicas entre
+                        pacotes.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Planejamento Database & RLS</strong></td>
+                      <td><code class="code-ref">c09bf74</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>
+                        Estrutura relacional planejada e diretrizes de isolamento de dados do aluno.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Currículo Fase 0 & Gramática de Validação</strong></td>
+                      <td><code class="code-ref">3ca2096</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>
+                        Gramática declarativa para validação de exercícios e lições inaugurais de
+                        terminal.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Protótipo Visual Fullscreen</strong></td>
+                      <td><code class="code-ref">bd82a83</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>
+                        Interface imersiva de terminal operando localmente em
+                        <code>http://127.0.0.1:5174/</code>.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Contratos TypeScript Iniciais Fase 1</strong></td>
+                      <td><code class="code-ref">a4c53f7</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>
+                        Tipos desacoplados em <code>packages/types</code> com 100% de cobertura nos
+                        testes unitários.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Visão de Produto & Cérebro Visual</strong></td>
+                      <td><code class="code-ref">docs/</code></td>
+                      <td><span class="badge badge-success">Registrado</span></td>
+                      <td>
+                        Norte comercial, política de IA pedagógica e documentação de governança
+                        institucional.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- 8. Validado vs. Não Implementado -->
+          <section class="graph-node-section" id="validado-vs-pendente">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 08</span>
+              <span class="node-category">Matriz de Escopo & Transparência</span>
+            </div>
+
+            <div class="section-card">
+              <div class="card-header-icon">
+                <span class="header-icon">⚖️</span>
+                <div>
+                  <h3 class="card-heading">Validado vs. Ainda Não Implementado</h3>
+                  <p class="card-subheading">
+                    Clareza executiva sobre o que já está funcionando e o que está planejado para as
+                    próximas etapas.
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid-2-col">
+                <div class="scope-panel scope-valid">
+                  <div class="scope-header">
+                    <span class="scope-icon">✅</span>
+                    <h4 class="scope-title">O Que Já Está Validado & Operacional</h4>
+                  </div>
+                  <ul class="scope-list">
+                    <li>
+                      <strong>Arquitetura de Monorepo:</strong> Compilação, lint e testes
+                      automatizados funcionando.
+                    </li>
+                    <li>
+                      <strong>Contratos TypeScript:</strong> Interfaces agnósticas
+                      (`ExecutionResult`, `ValidationRule`).
+                    </li>
+                    <li>
+                      <strong>Protótipo Visual:</strong> Terminal fullscreen validado no navegador
+                      local.
+                    </li>
+                    <li>
+                      <strong>Gramática Declarativa:</strong> Regras de validação de lições
+                      documentadas.
+                    </li>
+                    <li>
+                      <strong>Governança Viva:</strong> Registro contínuo no `Cérebro
+                      Operacional.md`.
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="scope-panel scope-pending">
+                  <div class="scope-header">
+                    <span class="scope-icon">⏳</span>
+                    <h4 class="scope-title">O Que Ainda Não Está Implementado</h4>
+                  </div>
+                  <ul class="scope-list">
+                    <li>
+                      <strong>Learning Catalog v1:</strong> Contratos em código para cursos, trilhas
+                      e módulos.
+                    </li>
+                    <li>
+                      <strong>Parser & Execução de Comandos:</strong> Implementação do
+                      terminal-engine e shell.
+                    </li>
+                    <li>
+                      <strong>Engine de Validação em Runtime:</strong> Função que compara a saída
+                      com a regra da lição.
+                    </li>
+                    <li>
+                      <strong>Supabase & Banco Remoto:</strong> Migrations e persistência de dados
+                      em nuvem.
+                    </li>
+                    <li>
+                      <strong>Integração com IA:</strong> Mecanismo de mentoria pedagógica e geração
+                      de dicas.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 9. Riscos e Controles -->
+          <section class="graph-node-section" id="riscos">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 09</span>
+              <span class="node-category">Gestão de Riscos & Salvaguardas</span>
+            </div>
+
+            <div class="section-card">
+              <div class="card-header-icon">
+                <span class="header-icon">🛡️</span>
+                <div>
+                  <h3 class="card-heading">Matriz de Riscos & Controles Operacionais</h3>
+                  <p class="card-subheading">
+                    Salvaguardas de engenharia e governança pedagógica ativas para garantir
+                    estabilidade.
+                  </p>
+                </div>
+              </div>
+
+              <div class="grid-3-col">
+                <div class="risk-card-item">
+                  <div class="risk-header-row">
+                    <span class="badge badge-amber">Risco Médio</span>
+                    <span class="risk-name">Acoplamento com Banco</span>
+                  </div>
+                  <p class="risk-explanation">
+                    Criar migrations e persistência remota prematuramente antes da engine local
+                    estar estável.
+                  </p>
+                  <div class="risk-control-box">
+                    <strong>Controle Ativo:</strong> Proibição formal de migrations antes da
+                    validação pedagógica local completa.
+                  </div>
+                </div>
+
+                <div class="risk-card-item">
+                  <div class="risk-header-row">
+                    <span class="badge badge-red">Risco Alto</span>
+                    <span class="risk-name">IA como Muleta</span>
+                  </div>
+                  <p class="risk-explanation">
+                    Estudante utilizar a IA para obter respostas prontas sem exercitar o raciocínio
+                    prático.
+                  </p>
+                  <div class="risk-control-box">
+                    <strong>Controle Ativo:</strong> Política pedagógica anti-muleta: a IA apenas
+                    orienta e diagnostica erros após tentativas.
+                  </div>
+                </div>
+
+                <div class="risk-card-item">
+                  <div class="risk-header-row">
+                    <span class="badge badge-green">Risco Baixo</span>
+                    <span class="risk-name">Regressões de Código</span>
+                  </div>
+                  <p class="risk-explanation">
+                    Alterações em um pacote quebrarem a compilação ou execução de outros módulos.
+                  </p>
+                  <div class="risk-control-box">
+                    <strong>Controle Ativo:</strong> Pipeline de 4 checagens locais obrigatórias
+                    (typecheck, lint, test, format:check).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 10. Como Apresentar para a Direção -->
+          <section class="graph-node-section" id="apresentacao">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 10</span>
+              <span class="node-category">Roteiro Executivo de Apresentação</span>
+            </div>
+
+            <div class="section-card">
+              <div class="card-header-icon">
+                <span class="header-icon">🎓</span>
+                <div>
+                  <h3 class="card-heading">Como Apresentar para a Direção da Universidade</h3>
+                  <p class="card-subheading">
+                    Guia estruturado em 5 passos para reuniões com reitoria, coordenação e liderança
+                    acadêmica.
+                  </p>
+                </div>
+              </div>
+
+              <div class="presentation-flow-list">
+                <div class="presentation-step-item">
+                  <div class="step-badge-num">1</div>
+                  <div class="step-text-content">
+                    <h4 class="step-main-title">O Problema Real do Mercado</h4>
+                    <p class="step-speech">
+                      "Estudantes de tecnologia frequentemente aprendem em ambientes artificiais e
+                      chegam às empresas sem saber operar um terminal, ler erros reais ou usar
+                      ferramentas profissionais."
+                    </p>
+                  </div>
+                </div>
+
+                <div class="presentation-step-item">
+                  <div class="step-badge-num">2</div>
+                  <div class="step-text-content">
+                    <h4 class="step-main-title">A Solução CodeChat (Modo Raiz)</h4>
+                    <p class="step-speech">
+                      "Uma plataforma imersiva onde a prática acontece diretamente no terminal,
+                      desenvolvendo autonomia técnica autêntica e raciocínio de engenharia."
+                    </p>
+                  </div>
+                </div>
+
+                <div class="presentation-step-item">
+                  <div class="step-badge-num">3</div>
+                  <div class="step-text-content">
+                    <h4 class="step-main-title">O Papel da IA (Diferencial Competitivo)</h4>
+                    <p class="step-speech">
+                      "Nossa IA não resolve exercícios nem entrega código pronto; ela atua como um
+                      professor experiente que ensina o aluno a diagnosticar seus próprios erros."
+                    </p>
+                  </div>
+                </div>
+
+                <div class="presentation-step-item">
+                  <div class="step-badge-num">4</div>
+                  <div class="step-text-content">
+                    <h4 class="step-main-title">Rigor de Engenharia & Governança</h4>
+                    <p class="step-desc">
+                      "O projeto é construído com arquitetura profissional de monorepo, contratos
+                      fortemente tipados, validações automatizadas e controle estrito de qualidade."
+                    </p>
+                  </div>
+                </div>
+
+                <div class="presentation-step-item">
+                  <div class="step-badge-num">5</div>
+                  <div class="step-text-content">
+                    <h4 class="step-main-title">Demonstração Visual ao Vivo</h4>
+                    <p class="step-desc">
+                      "Apresentar o protótipo visual em tela cheia do terminal (`apps/web`),
+                      comprovando o foco e a imersão da experiência do estudante."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 11. Próxima Entrega -->
+          <section class="graph-node-section" id="proxima-entrega">
+            <div class="node-badge-header">
+              <span class="node-id">NÓ 11</span>
+              <span class="node-category">Próximo Passo no Grafo Técnico</span>
+            </div>
+
+            <div class="next-step-banner">
+              <div class="banner-badge-row">
+                <span class="badge badge-blue">Próxima Fatia Recomendada</span>
+                <span class="badge badge-amber">Fase 1</span>
+              </div>
+              <h3 class="banner-title">Learning Catalog v1</h3>
+              <p class="banner-text">
+                Formalização e modelagem em TypeScript das entidades de catálogo educacional
+                (<code>Track</code>, <code>Course</code>, <code>Module</code>, <code>Lesson</code>,
+                <code>Challenge</code>) com metadados de tecnologia, linguagem, runtime de execução
+                e perfis de ambiente.
+              </p>
+              <div class="banner-action-buttons">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="window.scrollTo({ top: 0, behavior: 'smooth' })"
+                >
+                  Voltar ao Início do Grafo
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="window.print()">
+                  Exportar Resumo Executivo (PDF)
+                </button>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <!-- Footer do Dashboard -->
+        <footer class="dashboard-footer">
+          <p>
+            <strong>CodeChat</strong> • Cérebro Operacional Visual • Visualização de Governança
+            Institucional
+          </p>
+          <p class="footer-meta">
+            Diretório Oficial: <code>C:\Dev\CodeChat</code> • Branch: <code>main</code> • 100%
+            Funcional Offline
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

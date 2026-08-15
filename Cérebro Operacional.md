@@ -3,6 +3,8 @@
 > Documento vivo de continuidade do CodeChat. Deve ser atualizado ao fim de cada
 > sessao para que o proximo inicio tenha contexto, estado real, decisoes pendentes e
 > proximas acoes sem depender do historico do chat.
+>
+> 📊 **Versao Executiva e Visual**: Para consulta executiva, alinhamento institucional e apresentacao para a Direcao, consulte o [Cérebro Operacional Visual](docs/operations/visual-operational-brain.md) ou abra o dashboard navegavel em `docs/operations/visual-dashboard/index.html`.
 
 ## Como usar
 
@@ -43,10 +45,12 @@ Fundacao monorepo
   -> Database Model / RLS Planning
   -> Curriculum Phase 0
   -> Visual Prototype fullscreen terminal
+  -> Product Vision v1
   -> Proximas decisoes arquiteturais
      -> granularidade Lesson/Step/Challenge
      -> telemetria: derivada, tabela propria ou pipeline
      -> payload de ExecutionResult para validadores
+     -> learning catalog e politica de IA pedagogica
      -> estrategia Supabase real antes de migrations
 ```
 
@@ -59,6 +63,7 @@ Fundacao monorepo
 | c09bf74 | Planejamento de database e RLS                 | Publicado |
 | 3ca2096 | Curriculo Fase 0 e contratos de conteudo       | Publicado |
 | bd82a83 | Prototipo visual fullscreen focado no terminal | Publicado |
+| a4c53f7 | Contratos TypeScript iniciais da Fase 1        | Publicado |
 
 ## Decisoes de governanca
 
@@ -96,6 +101,58 @@ Fundacao monorepo
    - se implementar, comecar por fatia minima do contrato `ExecutionResult` + validadores.
 
 ## Registro de sessoes
+
+### 2026-08-15 13:55:00 -03:00
+
+**Entrega visual: dashboard executivo do Cérebro Operacional**
+
+- Antigravity criou `docs/operations/visual-dashboard/` com `index.html`,
+  `styles.css` e `app.js`.
+- Objetivo: disponibilizar uma versão HTML/CSS/JS navegável do Cérebro
+  Operacional Visual, em estilo Graphfy, com barras de navegação por área,
+  nós de leitura guiada, status executivo e roteiro para apresentação à
+  Direção da universidade.
+- Codex revisou a entrega e ajustou referências para apontar tanto ao Markdown
+  executivo quanto ao dashboard HTML navegável.
+- Escopo preservado: nenhum app, engine, Supabase, migration, parser, comando
+  ou contrato TypeScript foi alterado por esta entrega visual.
+- Validações informadas pelo Antigravity e conferidas por Codex:
+  `pnpm lint`, `pnpm format:check` e `pnpm test` passaram.
+- Observação de governança: alterações de Learning Catalog em
+  `packages/types/src/index.ts` foram detectadas no working tree, mas ficaram
+  fora deste commit por não pertencerem à entrega visual e ainda dependerem de
+  relatório/revisão própria.
+
+### 2026-08-15 13:45:00 -03:00
+
+**Registro estrategico: visao de produto e IA pedagogica**
+
+- Tarefa aprovada pelo usuario e Codex: registrar o norte de produto/comercial
+  do CodeChat antes de expandir catalogo, IA, UI ou engines.
+- Arquivo criado: `docs/product/product-vision-v1.md`.
+- Decisao registrada: CodeChat deve evoluir como plataforma completa de
+  aprendizagem tecnica, levando o aluno do zero ate prontidao para mercado.
+- Diferencial preservado: **modo raiz** com pratica real, terminal realista,
+  erros reais e raciocinio tecnico.
+- IA aprovada apenas como **mentor pedagogico controlado**, nao como muleta:
+  pode explicar erros, oferecer dicas progressivas, adaptar dificuldade,
+  revisar aprendizado, simular entrevista e apoiar professores/admins; nao
+  deve resolver desafios, substituir tentativa pratica ou virar chat generico.
+- Trilhas estrategicas registradas: Terminal/SO, Git/GitHub, Web, Programacao
+  e Pratica Profissional.
+- Segmentos previstos: Linux, macOS, Windows CMD, PowerShell, Git, HTML, CSS,
+  JavaScript, Python, Java, PHP, Node.js, banco de dados, deploy, testes e
+  debugging.
+- Proxima fatia recomendada apos este registro: **Learning Catalog v1** com
+  `Track`, `Course`, `Module`, `Lesson`, `Challenge`, metadados de segmento,
+  tecnologia, linguagem, runtime e perfil de ambiente.
+- Validacoes executadas: `corepack pnpm@10.28.0 lint`,
+  `corepack pnpm@10.28.0 format:check` e `corepack pnpm@10.28.0 test`
+  passaram. O primeiro `test` sem permissao elevada falhou apenas porque o
+  Vitest tentou criar arquivo temporario de configuracao na raiz do repo; a
+  repeticao com permissao adequada passou com 2 arquivos / 4 testes.
+- Fora de escopo nesta etapa: implementacao de IA, catalogo executavel, UI,
+  Supabase, migrations, parser, comandos ou engines.
 
 ### 2026-08-15 12:52:00 -03:00
 
