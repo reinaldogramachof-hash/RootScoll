@@ -36,7 +36,7 @@ pnpm install
 ## Comandos de validação
 
 ```bash
-pnpm typecheck     # TypeScript (project references)
+pnpm typecheck     # TypeScript (por workspace, via pnpm -r --if-present run typecheck)
 pnpm lint          # ESLint
 pnpm format:check  # Prettier (somente verificação)
 pnpm format        # Prettier (aplica formatação)
