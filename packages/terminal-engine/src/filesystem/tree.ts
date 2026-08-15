@@ -116,3 +116,103 @@ export function createDirectory(
   }));
   return { ok: true, root: newRoot };
 }
+
+export type InsertNodeResult =
+  | { readonly ok: true; readonly root: VirtualDirectoryNode }
+  | {
+      readonly ok: false;
+      readonly reason: 'already-exists' | 'parent-not-found' | 'parent-not-directory';
+    };
+
+/**
+ * Insere `node` (arquivo ou diretório, com sua subárvore, se houver) em
+ * `absolutePath`. Como a árvore é 100% imutável, "copiar"/"mover" um nó
+ * significa apenas reutilizar a MESMA referência do nó de origem numa nova
+ * posição — não é necessário clonar profundamente (nenhuma mutação futura
+ * pode invalidar essa partilha estrutural). Usada por `createFile` (nó novo
+ * vazio), e pelos comandos `cp`/`mv` (nó existente, copiado por referência).
+ */
+export function insertNode(
+  root: VirtualDirectoryNode,
+  absolutePath: string,
+  node: VirtualFsNode,
+  options: { readonly overwrite?: boolean } = {},
+): InsertNodeResult {
+  const segments = absolutePathSegments(absolutePath);
+  const name = segments.at(-1);
+  if (name === undefined) {
+    // absolutePath === '/' — não é possível substituir a raiz nesta fatia.
+    return { ok: false, reason: 'already-exists' };
+  }
+
+  const parentSegments = segments.slice(0, -1);
+  const parentNode = getNode(root, '/' + parentSegments.join('/'));
+  if (parentNode === undefined) {
+    return { ok: false, reason: 'parent-not-found' };
+  }
+  if (parentNode.kind !== 'dir') {
+    return { ok: false, reason: 'parent-not-directory' };
+  }
+  if (parentNode.children[name] !== undefined && options.overwrite !== true) {
+    return { ok: false, reason: 'already-exists' };
+  }
+
+  const newRoot = updateDirectoryAtPath(root, parentSegments, (parentDir) => ({
+    kind: 'dir',
+    children: { ...parentDir.children, [name]: node },
+  }));
+  return { ok: true, root: newRoot };
+}
+
+export type CreateFileResult = InsertNodeResult;
+
+/**
+ * Cria um arquivo vazio em `absolutePath` (usado por `touch`). Não sobrescreve
+ * um nó já existente por padrão — `touch` trata "já existe" como um caso à
+ * parte (no-op bem-sucedido), não como sobrescrita.
+ */
+export function createFile(
+  root: VirtualDirectoryNode,
+  absolutePath: string,
+  options: { readonly overwrite?: boolean } = {},
+): CreateFileResult {
+  return insertNode(root, absolutePath, { kind: 'file', content: '' }, options);
+}
+
+export type RemoveNodeResult =
+  | { readonly ok: true; readonly root: VirtualDirectoryNode }
+  | { readonly ok: false; readonly reason: 'not-found' };
+
+/**
+ * Remove o nó (arquivo ou diretório, com sua subárvore, se houver) em
+ * `absolutePath`. Não valida se um diretório está vazio — essa regra é
+ * responsabilidade do comando `rm` (ver `../commands/rm.ts`), que consulta a
+ * árvore antes de chamar esta função. `mv` também usa esta função
+ * internamente, para remover a origem depois de copiar para o destino.
+ */
+export function removeNode(root: VirtualDirectoryNode, absolutePath: string): RemoveNodeResult {
+  const segments = absolutePathSegments(absolutePath);
+  const name = segments.at(-1);
+  if (name === undefined) {
+    // absolutePath === '/' — a raiz nunca pode ser removida nesta fatia.
+    return { ok: false, reason: 'not-found' };
+  }
+
+  const parentSegments = segments.slice(0, -1);
+  const parentNode = getNode(root, '/' + parentSegments.join('/'));
+  if (
+    parentNode === undefined ||
+    parentNode.kind !== 'dir' ||
+    parentNode.children[name] === undefined
+  ) {
+    return { ok: false, reason: 'not-found' };
+  }
+
+  const newRoot = updateDirectoryAtPath(root, parentSegments, (parentDir) => {
+    const remainingChildren = Object.fromEntries(
+      Object.entries(parentDir.children).filter(([childName]) => childName !== name),
+    );
+    return { kind: 'dir', children: remainingChildren };
+  });
+  return { ok: true, root: newRoot };
+}

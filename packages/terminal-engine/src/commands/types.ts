@@ -1,12 +1,15 @@
 import type { TerminalFilesystemState } from '../filesystem/types';
 
 /**
- * Nomes dos comandos suportados nesta fatia mínima. Lista fechada de propósito
+ * Nomes dos comandos suportados até esta fatia. Lista fechada de propósito
  * — a Fase 0 completa tem 21 comandos + 3 operadores
- * (docs/product/curriculum-phase-0.md), mas esta fatia implementa
- * deliberadamente só 4, por decisão arquitetural explícita desta etapa.
+ * (docs/product/curriculum-phase-0.md); esta fatia soma os 4 da Shell Core
+ * mínima (`pwd`, `ls`, `cd`, `mkdir`) aos 7 de manipulação básica de
+ * arquivos (`touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`), por decisão
+ * arquitetural explícita de cada etapa.
  */
-export type TerminalCommandName = 'pwd' | 'ls' | 'cd' | 'mkdir';
+export type TerminalCommandName =
+  'pwd' | 'ls' | 'cd' | 'mkdir' | 'touch' | 'cat' | 'echo' | 'cp' | 'mv' | 'rm' | 'tree';
 
 /**
  * Resultado de rodar um comando: novo estado do filesystem (pode ser o mesmo

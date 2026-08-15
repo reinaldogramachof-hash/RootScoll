@@ -31,21 +31,23 @@
 - Diretorio oficial: `C:\Dev\CodeChat`
 - Branch: `main`
 - Remote: `origin/main`
-- Estado Git no ultimo registro: `git status -sb` no inicio desta sessao ja trazia 3 arquivos
-  modificados por origem externa (nao desta sessao): `Cérebro Operacional.md`,
-  `docs/operations/visual-dashboard/index.html`, `docs/operations/visual-operational-brain.md`
-  — preservados, nao tocados. Nesta sessao (Shell Core / Terminal Engine Minimo), com
-  alteracoes locais NAO commitadas: `packages/terminal-engine/package.json` modificado
-  (dependencia `@codechat/types` adicionada), `packages/terminal-engine/src/index.ts`
-  modificado (de `export {};` para a API publica da fatia), 12 arquivos novos em
-  `packages/terminal-engine/src/{filesystem,commands,parser,core,contracts}` +
-  `shell-core.test.ts`, `docs/architecture/terminal-engine.md` atualizado (status da fatia),
+- Estado Git no ultimo registro: `git status -sb` no inicio desta sessao (Comandos de arquivos e
+  manipulacao basica) ja estava limpo (`## main...origin/main`, 0 arquivos pendentes) — a fatia
+  Shell Core/Terminal Engine Minimo, registrada na sessao anterior como "pendente commit", ja
+  havia sido commitada e publicada externamente como `49663d8` antes do inicio desta sessao (ver
+  correcao de imprecisao abaixo). Nesta sessao, com alteracoes locais NAO commitadas: 5 arquivos
+  modificados (`docs/architecture/terminal-engine.md`,
+  `packages/terminal-engine/src/{commands/types.ts, core/run-command.ts, filesystem/tree.ts,
+index.ts}`) + 8 arquivos novos (`packages/terminal-engine/src/commands/{touch,cat,echo,cp,mv,rm,
+tree}.ts` + `packages/terminal-engine/src/file-manipulation.test.ts`) +
   `Cérebro Operacional.md` modificado (este registro).
-- Lock Git no ultimo registro: `.git/index.lock` presente novamente apos operacoes de `git`
-  feitas pelo bridge; tentativa de remocao via Codex retornou "Acesso negado". Acao necessaria:
-  remover via Antigravity/PowerShell nativo antes de `git add`/`commit`.
+- Lock Git no ultimo registro: `.git/index.lock` presente novamente apos `git status` executado
+  pelo bridge (mesma limitacao recorrente e nao corrigivel por este ambiente — ver sessoes
+  anteriores). Nao bloqueou a escrita dos arquivos desta fatia (feita via `device_commit_files`,
+  que nao depende de `git`), mas bloqueia qualquer `git add`/`commit` ate ser removido por fora
+  deste ambiente (Explorer ou terminal nativo no Windows).
 - Servidor local visual: `http://127.0.0.1:5174/`
-- Ultimo commit funcional publicado: `bebc3ea feat: define runtime requirements v1`
+- Ultimo commit funcional publicado: `49663d8 feat: implement minimal terminal shell core`
   (confirmado por `git log`/`git branch -vv` nesta sessao).
 
 ## Grafo operacional
@@ -60,10 +62,12 @@ Fundacao monorepo
   -> Product Vision v1
   -> Learning Catalog v1
   -> Runtime Requirements v1
+  -> shell-core/terminal-engine minimo (pwd/ls/cd/mkdir — publicado em 49663d8)
+  -> terminal-engine: comandos de arquivos e manipulacao basica (touch/cat/echo/cp/mv/rm/tree —
+     implementados e validados nesta sessao, pendente commit)
   -> Proximas decisoes arquiteturais
      -> granularidade Lesson/Step/Challenge
      -> telemetria: derivada, tabela propria ou pipeline
-     -> shell-core/terminal-engine minimo (pwd/ls/cd/mkdir implementados e validados, pendente commit)
      -> validadores reais de filesystem/stdout/stderr
      -> politica etica da Trilha 06 Seguranca
      -> politica de IA pedagogica
@@ -72,18 +76,19 @@ Fundacao monorepo
 
 ## Marcos confirmados
 
-| Commit  | Descricao                                      | Estado    |
-| ------- | ---------------------------------------------- | --------- |
-| bc52763 | Fundacao do monorepo CodeChat                  | Publicado |
-| e3ab4af | Domain Model v1 e Engine Contracts v1          | Publicado |
-| c09bf74 | Planejamento de database e RLS                 | Publicado |
-| 3ca2096 | Curriculo Fase 0 e contratos de conteudo       | Publicado |
-| bd82a83 | Prototipo visual fullscreen focado no terminal | Publicado |
-| a4c53f7 | Contratos TypeScript iniciais da Fase 1        | Publicado |
-| cdf220e | Registro de sessao do Cerebro Operacional      | Publicado |
-| fedb314 | Dashboard executivo do Cerebro Operacional     | Publicado |
-| 0d29750 | Learning Catalog v1 formalizado (6 trilhas)    | Publicado |
-| bebc3ea | Runtime Requirements v1                        | Publicado |
+| Commit  | Descricao                                             | Estado    |
+| ------- | ----------------------------------------------------- | --------- |
+| bc52763 | Fundacao do monorepo CodeChat                         | Publicado |
+| e3ab4af | Domain Model v1 e Engine Contracts v1                 | Publicado |
+| c09bf74 | Planejamento de database e RLS                        | Publicado |
+| 3ca2096 | Curriculo Fase 0 e contratos de conteudo              | Publicado |
+| bd82a83 | Prototipo visual fullscreen focado no terminal        | Publicado |
+| a4c53f7 | Contratos TypeScript iniciais da Fase 1               | Publicado |
+| cdf220e | Registro de sessao do Cerebro Operacional             | Publicado |
+| fedb314 | Dashboard executivo do Cerebro Operacional            | Publicado |
+| 0d29750 | Learning Catalog v1 formalizado (6 trilhas)           | Publicado |
+| bebc3ea | Runtime Requirements v1                               | Publicado |
+| 49663d8 | Shell Core / Terminal Engine Minimo (pwd/ls/cd/mkdir) | Publicado |
 
 ## Decisoes de governanca
 
@@ -104,22 +109,279 @@ Fundacao monorepo
    - eventos derivados das entidades existentes;
    - tabela propria de analytics;
    - ou pipeline/event store fora do Postgres.
-3. **Shell Core / Terminal Engine Minimo — implementado e validado nesta sessao, pendente commit**:
-   `pwd`/`ls`/`cd`/`mkdir` sobre filesystem virtual em memoria
-   (`packages/terminal-engine/src`). Proximos passos: remover `.git/index.lock` via ambiente
-   nativo, autorizacao de commit, e so entao continuar com os proximos comandos (nivel 2:
-   `touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`) em fatia separada.
+3. **Terminal-engine — comandos de arquivos e manipulacao basica, implementados e validados nesta
+   sessao, pendente commit**: `touch`/`cat`/`echo`/`cp`/`mv`/`rm`/`tree` sobre o filesystem virtual
+   em memoria (`packages/terminal-engine/src`), somados aos 4 comandos ja publicados em `49663d8`.
+   Proximos passos: remover `.git/index.lock` via ambiente nativo, autorizacao de commit, e so
+   entao continuar com os proximos comandos da Fase 0 (10 comandos + 3 operadores restantes,
+   incluindo pipe/redirecionamento e permissoes/chmod) em fatia(s) separada(s).
 4. Planejar validadores reais de filesystem/stdout/stderr:
    - existencia, conteudo, linhas, permissoes, cwd;
    - codigo de saida e stdout/stderr;
    - sem acoplar `ExecutionResult` a `Challenge` ou progresso.
 5. Formalizar a politica etica/isolamento da Trilha 06 antes de qualquer curriculo executavel de seguranca.
 6. Preparar a proxima instrucao para Claude Code:
-   - implementar shell-core minimo ou especificacao final de terminal-engine;
+   - proximo recorte de comandos da Fase 0 (pipe/redirecionamento, permissoes/chmod, ou os
+     comandos de sistema restantes) ou especificacao de `TerminalSession`/perfis de SO;
    - manter escopo sem Supabase, migrations, IA executavel ou UI nova;
    - validar sempre com `pnpm typecheck`, `pnpm lint`, `pnpm format:check` e `pnpm test`.
 
 ## Registro de sessoes
+
+### 2026-08-15 18:45:00 -03:00
+
+**Execucao: Fase 1 — Comandos de arquivos e manipulacao basica**
+
+- Tarefa aprovada, escopo: implementar somente `touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`
+  sobre o filesystem virtual em memoria ja existente (`packages/terminal-engine`), somando-se aos
+  4 comandos da fatia anterior (`pwd`, `ls`, `cd`, `mkdir`).
+- **Correcao de imprecisao encontrada no preflight**: o topo deste arquivo (secao "Snapshot atual"
+  e item 3 de "Proximos passos ativos") ainda apontava `bebc3ea` como ultimo commit publicado e
+  classificava o Shell Core/Terminal Engine Minimo como "implementado e validado, pendente
+  commit". `git status -sb`/`git branch -vv`/`git log --oneline -8` nesta sessao confirmaram que
+  isso estava desatualizado: o Shell Core ja havia sido commitado e publicado como
+  `49663d8 feat: implement minimal terminal shell core` (working tree limpo no inicio da sessao,
+  `main` rastreando `origin/main` exatamente nesse commit) antes do inicio desta sessao. Corrigido
+  no Snapshot/Grafo/Marcos confirmados acima.
+- Preflight: `Cérebro Operacional.md` lido integralmente. `git status -sb` no inicio da sessao:
+  `## main...origin/main`, limpo. `.git/index.lock` ausente no inicio (reapareceu depois, ver
+  Riscos). Branch `main` rastreando `origin/main` confirmado em `49663d8`. Re-sincronizado o
+  estado real de `packages/terminal-engine/src/*` e `packages/types/src/index.ts` via
+  `device_stage_files` antes de escrever qualquer codigo novo — `ls.ts`, `cd.ts`, `mkdir.ts` e
+  `core/run-command.ts` estavam diferentes da minha memoria da sessao anterior (Codex havia
+  adicionado 3 testes/validacoes de argumentos extras apos o fechamento da fatia anterior); e
+  `packages/types/src/index.ts` ja incluia a secao completa de Runtime Requirements v1.
+
+**Arquivos criados**
+
+- `packages/terminal-engine/src/commands/touch.ts` — `touch <arquivo>`.
+- `packages/terminal-engine/src/commands/cat.ts` — `cat <arquivo>`.
+- `packages/terminal-engine/src/commands/echo.ts` — `echo [texto...]`.
+- `packages/terminal-engine/src/commands/cp.ts` — `cp <origem> <destino>`.
+- `packages/terminal-engine/src/commands/mv.ts` — `mv <origem> <destino>`.
+- `packages/terminal-engine/src/commands/rm.ts` — `rm <caminho>`.
+- `packages/terminal-engine/src/commands/tree.ts` — `tree`.
+- `packages/terminal-engine/src/file-manipulation.test.ts` — 25 blocos `it()` cobrindo os 11
+  cenarios exigidos pela tarefa (ver "Testes criados" abaixo).
+
+**Arquivos alterados**
+
+- `packages/terminal-engine/src/filesystem/tree.ts` — 3 novas funcoes puras, copy-on-write:
+  `insertNode` (insere um no arbitrario — arquivo ou subarvore de diretorio — num caminho,
+  reaproveitando a mesma referencia do no de origem em vez de clonar profundamente, ja que a
+  arvore e imutavel), `createFile` (atalho de `insertNode` para um arquivo vazio nao existente,
+  usado por `touch`) e `removeNode` (remove um no existente, usado por `rm` e por `mv` para
+  apagar a origem apos copiar).
+- `packages/terminal-engine/src/commands/types.ts` — `TerminalCommandName` estendido de 4 para
+  11 valores.
+- `packages/terminal-engine/src/core/run-command.ts` — dispatcher (`isSupportedCommand` +
+  `switch`) estendido para os 7 novos comandos.
+- `packages/terminal-engine/src/index.ts` — API publica estendida: os 7 novos comandos, mais
+  `createFile`/`insertNode`/`removeNode` e seus tipos de resultado, exportados de
+  `filesystem/tree.ts` na mesma convencao ja usada para `createDirectory`/`getNode`/
+  `listDirectory`.
+- `docs/architecture/terminal-engine.md` — atualizado (status da Fase 1: agora 11 comandos em
+  duas fatias; decisoes de escopo desta fatia resumidas para referencia rapida).
+- `Cérebro Operacional.md` — este registro, mais correcao do Snapshot/Grafo/Marcos
+  confirmados/Proximos passos ativos (ver acima).
+
+**Comandos implementados**
+
+`touch <arquivo>` (cria arquivo vazio se nao existir; no-op bem-sucedido, nao erro, se ja
+existir — arquivo ou diretorio, igual ao bash real), `cat <arquivo>` (imprime conteudo exato,
+sem `\n` extra; erro controlado se nao existir ou for diretorio), `echo [texto...]` (imprime
+argumentos unidos por espaco + `\n`; nunca falha, nunca muta o filesystem), `cp <origem>
+<destino>` (copia arquivo ou diretorio — recursivamente, incluindo conteudo; se `destino` ja
+existir como diretorio, copia para dentro dele com o nome original), `mv <origem> <destino>`
+(mesma logica de resolucao de destino de `cp`, seguida de remocao da origem), `rm <caminho>`
+(remove arquivo ou diretorio VAZIO; diretorio nao-vazio e erro controlado nesta fatia), `tree`
+(imprime arvore determinística a partir do cwd, sem flags).
+
+**Decisoes tecnicas tomadas** (dentro do escopo aprovado, para revisao do Codex)
+
+1. **Copia por referencia estrutural, nao clonagem profunda** — como a arvore e 100% imutavel
+   (`readonly` em todos os niveis), "copiar" um no em `cp`/`mv` significa apenas inserir a MESMA
+   referencia do no de origem numa nova posicao da arvore; nenhuma mutacao futura pode invalidar
+   essa partilha, entao clonar profundamente seria trabalho desnecessario. Isso tambem faz `cp`
+   de um diretorio ser automaticamente recursivo (copia toda a subarvore) sem codigo extra.
+2. **`cp <arquivo-ou-dir> <destino>`: se `destino` ja existir como diretorio, copia PARA DENTRO
+   dele com o nome original de `origem`** — comportamento real do bash (`cp arquivo.txt pasta/`
+   nao substitui `pasta`, cria `pasta/arquivo.txt`). Mesma logica aplicada a `mv`. **Pede revisao
+   do Codex** caso a preferencia arquitetural para esta fatia fosse recusar targets-diretorio.
+3. **`rm` remove apenas arquivo ou diretorio vazio** — diretorio nao-vazio retorna erro
+   controlado (`Directory not empty`), equivalente a `rm` sem `-r`/`-f`. Consistente com a mesma
+   filosofia minimalista ja usada em `mkdir` (sem `-p`) na fatia anterior. As flags `-r -f`
+   ficam para uma fatia futura, quando o parser de flags for implementado.
+4. **`echo` sem argumento nao e erro — imprime apenas uma linha vazia** — decisao deliberada,
+   diferente dos demais 6 comandos desta fatia (que tem aridade fixa/obrigatoria e retornam erro
+   controlado se faltar operando). Justificativa: no bash real, `echo` aceita zero ou mais
+   argumentos por definicao — nunca falha por falta de argumento. Interpretei a regra geral da
+   tarefa ("argumentos ausentes ou excessivos devem retornar erro controlado") como aplicavel por
+   comando, conforme a aridade que cada um realmente exige. **Pede revisao explicita do Codex**,
+   por ser a unica divergencia da leitura mais literal da regra geral.
+5. **Mensagens de erro no estilo bash real, mesma convencao de exit codes ja aprovada** —
+   `127` para comando nao encontrado (inalterado), `1` para os demais erros esperados, `0` para
+   sucesso. Ex.: `cat: <nome>: No such file or directory`, `cat: <nome>: Is a directory`,
+   `rm: cannot remove '<nome>': Directory not empty`, `cp: cannot stat '<nome>': No such file or
+directory`.
+6. **`mv`/`cp` recusam sobrescrever um arquivo existente com um diretorio de origem** —
+   `cp`/`mv dir arquivo-existente` retorna erro controlado (`cannot overwrite non-directory ...
+with directory ...`), mesma semantica do bash real; nao ha checagem simetrica para
+   dir-sobre-dir nem arquivo-sobre-arquivo (ambos sao sobrescritos silenciosamente, tambem
+   comportamento real do `cp`/`mv` sem `-i`).
+7. **`touch`/`cp`/`mv`/`rm` sobre a raiz `/` sao recusados com erro controlado** (`rm '/'`
+   explicitamente bloqueado; `cp`/`mv` do no raiz tambem, por nao haver nome/basename para a
+   copia) — protecao minima contra um caso degenerado que o bash real tambem trata como erro ou
+   caso especial.
+
+**Como a fatia respeita Runtime Requirements v1**
+
+Nenhum comando novo abre rede, executa processo real do SO ou persiste em disco — toda a arvore
+continua 100% em memoria dentro do processo de teste/execucao, mesmo perfil `virtual-shell`
+(`networkAccess: 'none'`, `processExecution: 'simulated'`, `sandboxIsolation: 'interpreter'`) ja
+declarado em `docs/architecture/runtime-requirements-v1.md` e usado sem alteracao por
+`buildExecutionResult` (continua fixando `adapterId: 'virtual-shell'` sempre). Nenhum outro
+adapter (`pyodide`/`webcontainer`/`remote-runner`) e tocado por esta fatia.
+
+**Testes criados**
+
+`packages/terminal-engine/src/file-manipulation.test.ts` (25 `it()`, novo arquivo — convencao de
+um arquivo por fatia mantida, `shell-core.test.ts` nao foi alterado): `touch` (cria arquivo vazio;
+no-op bem-sucedido se ja existir; erro se faltar operando; erro se pai nao existir); `cat` (le
+arquivo vazio de `touch`; le conteudo exato de um arquivo com texto, via estado construido
+diretamente no teste, ja que esta fatia nao tem redirecionamento; erro se nao existir; erro se for
+diretorio); `echo` (imprime texto + `\n`, sem mutar filesystem; sem argumento imprime linha
+vazia); `cp` (copia arquivo preservando origem; copia diretorio recursivamente com conteudo; erro
+se origem nao existir); `mv` (renomeia no mesmo diretorio; move para dentro de diretorio
+existente; erro se origem nao existir); `rm` (remove arquivo; remove diretorio vazio; erro
+controlado em diretorio nao-vazio, com checagem explicita de imutabilidade do estado anterior;
+erro se caminho nao existir); `tree` (estrutura deterministica com aninhamento, comparacao exata
+de string; erro controlado com argumentos); imutabilidade encadeada entre `touch`/`cp`/`mv`/`rm`
+(cada passo do encadeamento verifica que o estado anterior nao mudou); bloco dedicado
+verificando que 14 cenarios de erro distintos nunca lancam excecao (`expect(...).not.toThrow()`)
+e sempre preservam a mesma referencia de `filesystem`; geracao de `ExecutionResult` apos uma
+sequencia `mkdir`+`touch`+`cp`, com snapshot completo comparado por igualdade estrutural exata
+(arquivos e diretorios, incluindo `content` de arquivo).
+
+**Comandos executados**
+
+- Leitura completa de `Cérebro Operacional.md`; re-sincronizacao via `device_stage_files` de todo
+  `packages/terminal-engine/src/*` (17 arquivos) e `packages/types/src/index.ts` antes de escrever
+  qualquer codigo novo.
+- `git status -sb`, checagem de `.git/index.lock`, `git branch -vv`, `git log --oneline -8`
+  (pre-check); `git status -sb` + checagem de `.git/index.lock` (pos-escrita).
+- Validacao em ambiente-proxy isolado (`/tmp/proxy4`, reutilizado da sessao anterior e
+  re-sincronizado com o estado real atual do repositorio antes de aplicar as mudancas desta
+  fatia): `tsc --noEmit` (2 packages), `eslint .`, `prettier --check .` / `--write`, `vitest run`.
+- Tentativa real: `corepack pnpm@10.28.0 --filter @codechat/terminal-engine typecheck`
+  diretamente contra o repositorio.
+
+**Validacoes executadas e resultados**
+
+No ambiente-proxy (`/tmp/proxy4`), apos re-sincronizar `packages/types/src/index.ts` (que ja
+incluia Runtime Requirements v1) e todo `packages/terminal-engine/src/*` com o estado real atual
+do repositorio, e aplicar os arquivos novos/alterados desta fatia:
+
+- `tsc --noEmit` (`packages/types/tsconfig.json`) -> **passou** (exit 0).
+- `tsc --noEmit` (`packages/terminal-engine/tsconfig.json`) -> **passou** na primeira passada
+  (exit 0) — nenhum erro de tipos novo nesta fatia.
+- `eslint .` (ambos os packages) -> **passou**, 0 erros/avisos (exit 0).
+- `prettier --check .` -> falhou na primeira passada (1 arquivo,
+  `packages/terminal-engine/src/commands/types.ts` — a uniao `TerminalCommandName` colapsada
+  para caber em `printWidth: 100`); corrigido com `prettier --write`; reexecutado -> **passou**.
+- `vitest run` -> **passou**, **44/44 testes** (19 de `shell-core.test.ts`, ja existentes e
+  inalterados, + 25 de `file-manipulation.test.ts`, novo) (exit 0).
+
+Tentativa real contra o repositorio: `corepack pnpm@10.28.0 --filter @codechat/terminal-engine
+typecheck` falhou pelo mesmo motivo ja documentado em todas as sessoes anteriores — **este bridge
+nao tem acesso de rede** (`Error when performing the request to
+https://registry.npmjs.org/pnpm/-/pnpm-10.28.0.tgz`, causado por `Proxy response (403) !== 200
+when HTTP Tunneling`). **Isso nao e validacao real do monorepo** — pendencia explicita, igual as
+fases anteriores; requer confirmacao num terminal nativo no Windows (Antigravity ou equivalente)
+antes de considerar esta fatia definitivamente fechada.
+
+**Riscos / pendencias**
+
+- Pendencia de validacao real do monorepo completo (`pnpm install`/`typecheck`/`lint`/
+  `format:check`/`test` nativos no Windows) — mesma pendencia recorrente de toda sessao anterior
+  a esta, por falta de acesso de rede deste bridge.
+- `.git/index.lock` presente novamente apos `git status` executado pelo bridge nesta sessao
+  (`warning: unable to unlink '.git/index.lock': Operation not permitted`) — mesma limitacao
+  recorrente, nao corrigivel por este ambiente. Nao bloqueou a escrita dos arquivos (feita via
+  `device_commit_files`), mas bloqueia `git add`/`commit` ate remocao por fora deste ambiente.
+- Decisao tecnica #4 (`echo` sem argumento nao e erro) e a unica desta fatia que diverge de uma
+  leitura estritamente literal da regra geral "argumentos ausentes ou excessivos retornam erro
+  controlado" — sinalizada explicitamente acima como ponto de revisao obrigatoria do Codex.
+- `cp`/`mv` desta fatia nao tem protecao contra mover/copiar um diretorio para dentro de si mesmo
+  (ex.: `mv projetos projetos/sub`) — cenario nao coberto por teste nem por guarda de codigo
+  explicita; comportamento nesse caso especifico e indefinido/nao testado. Fica como pendencia
+  para uma fatia futura de refinamento, junto com as flags `-r`/`-f`/`-p`.
+
+**Pontos especificos para o Codex revisar**
+
+1. Decisao tecnica #4: `echo` sem argumento imprime linha vazia (nao e erro), diferente dos
+   outros 6 comandos desta fatia. Confirmar se essa leitura da regra geral da tarefa (aridade por
+   comando, nao uma regra universal de "sempre exigir argumento") esta correta.
+2. Decisao tecnica #2: `cp`/`mv` para um diretorio-destino existente copiam/movem PARA DENTRO
+   dele com o nome original da origem, em vez de retornar erro. Confirmar se esse comportamento
+   (identico ao bash real) esta dentro do espirito de "fatia minima" desta etapa, ou se deveria
+   ter sido tratado como erro controlado nesta fatia (fora de escopo ate uma fatia futura).
+3. Decisao tecnica #1: reaproveitamento de referencia (nao clonagem profunda) para `cp` de
+   diretorios — funciona corretamente porque a arvore inteira e imutavel; confirmar que essa
+   premissa continua valida para as proximas fatias antes de qualquer futura introducao de
+   mutabilidade parcial na arvore.
+4. Limite conhecido nao coberto (ver Riscos): `mv`/`cp` de um diretorio para dentro de si mesmo.
+   Pede confirmacao se deve virar erro controlado explicito numa fatia futura de refinamento, ou
+   se pode permanecer como comportamento indefinido por ora (comandos de arquivo tipicamente nao
+   sao usados dessa forma nos exercicios da Fase 0).
+
+**Revisao Codex aplicada apos entrega do Claude**
+
+- Decisao #4 aprovada: `echo` sem argumento deve imprimir linha vazia, pois a aridade real do
+  comando e zero ou mais argumentos. Nao sera tratado como erro.
+- Decisao #2 aprovada: `cp`/`mv` para destino existente do tipo diretorio devem copiar/mover para
+  dentro dele com o nome original da origem, comportamento alinhado ao shell real.
+- Decisao #1 aprovada com ressalva: reaproveitamento de referencia estrutural em `cp`/`mv` e
+  aceitavel enquanto o filesystem virtual permanecer imutavel/copy-on-write.
+- Correcao aplicada pelo Codex: `cp` e `mv` agora bloqueiam explicitamente destino igual ou dentro
+  da propria origem (`projetos` -> `projetos/app`), retornando erro controlado e preservando o
+  filesystem anterior.
+- Correcao aplicada pelo Codex: `tree` passou a emitir conectores ASCII (`|--`, ``--`, `| `)
+  para evitar dependencia de caracteres de box drawing em Windows/PowerShell e em validacoes de
+  texto.
+- Testes ajustados por Codex: `file-manipulation.test.ts` passou de 25 para 27 testes, cobrindo
+  as travas de `cp` e `mv` para dentro da propria origem e a nova saida ASCII do `tree`.
+- Validacao real do monorepo em `C:\Dev\CodeChat` executada por Codex apos as correcoes:
+  `pnpm typecheck` OK, `pnpm lint` OK, `pnpm format:check` OK e `pnpm test` OK
+  (**6/6 arquivos, 65/65 testes**).
+- Pendencia operacional remanescente: `.git/index.lock` segue presente neste ambiente e precisa
+  ser removido por Antigravity/PowerShell nativo antes de `git add`/`commit`/`push`.
+
+**Decisoes tomadas nesta sessao**
+
+- 7 novos comandos implementados (`touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`), nenhum outro
+  dos 10 restantes da Fase 0, nenhuma flag (`-r`, `-f`, `-p`), pipe, redirecionamento ou
+  permissoes/`chmod`.
+- Arvore do filesystem virtual continua imutavel/copy-on-write; `cp`/`mv` implementados como
+  particionamento de referencia estrutural, sem clonagem profunda.
+- `ExecutionResult` gerado por `buildExecutionResult` continua agnostico e inalterado nesta
+  fatia — nenhuma mudanca na ponte com `@codechat/types`.
+- Nenhuma decisao sobre Supabase, migrations, UI ou IA foi tomada — seguem fora de escopo desta
+  etapa.
+
+**Nenhum commit ou push foi realizado** (fora de autorizacao explicita, conforme regra de
+governanca).
+
+**Proxima retomada**
+
+1. Ler este arquivo primeiro.
+2. Confirmar `git status -sb` e remover `.git/index.lock` via ambiente nativo, se ainda presente.
+3. Levar `packages/terminal-engine/src/{commands/{touch,cat,echo,cp,mv,rm,tree}.ts,
+filesystem/tree.ts, file-manipulation.test.ts}` e os pontos especificos listados acima para
+   revisao final/commit — em especial as decisoes tecnicas #2 e #4.
+4. Apos aprovacao do usuario, executar `git add` + `commit` + `push`.
+5. So entao considerar a proxima fatia de comandos da Fase 0 (10 comandos + 3 operadores
+   restantes, incluindo pipe/redirecionamento e permissoes/chmod) — nunca todos de uma vez.
 
 ### 2026-08-15 15:09:50 -03:00
 
