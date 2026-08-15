@@ -1,0 +1,13 @@
+{
+  "//": "tsconfig raiz mínimo, apenas para conveniência de ferramentas (ex.: editores que procuram um tsconfig.json na raiz do workspace). NÃO participa do typecheck real do monorepo — cada app/package roda seu próprio `tsc --noEmit` via `pnpm -r --if-present typecheck` (ver package.json raiz). Não usa project references (`tsc -b`) para evitar acoplar apps ao mesmo modelo de build de libraries.",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": [],
+  "exclude": ["node_modules", "**/dist", "**/build"]
+}

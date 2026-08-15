@@ -1,0 +1,14 @@
+{
+  "name": "@codechat/shared",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Utilidades genuinamente compartilhadas entre múltiplos módulos.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"not implemented yet\" && exit 0",
+    "test": "echo \"not implemented yet\" && exit 0",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  }
+}

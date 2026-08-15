@@ -1,0 +1,7 @@
+{
+  "extends": "../../packages/config/typescript/react.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["src"]
+}
