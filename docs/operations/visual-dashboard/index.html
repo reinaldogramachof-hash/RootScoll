@@ -120,7 +120,7 @@
           </button>
           <div class="status-summary-mini">
             <span class="pulse-indicator"></span>
-            <span>Fase 1 Ativa • 100% Offline</span>
+            <span>Fase 1 Publicada • Próximo: Terminal Engine</span>
           </div>
         </div>
       </aside>
@@ -141,9 +141,9 @@
             <div class="graph-breadcrumb">
               <span class="graph-step completed">Fundação (F0)</span>
               <span class="graph-sep">→</span>
-              <span class="graph-step active">Fase 1: Contratos TS</span>
+              <span class="graph-step completed">Fase 1: Contratos TS</span>
               <span class="graph-sep">→</span>
-              <span class="graph-step next">Próximo: Learning Catalog</span>
+              <span class="graph-step active">Próximo: Shell Core</span>
             </div>
           </div>
 
@@ -551,19 +551,19 @@
                 <!-- Fase 1 -->
                 <div class="roadmap-step step-current">
                   <div class="step-marker-col">
-                    <div class="marker-circle">●</div>
+                    <div class="marker-circle">✓</div>
                     <div class="marker-line"></div>
                   </div>
                   <div class="step-content-box">
                     <div class="step-meta">
-                      <span class="badge badge-amber">Fase Atual (Em Andamento)</span>
+                      <span class="badge badge-success">Publicado</span>
                       <span class="step-number">Fase 1</span>
                     </div>
-                    <h4 class="step-title">Contratos TypeScript & Catálogo Pedagógico</h4>
+                    <h4 class="step-title">Contratos TypeScript, Catálogo & Runtime</h4>
                     <p class="step-desc">
                       Contratos de execução agnósticos publicados (`ExecutionResult`,
-                      `ValidationRule`), visão de produto oficializada e preparação do `Learning
-                      Catalog v1`.
+                      `ValidationRule`), Learning Catalog v1 com 6 trilhas e Runtime Requirements v1
+                      com 4 adapters formalizados.
                     </p>
                   </div>
                 </div>
@@ -579,7 +579,7 @@
                       <span class="badge badge-neutral">Planejada</span>
                       <span class="step-number">Fase 2</span>
                     </div>
-                    <h4 class="step-title">Engines Locais & Validação Prática</h4>
+                    <h4 class="step-title">Shell Core & Validação Prática</h4>
                     <p class="step-desc">
                       Implementação mínima do terminal-engine, adaptadores de execução
                       (`virtual-shell`) e validação determinística de exercícios em ambiente
@@ -716,6 +716,25 @@
                         institucional.
                       </td>
                     </tr>
+                    <tr>
+                      <td><strong>Learning Catalog v1</strong></td>
+                      <td><code class="code-ref">0d29750</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>
+                        Catálogo formalizado com 6 trilhas, 20 segmentos e contratos de cursos,
+                        módulos, lições e desafios.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Runtime Requirements v1</strong></td>
+                      <td><code class="code-ref">bebc3ea</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>
+                        Perfis conceituais dos adapters <code>virtual-shell</code>,
+                        <code>pyodide</code>, <code>webcontainer</code> e
+                        <code>remote-runner</code>.
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -768,6 +787,14 @@
                       <strong>Governança Viva:</strong> Registro contínuo no `Cérebro
                       Operacional.md`.
                     </li>
+                    <li>
+                      <strong>Learning Catalog v1:</strong> 6 trilhas, 20 segmentos e contratos de
+                      catálogo publicados.
+                    </li>
+                    <li>
+                      <strong>Runtime Requirements v1:</strong> restrições conceituais dos 4
+                      adapters publicadas.
+                    </li>
                   </ul>
                 </div>
 
@@ -778,8 +805,8 @@
                   </div>
                   <ul class="scope-list">
                     <li>
-                      <strong>Learning Catalog v1:</strong> Contratos em código para cursos, trilhas
-                      e módulos.
+                      <strong>Shell Core / Terminal Engine Mínimo:</strong> Primeiros comandos da
+                      Fase 0 com filesystem virtual em memória.
                     </li>
                     <li>
                       <strong>Parser & Execução de Comandos:</strong> Implementação do
@@ -788,6 +815,10 @@
                     <li>
                       <strong>Engine de Validação em Runtime:</strong> Função que compara a saída
                       com a regra da lição.
+                    </li>
+                    <li>
+                      <strong>Política Ética da Trilha 06:</strong> isolamento e limites antes de
+                      qualquer laboratório executável de segurança.
                     </li>
                     <li>
                       <strong>Supabase & Banco Remoto:</strong> Migrations e persistência de dados
@@ -961,12 +992,11 @@
                 <span class="badge badge-blue">Próxima Fatia Recomendada</span>
                 <span class="badge badge-amber">Fase 1</span>
               </div>
-              <h3 class="banner-title">Learning Catalog v1</h3>
+              <h3 class="banner-title">Shell Core / Terminal Engine Mínimo</h3>
               <p class="banner-text">
-                Formalização e modelagem em TypeScript das entidades de catálogo educacional
-                (<code>Track</code>, <code>Course</code>, <code>Module</code>, <code>Lesson</code>,
-                <code>Challenge</code>) com metadados de tecnologia, linguagem, runtime de execução
-                e perfis de ambiente.
+                Implementação incremental dos primeiros comandos da Fase 0, preservando filesystem
+                virtual em memória, contratos agnósticos de execução e validadores determinísticos,
+                sem Supabase, migrations, IA executável ou UI nova.
               </p>
               <div class="banner-action-buttons">
                 <button

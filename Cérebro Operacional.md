@@ -31,10 +31,22 @@
 - Diretorio oficial: `C:\Dev\CodeChat`
 - Branch: `main`
 - Remote: `origin/main`
-- Estado Git no ultimo registro: fase Runtime Requirements v1 com alteracoes locais NAO commitadas: `docs/architecture/runtime-requirements-v1.md` novo, `docs/product/learning-catalog-v1.md` modificado (referencia curta ao novo doc), `packages/types/src/index.ts` modificado (aditivo — secao Runtime Requirements v1), `packages/types/src/runtime-requirements.test.ts` novo, `Cérebro Operacional.md` modificado (este registro).
-- Lock Git no ultimo registro: `.git/index.lock` ausente (confirmado por Antigravity e reconfirmado por Codex apos validacao real).
+- Estado Git no ultimo registro: `git status -sb` no inicio desta sessao ja trazia 3 arquivos
+  modificados por origem externa (nao desta sessao): `Cérebro Operacional.md`,
+  `docs/operations/visual-dashboard/index.html`, `docs/operations/visual-operational-brain.md`
+  — preservados, nao tocados. Nesta sessao (Shell Core / Terminal Engine Minimo), com
+  alteracoes locais NAO commitadas: `packages/terminal-engine/package.json` modificado
+  (dependencia `@codechat/types` adicionada), `packages/terminal-engine/src/index.ts`
+  modificado (de `export {};` para a API publica da fatia), 12 arquivos novos em
+  `packages/terminal-engine/src/{filesystem,commands,parser,core,contracts}` +
+  `shell-core.test.ts`, `docs/architecture/terminal-engine.md` atualizado (status da fatia),
+  `Cérebro Operacional.md` modificado (este registro).
+- Lock Git no ultimo registro: `.git/index.lock` presente novamente apos operacoes de `git`
+  feitas pelo bridge; tentativa de remocao via Codex retornou "Acesso negado". Acao necessaria:
+  remover via Antigravity/PowerShell nativo antes de `git add`/`commit`.
 - Servidor local visual: `http://127.0.0.1:5174/`
-- Ultimo commit funcional publicado: `0d29750 feat: formalize learning catalog v1` (confirmado por `git log`/`git branch -vv` nesta sessao; a linha anterior deste snapshot estava desatualizada — apontava `bd82a83`, que e 6 commits mais antigo).
+- Ultimo commit funcional publicado: `bebc3ea feat: define runtime requirements v1`
+  (confirmado por `git log`/`git branch -vv` nesta sessao).
 
 ## Grafo operacional
 
@@ -46,11 +58,15 @@ Fundacao monorepo
   -> Curriculum Phase 0
   -> Visual Prototype fullscreen terminal
   -> Product Vision v1
+  -> Learning Catalog v1
+  -> Runtime Requirements v1
   -> Proximas decisoes arquiteturais
      -> granularidade Lesson/Step/Challenge
      -> telemetria: derivada, tabela propria ou pipeline
-     -> payload de ExecutionResult para validadores
-     -> learning catalog, Trilha 06 Seguranca e politica de IA pedagogica
+     -> shell-core/terminal-engine minimo (pwd/ls/cd/mkdir implementados e validados, pendente commit)
+     -> validadores reais de filesystem/stdout/stderr
+     -> politica etica da Trilha 06 Seguranca
+     -> politica de IA pedagogica
      -> estrategia Supabase real antes de migrations
 ```
 
@@ -67,6 +83,7 @@ Fundacao monorepo
 | cdf220e | Registro de sessao do Cerebro Operacional      | Publicado |
 | fedb314 | Dashboard executivo do Cerebro Operacional     | Publicado |
 | 0d29750 | Learning Catalog v1 formalizado (6 trilhas)    | Publicado |
+| bebc3ea | Runtime Requirements v1                        | Publicado |
 
 ## Decisoes de governanca
 
@@ -87,24 +104,268 @@ Fundacao monorepo
    - eventos derivados das entidades existentes;
    - tabela propria de analytics;
    - ou pipeline/event store fora do Postgres.
-3. Detalhar o payload de `ExecutionResult` necessario para validadores de filesystem:
-   - existencia;
-   - conteudo;
-   - linhas;
-   - permissoes;
-   - cwd;
-   - codigo de saida;
-   - stdout/stderr.
-4. Preparar a proxima etapa tecnica:
-   - especificacao do shell-core/terminal-engine;
-   - sem implementar 21 comandos de uma vez;
-   - preferir fatias pequenas e testaveis.
-5. Preparar a proxima instrucao para Claude Code:
-   - resolver as decisoes arquiteturais acima;
-   - manter escopo documental/contratual antes de implementacao pesada;
-   - se implementar, comecar por fatia minima do contrato `ExecutionResult` + validadores.
+3. **Shell Core / Terminal Engine Minimo — implementado e validado nesta sessao, pendente commit**:
+   `pwd`/`ls`/`cd`/`mkdir` sobre filesystem virtual em memoria
+   (`packages/terminal-engine/src`). Proximos passos: remover `.git/index.lock` via ambiente
+   nativo, autorizacao de commit, e so entao continuar com os proximos comandos (nivel 2:
+   `touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`) em fatia separada.
+4. Planejar validadores reais de filesystem/stdout/stderr:
+   - existencia, conteudo, linhas, permissoes, cwd;
+   - codigo de saida e stdout/stderr;
+   - sem acoplar `ExecutionResult` a `Challenge` ou progresso.
+5. Formalizar a politica etica/isolamento da Trilha 06 antes de qualquer curriculo executavel de seguranca.
+6. Preparar a proxima instrucao para Claude Code:
+   - implementar shell-core minimo ou especificacao final de terminal-engine;
+   - manter escopo sem Supabase, migrations, IA executavel ou UI nova;
+   - validar sempre com `pnpm typecheck`, `pnpm lint`, `pnpm format:check` e `pnpm test`.
 
 ## Registro de sessoes
+
+### 2026-08-15 15:09:50 -03:00
+
+**Execucao: Fase 1 — Shell Core / Terminal Engine Minimo**
+
+- Tarefa aprovada, escopo: nucleo real de execucao simulada para 4 comandos da Fase 0
+  (`pwd`, `ls`, `cd`, `mkdir`) sobre filesystem virtual em memoria, em
+  `packages/terminal-engine`, com ponte opcional para `ExecutionResult`.
+- Preflight: `Cérebro Operacional.md` lido integralmente. `git status -sb` no inicio da sessao
+  ja trazia `Cérebro Operacional.md`, `docs/operations/visual-dashboard/index.html` e
+  `docs/operations/visual-operational-brain.md` modificados por origem externa a esta sessao
+  — preservados, nao tocados nesta fatia. `.git/index.lock` ausente. Branch `main` rastreando
+  `origin/main` confirmado (`git branch -vv`: `bebc3ea [origin/main]`). `git log --oneline -6`
+  confirmou os 2 commits citados no contexto da tarefa (`0d29750`, `bebc3ea`).
+
+**Arquivos criados**
+
+- `packages/terminal-engine/src/filesystem/types.ts` — `VirtualDirectoryNode`,
+  `VirtualFileNode`, `VirtualFsNode`, `TerminalFilesystemState` (tipos internos, nao
+  exportados de `@codechat/types`).
+- `packages/terminal-engine/src/filesystem/path.ts` — `resolvePath` (nomes simples e `..`,
+  generalizado para multi-segmento e caminhos absolutos).
+- `packages/terminal-engine/src/filesystem/tree.ts` — `getNode`, `listDirectory`,
+  `createDirectory` (copy-on-write, nunca lanca excecao — erros como valor `{ ok: false,
+reason }`).
+- `packages/terminal-engine/src/filesystem/initial-state.ts` — `createInitialFilesystemState`
+  (`cwd: /home/aluno`, alinhado ao setup padrao de `docs/product/curriculum-phase-0.md`).
+- `packages/terminal-engine/src/commands/{types,pwd,ls,cd,mkdir}.ts` — os 4 comandos, cada um
+  uma funcao pura `(state, args) -> TerminalCommandOutcome`.
+- `packages/terminal-engine/src/parser/tokenize.ts` — tokenizacao por espaco em branco (sem
+  aspas/pipe/redirect nesta fatia).
+- `packages/terminal-engine/src/core/run-command.ts` — dispatcher `runCommand` (tokeniza +
+  roteia; comando desconhecido -> `exitCode: 127`; linha vazia -> no-op `exitCode: 0`).
+- `packages/terminal-engine/src/contracts/execution-result.ts` — `toFilesystemSnapshot` e
+  `buildExecutionResult`, unica ponte com `ExecutionResult`/`VirtualFileSystemSnapshot`
+  (`@codechat/types`); `adapterId` sempre `'virtual-shell'`.
+- `packages/terminal-engine/src/shell-core.test.ts` — 19 blocos `it()` apos revisao do Codex
+  (ver "Testes criados"
+  abaixo).
+
+**Arquivos alterados**
+
+- `packages/terminal-engine/package.json` — adicionada `"dependencies": { "@codechat/types":
+"workspace:*" }`. **Esta e a primeira dependencia de workspace entre packages do monorepo**
+  (confirmado: nenhum outro package declarava isso antes, `node_modules/@codechat` nao existia
+  no repositorio real, `pnpm-lock.yaml` nao tinha nenhuma entrada de `@codechat/types`). Codex
+  rodou `pnpm install` nativo posteriormente; `pnpm-lock.yaml` agora registra
+  `packages/terminal-engine -> @codechat/types link:../types`.
+- `packages/terminal-engine/src/index.ts` — reescrito (de `export {};` para a API publica desta
+  fatia: tipos + `createInitialFilesystemState`, `resolvePath`, `getNode`, `listDirectory`,
+  `createDirectory`, os 4 comandos, `tokenizeCommandLine`, `runCommand`,
+  `buildExecutionResult`, `toFilesystemSnapshot`).
+- `docs/architecture/terminal-engine.md` — atualizado (era "Documento em construcao" puro):
+  agora lista o que existe em codigo nesta fatia e o que ainda aguarda definicao do Arquiteto
+  (17 comandos restantes, `TerminalSession` real, perfis de SO diferenciados, parser completo).
+- `Cérebro Operacional.md` — este registro, mais atualizacao do Grafo operacional e item 3 de
+  "Proximos passos ativos".
+
+**Comandos implementados**
+
+`pwd` (sem args, nunca falha), `ls` (lista `state.cwd`; `ls <path>` retorna erro controlado
+nesta fatia), `cd <path>` (relativo simples e `..`; erro controlado se inexistente,
+nao-diretorio, sem argumento ou com multiplos argumentos; sem suporte a `~` ou `-` nesta fatia),
+`mkdir <name>` (sem flag `-p`; erro controlado se ja existir, se o pai nao existir/nao for
+diretorio ou se receber multiplos operandos).
+
+**Decisoes tecnicas tomadas** (dentro do escopo aprovado, para revisao do Codex)
+
+1. **Arvore imutavel, copy-on-write** — `TerminalFilesystemState`/`VirtualDirectoryNode` sao
+   100% `readonly`; toda mutacao (`createDirectory`, `cd`) retorna uma nova referencia em vez
+   de mutar a existente. Escolhido para favorecer funcoes puras e testes deterministicos
+   (regra explicita da tarefa) — testado explicitamente (mkdir num estado nao afeta o estado
+   anterior).
+2. **`resolvePath` generalizado além do minimo pedido** — a tarefa pedia "no minimo nomes
+   simples e `..`"; a implementacao tambem resolve multi-segmento (`a/b/../c`) e absolutos
+   (`/etc`) porque e a mesma matematica de pilha, sem custo extra de complexidade. `~` e `-`
+   ficaram de fora deliberadamente — dependem de um conceito de sessao/historico que nao
+   existe ainda.
+3. **Erros como valor, nunca excecao** — `createDirectory`/`listDirectory`/`getNode` retornam
+   `{ ok: false, reason }` ou `undefined`; os 4 comandos convertem isso em
+   `stdout/stderr/exitCode`. Nenhuma condicao de erro esperada do aluno (comando desconhecido,
+   caminho inexistente, mkdir duplicado) lanca `throw`.
+4. **Mensagens de erro no estilo bash real** — `bash: cd: <path>: No such file or directory`,
+   `bash: <cmd>: command not found`, `mkdir: cannot create directory '<name>': File exists` —
+   alinhado a "Mensagens de erro reais" exigido em `docs/product/curriculum-phase-0.md`, secao
+   "Comportamentos de terminal exigidos no MVP". Codigos de saida seguem convencao real de
+   shell: `127` para comando nao encontrado, `1` para os demais erros, `0` para sucesso.
+5. **`mkdir` sem a flag `-p` do currículo** — a Fase 0 completa prevê `mkdir -p`, mas esta
+   fatia so implementa os 4 comandos sem flags (conforme escopo explicito da tarefa); diretorio
+   pai inexistente e erro controlado, nao criacao implicita. Codex confirmou como adequado para
+   esta fatia.
+6. **`ls` sem argumento de caminho** — lista sempre `state.cwd`; `ls <path>` retorna erro
+   controlado nesta fatia e fica para evolucao futura. Codex confirmou como adequado para o
+   escopo minimo.
+7. **Dependencia de workspace `@codechat/types` adicionada a `package.json`** — necessaria para
+   importar tipos do pacote compartilhado (regra explicita da tarefa: "usar apenas
+   @codechat/types"). E a primeira vez que um package do monorepo declara depender de outro —
+   ver Riscos abaixo para a pendencia de `pnpm install` real.
+8. **`buildExecutionResult` e puro, nao gera `id`/timestamp** — recebe `origin`
+   (`ExecutionRequestRef`), `completedAt` e `durationMs` prontos de quem chama; esta fatia nao
+   implementa `TerminalSession`/geracao de id, entao a funcao so faz a traducao de dados, sem
+   inventar identidade de sessao.
+
+**Como a fatia respeita Runtime Requirements v1**
+
+`buildExecutionResult` fixa `adapterId: 'virtual-shell'` sempre — coerente com
+`docs/architecture/runtime-requirements-v1.md` (Terminal/SO → `virtual-shell`,
+`networkAccess: 'none'`, `processExecution: 'simulated'`, `sandboxIsolation: 'interpreter'`):
+esta fatia nao abre rede, nao executa processo real do SO, nao persiste em disco — o filesystem
+inteiro vive em memoria dentro do processo de teste/execucao, exatamente o perfil declarado
+para `virtual-shell`. Nenhum outro adapter (`pyodide`/`webcontainer`/`remote-runner`) e tocado.
+
+**Testes criados**
+
+`packages/terminal-engine/src/shell-core.test.ts` (19 `it()`): estado inicial do filesystem;
+`pwd`; `mkdir` + `ls` (incluindo ordem alfabetica com multiplas entradas); `cd` para diretorio
+existente; `cd ..` (incluindo no-op seguro na raiz, sem excecao); `cd` para diretorio
+inexistente (incluindo caminho aninhado inexistente); `cd` com multiplos argumentos; `mkdir`
+duplicado; `mkdir` com multiplos operandos; `ls` com argumento; comando desconhecido (incluindo
+linha vazia como no-op); resolucao de caminhos (`resolvePath`); guarda de dependencias
+(package.json so declara `@codechat/types`, nenhuma substring proibida —
+`supabase`, `react`, `vue`, `openai`, `anthropic`, `@codechat/web`); geracao de
+`ExecutionResult` (adapterId `virtual-shell`, cwd, stdout, stderr, exitCode, filesystem
+snapshot, e checagem estrutural de que o objeto so tem os campos do contrato — nunca
+`Challenge`/`Progress`/`Lesson`/usuario); `toFilesystemSnapshot` com um no de arquivo
+(cobertura extra do caminho ainda nao usado por nenhum comando desta fatia).
+
+**Comandos executados**
+
+- Leitura completa de `Cérebro Operacional.md`, `docs/product/curriculum-phase-0.md` (secoes 1-
+  3), `docs/product/domain-model-v1.md` (secao `VirtualFileSystemState`),
+  `docs/architecture/dependency-rules.md`, `docs/architecture/terminal-engine.md`,
+  `docs/architecture/backend-architecture.md`, `packages/types/src/index.ts`,
+  `packages/terminal-engine/{package.json,tsconfig.json,src/index.ts}`,
+  `packages/execution-engine/package.json` (para comparacao de convencao), `package.json` raiz,
+  `pnpm-workspace.yaml`, `vitest.config.ts`, `packages/config/typescript/{base,library}.json`.
+- `git status -sb`, checagem de `.git/index.lock`, `git branch -vv`, `git log --oneline -6`,
+  `git status -sb` final (pos-escrita).
+- Verificacao de que `node_modules/@codechat` e qualquer entrada de `@codechat/types` no
+  `pnpm-lock.yaml` nao existiam antes desta sessao (`grep`/`ls` no repositorio real).
+- Validacao em ambiente-proxy isolado (`/tmp/proxy4`) — **novo**, com dois packages
+  (`packages/types` + `packages/terminal-engine`) e um symlink
+  `node_modules/@codechat/types -> packages/types` simulando a resolucao de workspace do
+  pnpm real, para validar o import `from '@codechat/types'` de fato: `tsc --noEmit` (2
+  packages), `eslint .`, `prettier --check .` / `--write`, `vitest run`.
+- Tentativa real: `corepack pnpm@10.28.0 --filter @codechat/terminal-engine typecheck`
+  diretamente contra o repositorio.
+
+**Validacoes executadas e resultados**
+
+No ambiente-proxy (`/tmp/proxy4`, com `packages/types/src/index.ts` sincronizado com o estado
+real atual do repositorio):
+
+- `tsc --noEmit` (`packages/types/tsconfig.json`) -> **passou** (exit 0).
+- `tsc --noEmit` (`packages/terminal-engine/tsconfig.json`) -> falhou na primeira passada com 3
+  erros reais de tipos (`TS7022` inferencia circular em `getNode`; 2x `TS4111` acesso a
+  indice-signature por dot notation no teste) — corrigidos (anotacao de tipo explicita em
+  `next`; bracket notation `children['home']`/`children['aluno']`); reexecutado -> **passou**
+  (exit 0).
+- `eslint .` (ambos os packages) -> **passou**, 0 erros/avisos (exit 0).
+- `prettier --check .` -> falhou na primeira passada (faltava `.prettierrc.json` no proxy —
+  corrigido; depois, 5 arquivos de `terminal-engine` fora do padrao, so quebra de linha por
+  `printWidth`); corrigido com `prettier --write`; reexecutado -> **passou**.
+- `vitest run` -> **passou**, **16/16 testes** (`shell-core.test.ts`) no ambiente-proxy inicial
+  (exit 0).
+
+Tentativa real contra o repositorio: `corepack pnpm@10.28.0 --filter @codechat/terminal-engine
+typecheck` falhou pelo mesmo motivo ja documentado nas 2 sessoes anteriores — **este bridge nao
+tem acesso de rede** (`Proxy response (403)` ao buscar o pnpm no registry). **Isso nao e
+validacao real do monorepo** — pendencia explicita, com um agravante nesta fatia especifica
+(ver Riscos).
+
+Validacao real posterior por Codex em `C:\Dev\CodeChat`: `pnpm install` rodou sem downloads e
+atualizou/materializou o workspace link (`packages/terminal-engine -> @codechat/types
+link:../types` em `pnpm-lock.yaml`). A primeira tentativa de `pnpm typecheck` falhou antes do
+install com `Cannot find module '@codechat/types'`; apos `pnpm install`, `pnpm typecheck`,
+`pnpm lint`, `pnpm format:check` e `pnpm test` passaram. Resultado final: 8/8 projetos no
+typecheck, lint sem erros/avisos, Prettier OK, 5/5 arquivos de teste e 38/38 testes no Vitest.
+Codex tambem adicionou 3 testes para erros controlados de argumentos extras (`ls <path>`,
+`cd a b`, `mkdir a b`) e ajustou os comandos para nao ignorarem esses casos silenciosamente.
+
+**Riscos / pendencias**
+
+- Sem pendencia de validacao real: `pnpm install` nativo foi executado por Codex, `pnpm-lock.yaml`
+  atualizado e as 4 validacoes passaram no monorepo real.
+- `.git/index.lock` presente novamente apos operacoes de Git pelo bridge; Codex tentou remover
+  com `Remove-Item`, mas recebeu "Acesso negado". Remover via Antigravity/PowerShell nativo
+  antes de qualquer commit.
+- `docs/operations/visual-dashboard/index.html` e `docs/operations/visual-operational-brain.md`
+  seguem modificados no working tree por origem externa a esta sessao — nao tocados, conforme
+  regra de preservar alteracoes nao relacionadas.
+
+**Pontos especificos para o Codex revisar**
+
+1. A generalizacao de `resolvePath` para multi-segmento/absoluto (decisao #2) foi aprovada por
+   Codex: nao extrapola o escopo, pois reutiliza a mesma logica de pilha necessaria para nomes
+   simples e `..`.
+2. `mkdir` sem `-p` e `ls` sem argumento (decisoes #5 e #6) foram aprovados para esta fatia.
+   Codex ajustou a implementacao para que argumentos extras retornem erro controlado em vez de
+   serem ignorados silenciosamente.
+3. A adicao de `@codechat/types` como primeira dependencia de workspace do monorepo foi aprovada
+   por Codex; o padrao correto e `"workspace:*"` no `package.json` + `pnpm install` atualizando
+   `pnpm-lock.yaml`.
+4. Convencao de exit codes aprovada para continuidade: `127` para comando nao encontrado, `1`
+   para os demais erros esperados, `0` para sucesso.
+
+**Decisoes tomadas nesta sessao**
+
+- Filesystem virtual modelado como arvore imutavel copy-on-write, 100% em memoria.
+- 4 comandos implementados (`pwd`, `ls`, `cd`, `mkdir`), nenhum outro dos 21 da Fase 0.
+- `ExecutionResult` gerado por `buildExecutionResult` continua agnostico — nunca referencia
+  `Challenge`/`ChallengeProgress`/`Lesson`/usuario (checado por teste estrutural).
+- Nenhuma decisao sobre Supabase, migrations, UI ou IA foi tomada — seguem fora de escopo desta
+  etapa.
+
+**Nenhum commit ou push foi realizado** (fora de autorizacao explicita, conforme regra de
+governanca).
+
+**Proxima retomada**
+
+1. Ler este arquivo primeiro.
+2. Confirmar `git status -sb` e remover `.git/index.lock` via ambiente nativo, se ainda presente.
+3. Levar `packages/terminal-engine/src` e os pontos especificos listados acima para revisao
+   final/commit.
+4. Apos aprovacao do usuario, executar `git add` +
+   `commit` + `push`.
+5. So entao considerar a proxima fatia de comandos (nivel 2: `touch`, `cat`, `echo`, `cp`, `mv`,
+   `rm`, `tree`) — nunca todos de uma vez.
+
+### 2026-08-15 14:50:00 -03:00
+
+**Fechamento pos-publicacao: Runtime Requirements v1**
+
+- Commit publicado: `bebc3ea feat: define runtime requirements v1`.
+- Push confirmado em `origin/main`; `git status -sb` final: `## main...origin/main`.
+- `.git/index.lock`: ausente.
+- Fatia publicada: `docs/architecture/runtime-requirements-v1.md`,
+  `packages/types/src/runtime-requirements.test.ts`, atualizacao em
+  `packages/types/src/index.ts`, referencia em `docs/product/learning-catalog-v1.md` e registro
+  operacional.
+- Validacoes finais antes da publicacao: `pnpm typecheck`, `pnpm lint`,
+  `pnpm format:check` e `pnpm test` passaram com 4 arquivos / 19 testes.
+- Contexto visual atualizado nesta retomada: Cérebro Operacional, Cérebro Visual e dashboard HTML
+  passam a refletir Learning Catalog v1 e Runtime Requirements v1 como marcos publicados. Proxima
+  fatia recomendada: shell-core/terminal-engine minimo, sem Supabase, migrations, IA executavel ou
+  UI nova.
 
 ### 2026-08-15 14:35:23 -03:00
 

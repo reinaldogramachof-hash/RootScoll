@@ -62,7 +62,11 @@ importers:
 
   packages/shared: {}
 
-  packages/terminal-engine: {}
+  packages/terminal-engine:
+    dependencies:
+      '@codechat/types':
+        specifier: workspace:*
+        version: link:../types
 
   packages/types: {}
 

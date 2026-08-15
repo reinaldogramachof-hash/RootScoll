@@ -10,5 +10,8 @@
     "build": "echo \"not implemented yet\" && exit 0",
     "test": "echo \"not implemented yet\" && exit 0",
     "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@codechat/types": "workspace:*"
   }
 }

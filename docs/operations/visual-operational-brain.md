@@ -139,8 +139,8 @@ mindmap
 timeline
     title Evolução e Ciclo de Vida do CodeChat
     Fase 0 : Fundação do Monorepo : Modelagem de Domínio : Contratos de Conteúdo : Protótipo Visual Fullscreen
-    Fase 1 (Atual) : Contratos TypeScript Iniciais : Visão de Produto Registrada : Learning Catalog v1 (Próximo) : Shell Core Mínimo
-    Fase 2 : Validação Pedagógica Local : Runtimes de Execução : Telemetria Educacional
+    Fase 1 (Atual) : Contratos TypeScript Iniciais : Learning Catalog v1 : Runtime Requirements v1 : Shell Core Mínimo
+    Fase 2 : Validação Pedagógica Local : Terminal Engine Mínimo : Telemetria Educacional
     Fase 3 : Integração de Backend e Supabase : Persistência de Progresso : PWA Offline-First
     Fase 4 : Mentoria IA Integrada : Painel Acadêmico / Turmas : Prontidão para Produção
 ```
@@ -151,16 +151,18 @@ timeline
 
 A tabela abaixo resume os marcos técnicos oficialmente homologados no repositório:
 
-| Marco Técnico                           | Commit / Referência                 | Status     | Impacto no Projeto                                                                                        |
-| :-------------------------------------- | :---------------------------------- | :--------- | :-------------------------------------------------------------------------------------------------------- |
-| **Fundação do Monorepo**                | `bc52763`                           | Publicado  | Estrutura modular (`apps/` e `packages/`) com pnpm workspaces e TypeScript rigoroso.                      |
-| **Modelagem de Domínio e Contratos v1** | `e3ab4af`                           | Publicado  | Definição formal das entidades pedagógicas e fronteiras técnicas.                                         |
-| **Planejamento de Banco e RLS**         | `c09bf74`                           | Publicado  | Estrutura relacional planejada e regras de segurança sem acoplamento prematuro.                           |
-| **Currículo Fase 0 e Validações**       | `3ca2096`                           | Publicado  | Gramática de validação declarativa e lições inaugurais de terminal.                                       |
-| **Protótipo Visual Fullscreen**         | `bd82a83`                           | Publicado  | Interface imersiva de terminal aprovada pela direção de produto.                                          |
-| **Contratos TypeScript Fase 1**         | `a4c53f7`                           | Publicado  | Tipos de execução desacoplados (`ExecutionResult`, `ValidationRule`, `VirtualFileSystemSnapshot`).        |
-| **Visão de Produto Registrada**         | `docs/product/product-vision-v1.md` | Registrado | Posicionamento comercial, política de IA pedagógica e mapa de trilhas.                                    |
-| **Trilha 06 em Radar**                  | `docs/product/product-vision-v1.md` | Registrado | Segurança cibernética e da informação como pilar estratégico de formação, ainda sem currículo executável. |
+| Marco Técnico                           | Commit / Referência                 | Status     | Impacto no Projeto                                                                                               |
+| :-------------------------------------- | :---------------------------------- | :--------- | :--------------------------------------------------------------------------------------------------------------- |
+| **Fundação do Monorepo**                | `bc52763`                           | Publicado  | Estrutura modular (`apps/` e `packages/`) com pnpm workspaces e TypeScript rigoroso.                             |
+| **Modelagem de Domínio e Contratos v1** | `e3ab4af`                           | Publicado  | Definição formal das entidades pedagógicas e fronteiras técnicas.                                                |
+| **Planejamento de Banco e RLS**         | `c09bf74`                           | Publicado  | Estrutura relacional planejada e regras de segurança sem acoplamento prematuro.                                  |
+| **Currículo Fase 0 e Validações**       | `3ca2096`                           | Publicado  | Gramática de validação declarativa e lições inaugurais de terminal.                                              |
+| **Protótipo Visual Fullscreen**         | `bd82a83`                           | Publicado  | Interface imersiva de terminal aprovada pela direção de produto.                                                 |
+| **Contratos TypeScript Fase 1**         | `a4c53f7`                           | Publicado  | Tipos de execução desacoplados (`ExecutionResult`, `ValidationRule`, `VirtualFileSystemSnapshot`).               |
+| **Visão de Produto Registrada**         | `docs/product/product-vision-v1.md` | Registrado | Posicionamento comercial, política de IA pedagógica e mapa de trilhas.                                           |
+| **Trilha 06 em Radar**                  | `docs/product/product-vision-v1.md` | Registrado | Segurança cibernética e da informação como pilar estratégico de formação, ainda sem currículo executável.        |
+| **Learning Catalog v1**                 | `0d29750`                           | Publicado  | Catálogo formalizado com 6 trilhas, 20 segmentos e contratos `Track -> Course -> Module -> Lesson -> Challenge`. |
+| **Runtime Requirements v1**             | `bebc3ea`                           | Publicado  | Restrições conceituais por adapter (`virtual-shell`, `pyodide`, `webcontainer`, `remote-runner`).                |
 
 ---
 
@@ -178,7 +180,8 @@ quadrantChart
     "Protótipo Visual Terminal": [0.85, 0.85]
     "Visão de Produto": [0.80, 0.40]
     "Gramática de Validação": [0.75, 0.45]
-    "Learning Catalog v1": [0.30, 0.25]
+    "Learning Catalog v1": [0.85, 0.60]
+    "Runtime Requirements v1": [0.82, 0.55]
     "Engine de Validação Real": [0.20, 0.20]
     "Supabase e Migrations": [0.15, 0.15]
     "Integração de IA": [0.10, 0.10]
@@ -191,14 +194,17 @@ quadrantChart
 3. Protótipo visual de terminal em tela cheia validado em ambiente local (`http://127.0.0.1:5174/`).
 4. Gramática declarativa de regras de validação documentada e consistente.
 5. Diretrizes de governança e documentação viva (`Cérebro Operacional.md`).
+6. Learning Catalog v1 publicado com 6 trilhas e 20 segmentos.
+7. Runtime Requirements v1 publicado com perfis conceituais de runtime por adapter.
 
 ### ⏳ O Que Ainda Não Está Implementado (Próximas Etapas)
 
-1. **Learning Catalog v1**: Definição das trilhas, cursos, módulos e metadados de tecnologia em TypeScript.
-2. **Parser e Execução de Comandos**: Implementação das engines de terminal e adaptadores de execução.
+1. **Shell Core / Terminal Engine Mínimo**: Primeiros comandos da Fase 0 com filesystem virtual em memória.
+2. **Parser e Execução de Comandos**: Implementação incremental das engines de terminal e adaptadores.
 3. **Funções Reais de Validação**: Mecanismo que compara o resultado do comando com a regra da lição.
-4. **Persistência Remota / Supabase**: Criação de tabelas reais, autenticação e sincronização de progresso.
-5. **Integração Real de IA**: Mecanismo de mentoria pedagógica e geração de dicas progressivas.
+4. **Política Ética da Trilha 06**: Regras de isolamento e limites antes de qualquer exercício executável de segurança.
+5. **Persistência Remota / Supabase**: Criação de tabelas reais, autenticação e sincronização de progresso.
+6. **Integração Real de IA**: Mecanismo de mentoria pedagógica e geração de dicas progressivas.
 
 ---
 
@@ -228,8 +234,8 @@ Ao conduzir a apresentação executiva deste projeto para a reitoria, coordenaç
 
 ## 10. Próxima Fatia Recomendada
 
-A próxima entrega técnica planejada e recomendada pelo time de engenharia é a **Fase 1 — Learning Catalog v1**:
+A próxima entrega técnica planejada e recomendada pelo time de engenharia é a **Fase 1 — Shell Core / Terminal Engine Mínimo**:
 
-- Modelagem e tipagem dos contratos de catálogo (`Track`, `Course`, `Module`, `Lesson`, `Challenge`).
-- Associação com metadados de tecnologia, linguagem, runtime exigido e perfil de ambiente.
-- Continuidade da governança rigorosa sem commits prematuros ou código não validado.
+- Implementar uma fatia mínima do terminal virtual com poucos comandos da Fase 0.
+- Preservar `ExecutionResult` agnóstico, filesystem virtual em memória e validadores determinísticos.
+- Evitar implementação em massa dos 21 comandos; avançar por lotes pequenos, testáveis e revisados.
