@@ -155,7 +155,10 @@ ensinada por um `CourseCatalogEntry` de programação especificamente.
   qual `ExecutionAdapterId` (já definido na fatia mínima da Fase 1) uma lição
   exige, e opcionalmente qual `EnvironmentProfileId`. É dado puro — não decide
   roteamento nem executa nada; a decisão de roteamento real pertence a
-  `execution-engine` e está fora de escopo aqui.
+  `execution-engine` e está fora de escopo aqui. O raciocínio completo de
+  quando usar cada adapter e as restrições conceituais que cada um carrega
+  (rede, filesystem, execução de processo, persistência, isolamento) estão
+  formalizados em `docs/architecture/runtime-requirements-v1.md`.
 
 Tabela de referência usada nos testes (`RUNTIME_BY_SEGMENT` em
 `packages/types/src/learning-catalog.test.ts`) — apenas ilustrativa, não é um

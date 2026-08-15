@@ -31,10 +31,10 @@
 - Diretorio oficial: `C:\Dev\CodeChat`
 - Branch: `main`
 - Remote: `origin/main`
-- Estado Git no ultimo registro: com alteracoes locais NAO commitadas (fase Learning Catalog v1 + radar Trilha 06 Seguranca): `packages/types/src/index.ts` modificado (aditivo — secao Learning Catalog v1), `packages/types/src/learning-catalog.test.ts` novo, `docs/product/learning-catalog-v1.md` novo, `docs/product/product-vision-v1.md` modificado, `docs/operations/visual-operational-brain.md` modificado, `docs/operations/visual-dashboard/index.html` modificado, `Cérebro Operacional.md` modificado. Tambem ha `tsconfig.json` modificado no working tree por correcao operacional ja validada.
-- Lock Git no ultimo registro: `.git/index.lock` ausente (confirmado por Codex apos retorno APROVADO do Antigravity).
+- Estado Git no ultimo registro: fase Runtime Requirements v1 com alteracoes locais NAO commitadas: `docs/architecture/runtime-requirements-v1.md` novo, `docs/product/learning-catalog-v1.md` modificado (referencia curta ao novo doc), `packages/types/src/index.ts` modificado (aditivo — secao Runtime Requirements v1), `packages/types/src/runtime-requirements.test.ts` novo, `Cérebro Operacional.md` modificado (este registro).
+- Lock Git no ultimo registro: `.git/index.lock` ausente (confirmado por Antigravity e reconfirmado por Codex apos validacao real).
 - Servidor local visual: `http://127.0.0.1:5174/`
-- Ultimo commit funcional publicado: `bd82a83 feat: add fullscreen terminal visual prototype`
+- Ultimo commit funcional publicado: `0d29750 feat: formalize learning catalog v1` (confirmado por `git log`/`git branch -vv` nesta sessao; a linha anterior deste snapshot estava desatualizada — apontava `bd82a83`, que e 6 commits mais antigo).
 
 ## Grafo operacional
 
@@ -64,7 +64,9 @@ Fundacao monorepo
 | 3ca2096 | Curriculo Fase 0 e contratos de conteudo       | Publicado |
 | bd82a83 | Prototipo visual fullscreen focado no terminal | Publicado |
 | a4c53f7 | Contratos TypeScript iniciais da Fase 1        | Publicado |
+| cdf220e | Registro de sessao do Cerebro Operacional      | Publicado |
 | fedb314 | Dashboard executivo do Cerebro Operacional     | Publicado |
+| 0d29750 | Learning Catalog v1 formalizado (6 trilhas)    | Publicado |
 
 ## Decisoes de governanca
 
@@ -103,6 +105,179 @@ Fundacao monorepo
    - se implementar, comecar por fatia minima do contrato `ExecutionResult` + validadores.
 
 ## Registro de sessoes
+
+### 2026-08-15 14:35:23 -03:00
+
+**Execucao: fatia arquitetural Runtime Requirements v1**
+
+- Tarefa aprovada, escopo: `docs/architecture/runtime-requirements-v1.md` (novo) +
+  referencia curta em `docs/product/learning-catalog-v1.md` + contratos minimos em
+  `packages/types/src/index.ts` + testes em `packages/types/src/runtime-requirements.test.ts`.
+- Preflight: `Cérebro Operacional.md` lido integralmente. `git status -sb` limpo antes desta
+  sessao (`## main...origin/main`, sem arquivos pendentes — tudo da fase anterior ja estava no
+  commit `0d29750`). `.git/index.lock` ausente no inicio da sessao. Branch `main` rastreando
+  `origin/main` confirmado (`git branch -vv`).
+- **Correcao de imprecisao encontrada no preflight**: o snapshot deste arquivo ainda apontava
+  `bd82a83` como ultimo commit publicado — desatualizado em 6 commits (o real, confirmado por
+  `git log`, e `0d29750 feat: formalize learning catalog v1`). Corrigido acima, junto com 2
+  linhas faltantes na tabela "Marcos confirmados" (`cdf220e`, `0d29750`).
+
+**Arquivos criados**
+
+- `docs/architecture/runtime-requirements-v1.md` — documento conceitual: os 4 adapters
+  (`virtual-shell`, `pyodide`, `webcontainer`, `remote-runner`), quando usar cada um, tabela de
+  restricoes conceituais por adapter, nota dedicada sobre Ciberseguranca exigir politica etica e
+  isolamento adicional antes de qualquer exercicio pratico, e como se encaixa no
+  `RuntimeRequirement` ja existente do Learning Catalog v1.
+- `packages/types/src/runtime-requirements.test.ts` — 8 blocos `it()`.
+
+**Arquivos alterados**
+
+- `packages/types/src/index.ts` — **aditivo puro**: `git diff --stat` confirmou
+  `82 insertions(+)`, zero linhas removidas ou alteradas nas secoes Fase 1 e Learning Catalog v1
+  ja existentes (unico hunk do diff comeca logo apos a ultima linha previa do arquivo).
+- `docs/product/learning-catalog-v1.md` — edicao curta e cirurgica: um paragrafo do campo
+  `RuntimeRequirement` ganhou 1 frase apontando para o novo documento; nada mais foi tocado
+  (`git diff --stat`: `5 insertions(+), 1 deletion(-)`, a "delecao" e apenas a linha final do
+  paragrafo sendo estendida).
+- `Cérebro Operacional.md` — este registro, mais a correcao de imprecisao acima.
+
+**Tipos criados** (todos exportados de `packages/types/src/index.ts`, secao Runtime Requirements v1)
+
+`RuntimeNetworkAccess`, `RuntimeFilesystemMutability`, `RuntimeProcessExecution`,
+`RuntimePersistence`, `RuntimeSandboxIsolation`, `RuntimeAdapterProfile` (interface que agrega os
+5 tipos anteriores por `ExecutionAdapterId`, mais `telemetryHooksPlanned?` opcional).
+
+**Decisoes arquiteturais tomadas** (dentro do escopo aprovado, para revisao do Codex)
+
+1. **Restricoes modeladas por adapter, nao por segmento** — `RuntimeAdapterProfile` e chaveado
+   por `ExecutionAdapterId` (4 valores), nao por `LearningSegment` (20 valores). O mapeamento
+   segmento -> adapter continua sendo responsabilidade exclusiva de
+   `docs/product/learning-catalog-v1.md` (unica fonte de verdade, citada explicitamente no novo
+   documento para evitar duas tabelas divergentes).
+2. **`RuntimeAdapterProfile` nao foi anexado como campo obrigatorio de `RuntimeRequirement`** —
+   permanecem tipos irmaos, nao aninhados. `RuntimeRequirement` continua just "qual adapter uma
+   licao exige"; `RuntimeAdapterProfile` e "quais restricoes aquele adapter carrega",
+   independente de qual licao o usa. Acoplar os dois exigiria que toda `LessonCatalogEntry`
+   carregasse o perfil inteiro do adapter, duplicando dado que já é 1:1 com `adapterId`.
+   **Pede revisao do Codex** caso a preferencia arquitetural seja outra.
+3. **Nenhum adapter usa `networkAccess: 'full'` ou `persistence: 'durable'` nesta fase** —
+   decisao deliberada, testada explicitamente (`runtime-requirements.test.ts`, "nenhum adapter
+   declara acesso de rede irrestrito ou persistencia duravel nesta fase") como guarda de
+   regressao: qualquer alteracao futura que afrouxe essas restricoes precisa tocar esse teste,
+   nao pode acontecer silenciosamente.
+4. **Ciberseguranca mapeada para `remote-runner`, mas com nota explicita de insuficiencia** —
+   o documento e um teste dedicado (`runtime-requirements.test.ts`, "o piso minimo de
+   remote-runner nao e suficiente sozinho para Ciberseguranca") fixam o piso minimo atual e
+   deixam registrado que politica etica, isolamento reforcado (`networkAccess: 'none'` em vez
+   de `'restricted'`) e limites de escopo pedagogico sao pre-requisito antes de qualquer
+   `Lesson`/`Challenge` executavel de seguranca — nenhuma foi criada nesta fase.
+5. **`telemetryHooksPlanned?` como lista de nomes, nao enum fechado** — mesma logica de
+   `TechnologyTag` na fase anterior: telemetria futura ainda nao foi desenhada
+   (`Cérebro Operacional.md`, "Proximos passos ativos", item 2), entao fechar essa lista agora
+   seria decisao prematura.
+
+**Como Runtime Requirements v1 se encaixa no Learning Catalog v1**
+
+`LessonCatalogEntry.runtime` (`RuntimeRequirement`, ja existente) continua declarando, por
+licao, qual `adapterId` ela exige. O que esta fase acrescenta e uma camada complementar **por
+adapter** (nao por licao): `RuntimeAdapterProfile` diz o que aquele adapter, especificamente,
+pode/nao pode fazer — independente de qual licao o esta usando. As 4 preservacoes exigidas pela
+tarefa foram todas testadas explicitamente: Terminal/SO -> `virtual-shell` (`networkAccess:
+'none'`, `processExecution: 'simulated'`); Python inicial -> `pyodide` (`sandboxIsolation:
+'wasm'`, `persistence: 'none'`); HTML/CSS/JavaScript -> `webcontainer`
+(`sandboxIsolation: 'browser-container'`); Java/PHP/Node.js, banco, deploy, testes, debugging e
+a familia de seguranca -> `remote-runner` (`processExecution: 'delegated'`), "enquanto nao houver
+runtime local seguro definido" (frase literal da tarefa, reproduzida no novo documento).
+
+**Testes criados**
+
+- `packages/types/src/runtime-requirements.test.ts` (8 `it()`): perfil completo para os 4
+  adapters; preservacao Terminal/SO -> `virtual-shell`; preservacao Python -> `pyodide`;
+  preservacao HTML/CSS/JS -> `webcontainer`; preservacao Java/PHP/Node/banco/deploy/testes/
+  debugging/seguranca -> `remote-runner`; guarda de regressao contra `networkAccess: 'full'` e
+  `persistence: 'durable'`; piso minimo de `remote-runner` insuficiente sozinho para
+  Ciberseguranca; valores validos dos 5 tipos de apoio.
+- `packages/types/src/learning-catalog.test.ts` e `packages/types/src/index.test.ts`: nao
+  alterados nesta sessao — verificados intactos e ainda passando (ver Validacoes abaixo).
+
+**Comandos executados**
+
+- Leitura completa de `Cérebro Operacional.md`, `docs/product/product-vision-v1.md`,
+  `docs/product/learning-catalog-v1.md`, `docs/architecture/execution-engine.md`,
+  `docs/architecture/dependency-rules.md`, `docs/architecture/engine-contracts-v1.md` (trechos),
+  `packages/types/src/index.ts`, `packages/types/src/learning-catalog.test.ts`,
+  `packages/types/src/index.test.ts`.
+- `git status -sb`, checagem de `.git/index.lock`, `git branch -vv`, `git log --oneline -8`,
+  `git diff --stat`, `git diff` (arquivos desta fase).
+- Validacao em ambiente-proxy isolado (`/tmp/proxy2`, reutilizado e sincronizado com o estado
+  real atual do repositorio antes de aplicar as mudancas desta fase): `tsc --noEmit`,
+  `eslint .`, `prettier --check .` / `--write`, `vitest run`.
+- Tentativa real: `corepack pnpm --version` e `corepack pnpm@10.28.0 --filter @codechat/types
+typecheck` diretamente contra o repositorio.
+
+**Validacoes executadas e resultados**
+
+No ambiente-proxy (`/tmp/proxy2`), com `src/index.ts`, `src/index.test.ts` e
+`src/learning-catalog.test.ts` sincronizados com o estado real atual do repositorio (6 trilhas,
+`PhaseZeroSourceLevel`) antes de aplicar a fatia desta sessao:
+
+- `tsc --noEmit` -> **passou** (exit 0).
+- `eslint .` -> **passou**, 0 erros/avisos (exit 0).
+- `prettier --check .` -> falhou na primeira passada (`src/index.ts` e
+  `src/runtime-requirements.test.ts` fora do padrao — unicas mudancas reais: a uniao
+  `RuntimeSandboxIsolation` e 3 arrays literais do teste colapsados/quebrados para caber em
+  `printWidth: 100`); corrigido com `prettier --write`; reexecutado -> **passou**.
+- `vitest run` -> **passou**, **18/18 testes** (3 de `index.test.ts`, 7 de
+  `learning-catalog.test.ts`, 8 de `runtime-requirements.test.ts`) (exit 0).
+
+Tentativa real contra o repositorio: `corepack pnpm@10.28.0 --filter @codechat/types typecheck`
+falhou porque **este bridge nao tem acesso de rede** — erro exato: `Error when performing the
+request to https://registry.npmjs.org/pnpm/-/pnpm-10.28.0.tgz` / `Proxy response (403) !== 200
+when HTTP Tunneling`. Confirmado tambem que `pnpm` nao esta instalado globalmente neste bridge
+(`pnpm: command not found`) e que `node_modules/typescript` via symlink continua irresolvivel
+(`Cannot find module`) — mesma limitacao ja documentada em sessoes anteriores, agora com o erro
+de rede exato registrado. **Isso nao e validacao real do monorepo** — pendencia explicita, igual
+as fases anteriores.
+
+Validacao real posterior pelo Antigravity em Windows nativo: `pnpm typecheck`, `pnpm lint`,
+`pnpm format:check` e `pnpm test` passaram. Resultado reportado: 8/8 projetos no typecheck,
+0 erros/avisos no lint, Prettier OK, 4/4 arquivos de teste aprovados e 19/19 testes no Vitest
+(`learning-catalog.test.ts`, `runtime-requirements.test.ts`, `index.test.ts` e smoke test de
+integracao). Codex revisou o retorno e confirmou o estado real: `git status -sb` em
+`main...origin/main` com apenas os arquivos desta fatia pendentes, `.git/index.lock` ausente.
+
+**Riscos / bloqueios**
+
+- Sem bloqueio operacional no momento desta revisao: `.git/index.lock` ausente e validacao
+  real do monorepo confirmada pelo Antigravity.
+- A politica etica/isolamento adicional para Ciberseguranca (ver decisao #4 acima) e uma
+  pendencia de produto explicita, nao resolvida por este documento — apenas sinalizada.
+
+**Decisoes tomadas nesta sessao**
+
+- Runtime Requirements v1 modela restricoes por adapter (4 valores), nao por segmento
+  (20 valores) — mapeamento segmento -> adapter permanece unicamente em
+  `learning-catalog-v1.md`.
+- Nenhum adapter recebeu `networkAccess: 'full'` ou `persistence: 'durable'` nesta fase.
+- Ciberseguranca reconhecida como precisando de restricoes adicionais antes de qualquer
+  exercicio pratico — nenhuma Lesson/Challenge executavel de seguranca foi criada.
+- Nenhuma decisao sobre Supabase, migrations, UI, parser, comandos, terminal real ou IA foi
+  tomada — seguem fora de escopo desta etapa.
+
+**Nenhum commit ou push foi realizado** (fora de autorizacao explicita, conforme regra de
+governanca).
+
+**Proxima retomada**
+
+1. Ler este arquivo primeiro.
+2. Confirmar `git status -sb` e ausencia de `.git/index.lock`.
+3. Levar `docs/architecture/runtime-requirements-v1.md` e `packages/types/src/index.ts`
+   (secao Runtime Requirements v1) para decisao final de commit/push pelo usuario.
+4. Formalizar a politica etica/isolamento de Ciberseguranca antes de qualquer curriculo
+   executavel dessa trilha (pendencia explicita, ver decisao #4).
+5. Apos aprovacao do usuario, executar `git add` +
+   `commit` + `push`.
 
 ### 2026-08-15 14:20:00 -03:00
 

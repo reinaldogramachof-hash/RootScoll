@@ -472,3 +472,85 @@ export interface ChallengeCatalogEntry {
   readonly environmentProfileId?: EnvironmentProfileId;
   readonly maxAttempts?: number;
 }
+
+// =============================================================================
+// Runtime Requirements v1
+// =============================================================================
+//
+// Fase aprovada pelo Arquiteto: formaliza, como dado puro, as restrições
+// conceituais de cada ExecutionAdapterId (já definido na fatia mínima da
+// Fase 1) e complementa RuntimeRequirement (Learning Catalog v1), que já
+// declarava qual adapter uma Lesson exige. Ver
+// docs/architecture/runtime-requirements-v1.md para o raciocínio completo,
+// a tabela de restrições e a nota sobre Segurança Cibernética.
+//
+// Explicitamente FORA de escopo nesta fase: implementação real de sandbox,
+// rede, filesystem, roteamento de execução, parser, comandos, terminal real,
+// Supabase, migrations, UI ou IA executável. Os tipos abaixo declaram
+// requisitos/restrições — não os aplicam nem os fazem cumprir.
+
+/**
+ * Acesso de rede declarado para um adapter — dado descritivo, não imposição
+ * real (a aplicação de fato pertence a `execution-engine`, fora de escopo
+ * aqui). Ver docs/architecture/runtime-requirements-v1.md, seção "Restrições
+ * conceituais por adapter".
+ */
+export type RuntimeNetworkAccess = 'none' | 'restricted' | 'full';
+
+/**
+ * Mutabilidade do filesystem exposto ao aluno por um adapter.
+ * `'none'`: sem escrita. `'ephemeral'`: grava mas descarta ao fim da
+ * execução. `'session-persistent'`: grava e mantém durante a sessão do
+ * aluno, nunca entre sessões (persistência entre sessões exigiria storage
+ * real, fora de escopo).
+ */
+export type RuntimeFilesystemMutability = 'none' | 'ephemeral' | 'session-persistent';
+
+/**
+ * Como um adapter executa o "processo" do comando do aluno. `'simulated'`:
+ * nenhum processo real — um parser/simulador interpreta (ex.:
+ * `virtual-shell`). `'sandboxed'`: processo real, porém isolado (WASM ou
+ * container de navegador). `'delegated'`: executado fora do processo do
+ * cliente, por um serviço controlado (ex.: `remote-runner` via
+ * `apps/runner`).
+ */
+export type RuntimeProcessExecution = 'simulated' | 'sandboxed' | 'delegated';
+
+/**
+ * Persistência de estado entre execuções distintas do mesmo aluno.
+ * `'durable'` (mantido entre sessões) não é usado por nenhum adapter nesta
+ * fase — implicaria storage real (Supabase ou equivalente), fora de escopo.
+ */
+export type RuntimePersistence = 'none' | 'session' | 'durable';
+
+/** Mecanismo de isolamento/sandbox declarado para um adapter. */
+export type RuntimeSandboxIsolation =
+  'interpreter' | 'wasm' | 'browser-container' | 'remote-service';
+
+/**
+ * Restrições conceituais declaradas para um `ExecutionAdapterId` — dado
+ * puro, documentação em forma de tipo. Não implementa sandbox, rede,
+ * filesystem ou qualquer mecanismo real; apenas declara o que cada adapter
+ * deve respeitar quando `execution-engine` for implementada de fato. Ver
+ * docs/architecture/runtime-requirements-v1.md para a tabela completa, a
+ * justificativa de cada valor e a nota específica sobre a trilha
+ * `cybersecurity` (que exige restrições adicionais além deste piso mínimo
+ * antes de qualquer exercício prático).
+ */
+export interface RuntimeAdapterProfile {
+  readonly adapterId: ExecutionAdapterId;
+  readonly networkAccess: RuntimeNetworkAccess;
+  readonly filesystemMutability: RuntimeFilesystemMutability;
+  readonly processExecution: RuntimeProcessExecution;
+  readonly persistence: RuntimePersistence;
+  readonly sandboxIsolation: RuntimeSandboxIsolation;
+  /**
+   * Hooks de telemetria previstos para o futuro — apenas identificadores
+   * nominais (ex.: `'execution-duration'`, `'sandbox-violation'`); nenhuma
+   * coleta real é implementada nesta fase. Campo ausente/lista vazia
+   * significa "nenhum hook definido ainda", não "telemetria desabilitada por
+   * decisão de produto" — essa decisão pertence à futura estratégia de
+   * telemetria já registrada como pendência em `Cérebro Operacional.md`.
+   */
+  readonly telemetryHooksPlanned?: readonly string[];
+}
