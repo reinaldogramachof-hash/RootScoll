@@ -1,29 +1,45 @@
 # Database Schema
 
-> Documento em construção. Nenhum schema definitivo foi criado nesta etapa. Nenhuma
-> tabela, coluna, tipo SQL, chave ou constraint foi decidida aqui — apenas uma
-> referência conceitual ao Domain Model v1.
+> Documento em construção. **Nenhum schema definitivo, migration, SQL ou tabela real
+> foi criado nesta etapa.** Este arquivo funciona apenas como ponto de entrada,
+> apontando para o planejamento conceitual detalhado.
 
 ## Status
 
-Aguardando definição arquitetural do schema pelo Arquiteto antes da criação de
-migrations em `supabase/migrations`.
+Planejamento conceitual concluído (Etapa 004 — Database Model / Supabase Planning).
+Implementação real (migrations em `supabase/migrations`) aguarda aprovação explícita
+do Arquiteto antes de ser iniciada — nenhuma migration foi criada até o momento.
 
-## Referência conceitual
+## Onde está o planejamento
 
-O vocabulário de entidades que eventualmente precisará de persistência real
-(Supabase/Postgres) está descrito, em nível puramente conceitual, em
-`docs/product/domain-model-v1.md`. Esse documento não deve ser lido como um schema —
-ele existe para alinhar nomes e fronteiras de domínio antes de qualquer modelagem de
-banco. Quando a modelagem de banco desta etapa futura começar, ela deve:
+- **`docs/product/domain-model-v1.md`** — vocabulário e fronteiras de domínio
+  (Etapa 003), ponto de partida de tudo abaixo.
+- **`docs/architecture/engine-contracts-v1.md`** — contratos conceituais entre
+  `terminal-engine`, `execution-engine` e `lesson-engine` (Etapa 003.1/003.2).
+- **`docs/database/database-model-v1.md`** — mapeamento das entidades do Domain
+  Model v1 para tabelas candidatas em Postgres/Supabase, sem SQL: nome sugerido,
+  colunas conceituais, relações, exposição esperada e riscos de RLS por tabela
+  (Etapa 004).
+- **`docs/security/rls-planning-v1.md`** — estratégia de Row Level Security por
+  domínio: ownership, escopo por organização/turma, tabelas append-only, tabelas
+  nunca expostas ao cliente, riscos de views e cuidados com `service_role`/claims
+  (Etapa 004).
 
-- decidir quais entidades do Domain Model v1 viram tabelas reais, e quais permanecem
-  apenas conceituais (ex.: `RunnerExecutionLog`, explicitamente marcado como
-  "apenas conceitual" no Domain Model v1);
-- decidir estratégia de RLS (Row Level Security) por entidade, em conjunto com
-  `docs/security/security-model.md`;
-- resolver as `ARCHITECTURAL QUESTION`s abertas no Domain Model v1 (ex.: hierarquia de
-  `Organization`/`School`/`Cohort`; persistência ou não de `VirtualFileSystemState`
-  entre sessões).
+## O que ainda não existe
 
-Nenhuma dessas decisões foi tomada nesta etapa.
+- Nenhuma migration em `supabase/migrations` (o diretório continua com apenas o
+  `README.md` da Etapa 001).
+- Nenhuma tabela, coluna, chave, índice ou constraint real.
+- Nenhuma policy de RLS real.
+- Nenhuma conexão com o projeto Supabase provisionado (`chbbztqlxqahyrrprxxa`) foi
+  estabelecida a partir deste repositório — nenhum comando do Supabase CLI
+  (`login`/`init`/`link`/`db`/`migration`) foi executado.
+
+## Próximo passo
+
+Quando autorizado pelo Arquiteto, a implementação real (migrations + RLS) deve seguir
+diretamente o mapeamento já feito em `database-model-v1.md` e `rls-planning-v1.md`,
+resolvendo primeiro as `ARCHITECTURAL QUESTION`s neles registradas (ex.: se
+`classroom_memberships` e `roles` escopado coexistem ou se uma delas é eliminada; se
+`execution_requests` precisa mesmo ser persistida; se `environment_profiles` vira
+tabela ou permanece como enum/constante).
