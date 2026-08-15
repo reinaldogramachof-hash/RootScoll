@@ -125,6 +125,10 @@ mindmap
       Bancos de Dados SQL
       Testes e Debugging
       Docker, CI/CD e Deploy
+    Trilha Segurança Cibernética e da Informação
+      Risco Digital e Boas Práticas
+      Desenvolvimento Seguro
+      Privacidade, Credenciais e Superfície de Ataque
 ```
 
 ---
@@ -147,15 +151,16 @@ timeline
 
 A tabela abaixo resume os marcos técnicos oficialmente homologados no repositório:
 
-| Marco Técnico                           | Commit / Referência                 | Status     | Impacto no Projeto                                                                                 |
-| :-------------------------------------- | :---------------------------------- | :--------- | :------------------------------------------------------------------------------------------------- |
-| **Fundação do Monorepo**                | `bc52763`                           | Publicado  | Estrutura modular (`apps/` e `packages/`) com pnpm workspaces e TypeScript rigoroso.               |
-| **Modelagem de Domínio e Contratos v1** | `e3ab4af`                           | Publicado  | Definição formal das entidades pedagógicas e fronteiras técnicas.                                  |
-| **Planejamento de Banco e RLS**         | `c09bf74`                           | Publicado  | Estrutura relacional planejada e regras de segurança sem acoplamento prematuro.                    |
-| **Currículo Fase 0 e Validações**       | `3ca2096`                           | Publicado  | Gramática de validação declarativa e lições inaugurais de terminal.                                |
-| **Protótipo Visual Fullscreen**         | `bd82a83`                           | Publicado  | Interface imersiva de terminal aprovada pela direção de produto.                                   |
-| **Contratos TypeScript Fase 1**         | `a4c53f7`                           | Publicado  | Tipos de execução desacoplados (`ExecutionResult`, `ValidationRule`, `VirtualFileSystemSnapshot`). |
-| **Visão de Produto Registrada**         | `docs/product/product-vision-v1.md` | Registrado | Posicionamento comercial, política de IA pedagógica e mapa de trilhas.                             |
+| Marco Técnico                           | Commit / Referência                 | Status     | Impacto no Projeto                                                                                        |
+| :-------------------------------------- | :---------------------------------- | :--------- | :-------------------------------------------------------------------------------------------------------- |
+| **Fundação do Monorepo**                | `bc52763`                           | Publicado  | Estrutura modular (`apps/` e `packages/`) com pnpm workspaces e TypeScript rigoroso.                      |
+| **Modelagem de Domínio e Contratos v1** | `e3ab4af`                           | Publicado  | Definição formal das entidades pedagógicas e fronteiras técnicas.                                         |
+| **Planejamento de Banco e RLS**         | `c09bf74`                           | Publicado  | Estrutura relacional planejada e regras de segurança sem acoplamento prematuro.                           |
+| **Currículo Fase 0 e Validações**       | `3ca2096`                           | Publicado  | Gramática de validação declarativa e lições inaugurais de terminal.                                       |
+| **Protótipo Visual Fullscreen**         | `bd82a83`                           | Publicado  | Interface imersiva de terminal aprovada pela direção de produto.                                          |
+| **Contratos TypeScript Fase 1**         | `a4c53f7`                           | Publicado  | Tipos de execução desacoplados (`ExecutionResult`, `ValidationRule`, `VirtualFileSystemSnapshot`).        |
+| **Visão de Produto Registrada**         | `docs/product/product-vision-v1.md` | Registrado | Posicionamento comercial, política de IA pedagógica e mapa de trilhas.                                    |
+| **Trilha 06 em Radar**                  | `docs/product/product-vision-v1.md` | Registrado | Segurança cibernética e da informação como pilar estratégico de formação, ainda sem currículo executável. |
 
 ---
 

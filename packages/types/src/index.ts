@@ -260,3 +260,215 @@ export interface ValidationOutcome {
   readonly verdict: ValidationVerdict;
   readonly message?: string;
 }
+
+// =============================================================================
+// Learning Catalog v1
+// =============================================================================
+//
+// Fase completa aprovada pelo Arquiteto: contratos mínimos para organizar o
+// CodeChat por trilhas, cursos, módulos, lições e desafios (ver
+// docs/product/learning-catalog-v1.md e docs/product/product-vision-v1.md).
+//
+// Hierarquia (docs/product/domain-model-v1.md, seções "Course"/"Module"/
+// "Lesson"/"Challenge"): Track (nova camada, acima de Course) -> Course ->
+// Module -> Lesson -> Challenge. `Step` permanece fora do catálogo nesta
+// fase, consistente com a decisão já registrada na fatia mínima da Fase 1
+// ("Lesson com Challenge principal implícito; Step reservado para evolução
+// futura").
+//
+// Explicitamente FORA de escopo nesta fase: parser real, terminal real,
+// execução real, filesystem mutável, validadores reais (funções), Supabase,
+// migrations, UI, e qualquer IA executável — IA aparece apenas como
+// referência futura em docs/product/product-vision-v1.md, nunca como tipo
+// ou contrato de catálogo executável aqui.
+
+// ---------------------------------------------------------------------------
+// Segmentos, trilhas e linguagens
+// ---------------------------------------------------------------------------
+
+/**
+ * Segmento de conteúdo — a granularidade usada para decidir requisitos de
+ * runtime (ver `RuntimeRequirement`) e para compor `LearningTrack.segments`.
+ * Conjunto fechado, derivado literalmente da lista de expansão registrada em
+ * `docs/product/product-vision-v1.md` ("Trilhas estrategicas") e nas regras
+ * de produto desta etapa.
+ */
+export type LearningSegment =
+  | 'linux'
+  | 'macos'
+  | 'windows-cmd'
+  | 'powershell'
+  | 'git'
+  | 'html'
+  | 'css'
+  | 'javascript'
+  | 'python'
+  | 'java'
+  | 'php'
+  | 'nodejs'
+  | 'database'
+  | 'deploy'
+  | 'testing'
+  | 'debugging'
+  | 'cybersecurity'
+  | 'information-security'
+  | 'secure-development'
+  | 'digital-risk';
+
+/**
+ * Identificador das 6 trilhas estratégicas registradas em
+ * `docs/product/product-vision-v1.md` ("Trilhas estrategicas").
+ */
+export type LearningTrackId =
+  'terminal-os' | 'git-github' | 'web' | 'programming' | 'professional-practice' | 'cybersecurity';
+
+/**
+ * Trilha — camada acima de `Course` (decisão arquitetural desta fase: "Track
+ * é a camada acima de Course"). Agrupa `LearningSegment`s relacionados; não
+ * agrupa `CourseCatalogEntry`s diretamente — essa associação é feita por
+ * `CourseCatalogEntry.trackId` (evita duplicar a lista de cursos em dois
+ * lugares).
+ */
+export interface LearningTrack {
+  readonly trackId: LearningTrackId;
+  readonly name: string;
+  readonly description: string;
+  readonly segments: readonly LearningSegment[];
+}
+
+/**
+ * Linguagens de programação previstas para a trilha `programming`
+ * (`docs/product/product-vision-v1.md`: "Python, Java, PHP, Node.js e outras
+ * linguagens conforme prioridade de produto"). Conjunto inicial, deve
+ * crescer por decisão de produto — não é o mesmo conjunto que
+ * `LearningSegment`: `ProgrammingLanguageId` identifica a linguagem
+ * ensinada por um `CourseCatalogEntry`; `LearningSegment` é a taxonomia mais
+ * ampla usada para runtime/trilha.
+ */
+export type ProgrammingLanguageId = 'python' | 'java' | 'php' | 'javascript' | 'nodejs';
+
+// ---------------------------------------------------------------------------
+// Tags, dificuldade e requisitos de runtime
+// ---------------------------------------------------------------------------
+
+/**
+ * Tag de tecnologia associada a um `CourseCatalogEntry`/`LessonCatalogEntry`
+ * (domain-model-v1.md, `Course`: "tecnologias abordadas ... etc." — conjunto
+ * explicitamente aberto). Modelada como dado estruturado (não como união
+ * fechada de string) para permitir novas tecnologias sem alterar este
+ * arquivo a cada tag — ao custo de não ter checagem exaustiva em tempo de
+ * compilação; ver decisão local no Implementation Report.
+ */
+export interface TechnologyTag {
+  readonly id: string;
+  readonly label: string;
+}
+
+/**
+ * Nível de dificuldade — 3 níveis, herdado literalmente do campo conceitual
+ * já aprovado em domain-model-v1.md (`Course`: "nível
+ * (iniciante/intermediário/avançado)"). Não é o mesmo campo que o `nivel`
+ * numérico (1 a 4) usado por lição em `docs/product/curriculum-phase-0.md`
+ * — ver `LessonCatalogEntry.sourceLevel` para a preservação desse dado
+ * original.
+ */
+export type DifficultyLevel = 'beginner' | 'intermediate' | 'advanced';
+
+/**
+ * Nivel numerico original das licoes da Fase 0. Mantido apenas como dado de
+ * origem em `LessonCatalogEntry.sourceLevel`; a dificuldade semantica do
+ * catalogo continua em `DifficultyLevel`.
+ */
+export type PhaseZeroSourceLevel = 1 | 2 | 3 | 4;
+
+/**
+ * Requisito de runtime de um `LessonCatalogEntry` — qual adapter de
+ * `execution-engine` (`ExecutionAdapterId`, já definido na fatia mínima da
+ * Fase 1) e, quando aplicável, qual `EnvironmentProfileId` uma lição exige.
+ * Dado puro: não decide roteamento nem executa nada — apenas declara o
+ * requisito, consistente com "ExecutionRequest é um contrato puramente
+ * técnico" (engine-contracts-v1.md).
+ */
+export interface RuntimeRequirement {
+  readonly adapterId: ExecutionAdapterId;
+  readonly environmentProfileId?: EnvironmentProfileId;
+}
+
+// ---------------------------------------------------------------------------
+// Catálogo: Course -> Module -> Lesson -> Challenge
+// ---------------------------------------------------------------------------
+
+/**
+ * Entrada de catálogo de um `Course` (domain-model-v1.md, `Course`: "a
+ * maior unidade de conteúdo — um percurso completo"). Pertence a exatamente
+ * uma `LearningTrack` via `trackId`. `moduleIds` preserva a ordem dos
+ * módulos (mesma convenção de "ordem de módulos" do campo conceitual de
+ * `Course`), sem embutir os módulos inteiros — cada `ModuleCatalogEntry` é
+ * uma entidade de catálogo independente, referenciada por id.
+ */
+export interface CourseCatalogEntry {
+  readonly courseId: string;
+  readonly trackId: LearningTrackId;
+  readonly title: string;
+  readonly description: string;
+  readonly difficulty: DifficultyLevel;
+  readonly technologies: readonly TechnologyTag[];
+  readonly moduleIds: readonly string[];
+  readonly publicationStatus: 'draft' | 'published';
+}
+
+/**
+ * Entrada de catálogo de um `Module` (domain-model-v1.md, `Module`:
+ * "agrupamento intermediário de Lessons dentro de um Course"). `order`
+ * expressa a progressão sugerida dentro do `Course` (não necessariamente
+ * obrigatória — ver Domain Model v1, "Riscos/observações" de `Module`).
+ */
+export interface ModuleCatalogEntry {
+  readonly moduleId: string;
+  readonly courseId: string;
+  readonly title: string;
+  readonly description: string;
+  readonly order: number;
+  readonly lessonIds: readonly string[];
+}
+
+/**
+ * Entrada de catálogo de uma `Lesson` (domain-model-v1.md, `Lesson`:
+ * "unidade de ensino específica dentro de um Module"). `challengeIds` é
+ * tipicamente um único id nesta fase, refletindo a decisão já registrada na
+ * fatia mínima da Fase 1 ("cada lição da Fase 0 mapeia para uma Lesson com
+ * um Challenge principal implícito"); o tipo permite mais de um para não
+ * fechar a porta a `Lesson`s compostas por múltiplos desafios no futuro.
+ * `sourceLevel` preserva o `nivel` (1 a 4) original de
+ * `docs/product/curriculum-phase-0.md` quando a lição vem da Fase 0 — ver
+ * `DifficultyLevel` para o campo semântico equivalente de 3 níveis.
+ */
+export interface LessonCatalogEntry {
+  readonly lessonId: string;
+  readonly moduleId: string;
+  readonly title: string;
+  readonly learningObjective: string;
+  readonly order: number;
+  readonly segment: LearningSegment;
+  readonly difficulty: DifficultyLevel;
+  readonly runtime: RuntimeRequirement;
+  readonly challengeIds: readonly string[];
+  readonly sourceLevel?: PhaseZeroSourceLevel;
+}
+
+/**
+ * Entrada de catálogo de um `Challenge` (domain-model-v1.md, `Challenge`:
+ * "um desafio prático que exige uma ação do aluno no terminal").
+ * `validationRules` reaproveita `ValidationRule` (já definido na fatia
+ * mínima da Fase 1), reafirmando que o catálogo não introduz um segundo
+ * vocabulário de validação — apenas referencia o já aprovado.
+ */
+export interface ChallengeCatalogEntry {
+  readonly challengeId: string;
+  readonly lessonId: string;
+  readonly prompt: string;
+  readonly expectedOutcome: string;
+  readonly validationRules: readonly ValidationRule[];
+  readonly environmentProfileId?: EnvironmentProfileId;
+  readonly maxAttempts?: number;
+}

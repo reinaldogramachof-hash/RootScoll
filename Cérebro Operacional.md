@@ -31,8 +31,8 @@
 - Diretorio oficial: `C:\Dev\CodeChat`
 - Branch: `main`
 - Remote: `origin/main`
-- Estado Git no ultimo registro: com alteracoes locais prontas para commit (Cérebro Operacional.md modificado; packages/types/src/index.ts modificado; packages/types/src/index.test.ts novo — 3 arquivos no total; ver Registro de sessoes, 2026-08-15 12:52, correcao de 2026-08-15 13:10 e fechamento de 2026-08-15 13:20)
-- Lock Git no ultimo registro: `.git/index.lock` ausente apos remocao pelo Codex em ambiente PowerShell nativo (ver fechamento de 2026-08-15 13:20)
+- Estado Git no ultimo registro: com alteracoes locais NAO commitadas (fase Learning Catalog v1 + radar Trilha 06 Seguranca): `packages/types/src/index.ts` modificado (aditivo — secao Learning Catalog v1), `packages/types/src/learning-catalog.test.ts` novo, `docs/product/learning-catalog-v1.md` novo, `docs/product/product-vision-v1.md` modificado, `docs/operations/visual-operational-brain.md` modificado, `docs/operations/visual-dashboard/index.html` modificado, `Cérebro Operacional.md` modificado. Tambem ha `tsconfig.json` modificado no working tree por correcao operacional ja validada.
+- Lock Git no ultimo registro: `.git/index.lock` ausente (confirmado por Codex apos retorno APROVADO do Antigravity).
 - Servidor local visual: `http://127.0.0.1:5174/`
 - Ultimo commit funcional publicado: `bd82a83 feat: add fullscreen terminal visual prototype`
 
@@ -50,7 +50,7 @@ Fundacao monorepo
      -> granularidade Lesson/Step/Challenge
      -> telemetria: derivada, tabela propria ou pipeline
      -> payload de ExecutionResult para validadores
-     -> learning catalog e politica de IA pedagogica
+     -> learning catalog, Trilha 06 Seguranca e politica de IA pedagogica
      -> estrategia Supabase real antes de migrations
 ```
 
@@ -64,6 +64,7 @@ Fundacao monorepo
 | 3ca2096 | Curriculo Fase 0 e contratos de conteudo       | Publicado |
 | bd82a83 | Prototipo visual fullscreen focado no terminal | Publicado |
 | a4c53f7 | Contratos TypeScript iniciais da Fase 1        | Publicado |
+| fedb314 | Dashboard executivo do Cerebro Operacional     | Publicado |
 
 ## Decisoes de governanca
 
@@ -73,6 +74,7 @@ Fundacao monorepo
 - Commits/pushes somente com autorizacao explicita.
 - Supabase so deve ser usado apos aprovacao arquitetural da etapa correspondente.
 - `service_role` e segredos nunca devem ser gravados em frontend ou documentacao versionada.
+- Trilha 06 — Seguranca cibernetica e da informacao — aprovada como radar estrategico de produto, ainda sem curriculo executavel.
 
 ## Proximos passos ativos
 
@@ -101,6 +103,192 @@ Fundacao monorepo
    - se implementar, comecar por fatia minima do contrato `ExecutionResult` + validadores.
 
 ## Registro de sessoes
+
+### 2026-08-15 14:20:00 -03:00
+
+**Decisao de produto: Trilha 06 — Seguranca cibernetica e da informacao**
+
+- Decisao do usuario: incluir Seguranca cibernetica/seguranca da informacao no radar imediato do CodeChat como uma sexta trilha estrategica de formacao.
+- Motivacao: alunos devem aprender, desde o inicio, que navegar, criar, publicar e distribuir aplicacoes em um ambiente digital denso exige consciencia de risco, protecao, privacidade e responsabilidade tecnica.
+- Escopo aplicado agora: registro estrategico/documental e contratual minimo no Learning Catalog v1; **nenhum curriculo executavel, laboratorio, engine, parser, Supabase, migration ou IA foi implementado**.
+- Arquivos atualizados por esta decisao:
+  - `docs/product/product-vision-v1.md`: adicionada Trilha 06 como pilar estrategico.
+  - `docs/product/learning-catalog-v1.md`: catalogo ajustado de 5 para 6 trilhas e de 16 para 20 segmentos.
+  - `packages/types/src/index.ts`: `LearningTrackId` passou a incluir `cybersecurity`; `LearningSegment` passou a incluir `cybersecurity`, `information-security`, `secure-development` e `digital-risk`.
+  - `packages/types/src/learning-catalog.test.ts`: teste de protecao para garantir que a Trilha 06 permaneca registrada.
+  - `docs/operations/visual-operational-brain.md` e `docs/operations/visual-dashboard/index.html`: mapa visual atualizado para exibir a nova trilha.
+- Pendente para etapa futura: formalizar curriculo de seguranca com limites eticos, ambiente isolado, validadores adequados e politica clara de simulacao antes de qualquer exercicio pratico sensivel.
+
+### 2026-08-15 14:03:51 -03:00
+
+**Execucao: fase completa Learning Catalog v1**
+
+- Tarefa aprovada pelo Arquiteto Codex, escopo: `docs/product/learning-catalog-v1.md` (novo) +
+  edicao minima de `docs/product/product-vision-v1.md` (referencia) + tipos de catalogo em
+  `packages/types/src/index.ts` + testes em `packages/types/src/learning-catalog.test.ts`.
+- Preflight: `Cérebro Operacional.md` lido integralmente antes de qualquer alteracao. `.git/index.lock`
+  ausente no inicio da sessao; branch `main` rastreando `origin/main` confirmado.
+
+**Arquivos criados**
+
+- `docs/product/learning-catalog-v1.md` — documento de planejamento da fase (hierarquia
+  `Track -> Course -> Module -> Lesson -> Challenge`, 6 trilhas/20 segmentos, mapeamento
+  completo da Fase 0, fronteira explicita com IA/Supabase/UI/parser real).
+- `packages/types/src/learning-catalog.test.ts` — 392 linhas, 6 blocos `it()` cobrindo: trilha
+  Terminal/SO, trilha Programacao/Python, associacao Course->Module->Lesson->Challenge (2x,
+  Terminal/SO e Programacao/Python), mapeamento runtime por segmento, preservacao do modelo da
+  Fase 0 (ids/ordem/`sourceLevel`/`difficulty`) e interoperabilidade com `ValidationRule` da
+  fatia minima da Fase 1.
+
+**Arquivos alterados**
+
+- `packages/types/src/index.ts` — **aditivo puro**: +201 linhas ao final do arquivo (secao
+  "Learning Catalog v1"), zero linhas removidas/alteradas na fatia da Fase 1 (confirmado por
+  `git diff --stat`: `1 file changed, 201 insertions(+)`).
+- `docs/product/product-vision-v1.md` — edicao minima e cirurgica: removida a entrada
+  "Learning Catalog v1" da lista "ainda sera necessario formalizar" e adicionado paragrafo
+  "Ja formalizado" com referencia a `docs/product/learning-catalog-v1.md` e aos contratos em
+  `packages/types/src/index.ts`. Nenhum outro trecho do documento foi tocado.
+- `Cérebro Operacional.md` — este registro.
+
+**Tipos criados** (todos exportados de `packages/types/src/index.ts`, secao Learning Catalog v1)
+
+`LearningSegment` (uniao fechada de 20 segmentos), `LearningTrackId` (uniao das 6 trilhas),
+`LearningTrack`, `ProgrammingLanguageId`, `TechnologyTag`, `DifficultyLevel`,
+`RuntimeRequirement`, `CourseCatalogEntry`, `ModuleCatalogEntry`, `LessonCatalogEntry`,
+`ChallengeCatalogEntry`.
+
+**Decisoes locais tomadas** (dentro do escopo aprovado, para revisao do Codex)
+
+1. **`Track` como camada acima de `Course`** — decisao arquitetural explicitamente pedida pela
+   tarefa. `LearningTrack` agrupa `LearningSegment`s; `CourseCatalogEntry.trackId` faz a
+   associacao inversa (Track nao lista Course diretamente, para nao duplicar a relacao).
+2. **`Step` permanece fora do catalogo** — consistente com a decisao ja fechada na Fase 1
+   ("Lesson com Challenge principal implicito"); catalogo modela apenas o nivel de
+   indice/navegacao, nao a sequencia interna de uma licao.
+3. **`TechnologyTag` como dado estruturado (`{ id, label }`), nao uniao fechada de string** —
+   o campo "tecnologias abordadas" em `domain-model-v1.md` e explicitamente aberto; uma uniao
+   fechada exigiria alterar `@codechat/types` a cada nova tecnologia. Custo aceito: sem
+   checagem exaustiva em tempo de compilacao para esse campo especifico. **Pede revisao do
+   Codex.**
+4. **`ProgrammingLanguageId` modelado separado de `LearningSegment`** — evita confundir a
+   taxonomia ampla de runtime/trilha (`LearningSegment`) com o recorte especifico de linguagens
+   da trilha `programming`.
+5. **`LessonCatalogEntry.sourceLevel` opcional** — preserva o `nivel` numerico (1-4) original
+   das licoes da Fase 0 sem forcar toda licao futura (fora da Fase 0) a ter um nivel numerico.
+   Mapeamento para `DifficultyLevel`: `nivel <= 2 -> beginner`, `nivel === 3 -> intermediate`,
+   `nivel === 4 -> advanced` — regra testada explicitamente, nao apenas documentada.
+6. **`ChallengeCatalogEntry.validationRules` reaproveita `ValidationRule`** da fatia minima da
+   Fase 1 em vez de criar um segundo vocabulario de validacao para o catalogo.
+
+**Como a Fase 0 se encaixa no catalogo**
+
+- Track `terminal-os` -> Course `fundamentos-terminal` -> 4 Modules (um por nivel de comando:
+  Orientacao, Arquivos/diretorios, Conteudo/fluxo, Sistema) -> 10 Lessons (mesmos `lessonId`
+  do curriculo existente, mesma ordem, `sourceLevel` preservado) -> 10 Challenges (cada um com
+  ao menos uma `ValidationRule` real, ex.: `{ kind: 'exit-code', value: 0 }`).
+- Curso `fundamentos-python` (trilha `programming`) incluido apenas como exemplo
+  **ilustrativo** do mesmo grafo com runtime diferente (`pyodide`) — nao e curriculo real
+  aprovado, sinalizado explicitamente como tal no codigo e no documento.
+
+**Testes criados/atualizados**
+
+- `packages/types/src/learning-catalog.test.ts` (392 linhas, novo): cobre as 5 categorias
+  exigidas pela tarefa (trilha Terminal/SO; trilha Programacao/Python; associacao
+  Course->Module->Lesson->Challenge sem ids orfaos, testada para as duas trilhas; mapeamento de
+  runtime por segmento; preservacao do modelo atual da Fase 0 com asserts exatos de ids, ordem,
+  `sourceLevel` e `difficulty`).
+- `packages/types/src/index.test.ts` (Fase 1, ja existente): verificado intacto, sem alteracoes
+  nesta sessao — `git diff --stat` retornou vazio para este arquivo antes do lock impedir novas
+  checagens de git.
+
+**Comandos executados**
+
+- Leitura completa de `Cérebro Operacional.md`, `docs/product/product-vision-v1.md`,
+  `docs/product/domain-model-v1.md` (secoes Course/Module/Lesson/Step/Challenge),
+  `docs/product/curriculum-phase-0.md` (10 licoes/4 niveis), `packages/types/src/index.ts`.
+- `git status -sb`, `git diff --stat`, `git diff` (parcial, antes do lock bloquear novas
+  chamadas de leitura via git neste bridge).
+- Validacao em ambiente-proxy isolado (`/tmp/proxy2`, mesmas versoes de dependencias e mesmos
+  arquivos de config do repositorio real): `tsc --noEmit`, `eslint .`, `prettier --check .`,
+  `vitest run`.
+
+**Validacoes executadas e resultados**
+
+No ambiente-proxy (`/tmp/proxy2`), apos adicionar os tipos e os testes:
+
+- `tsc --noEmit` -> **passou** (exit 0).
+- `eslint .` -> **passou**, 0 erros/avisos (exit 0).
+- `prettier --check .` -> falhou na primeira passada (`src/index.ts` e
+  `src/learning-catalog.test.ts` fora do padrao); corrigido com `prettier --write` (unica
+  mudanca real: a uniao `LearningTrackId` colapsada para uma linha); reexecutado -> **passou**
+  apos a formatacao.
+- `vitest run` -> **passou**, 9/9 testes (3 de `index.test.ts` da Fase 1 + 6 de
+  `learning-catalog.test.ts`) (exit 0).
+
+Isso e uma **aproximacao valida, nao a validacao real do monorepo completo** — mesma limitacao
+ja registrada na sessao de 2026-08-15 12:52 (bridge nao resolve symlinks/junctions do pnpm em
+`node_modules/.pnpm`; computer-use so permite clicar, nao digitar). Nao foi possivel, nesta
+sessao, tentar novamente a rota `corepack pnpm@10.28.0 typecheck/lint/test/format:check`
+diretamente contra o repositorio real, porque `.git/index.lock` ficou presente durante boa
+parte da sessao e os comandos de escrita de arquivo (`device_commit_files`) nao dependem de
+`git`, mas a validacao via `pnpm` real nao foi retentada por falta de tempo de sessao apos a
+descoberta do problema de integridade de transferencia (ver Riscos abaixo). **Pendencia
+explicita**, igual a da Fase 1: rodar as 4 validacoes reais num terminal nativo no Windows.
+
+**Riscos / bloqueios**
+
+- ⚠️ **Corrupcao silenciosa detectada e corrigida durante a transferencia de arquivos.** O
+  metodo usado nas sessoes anteriores (colar o conteudo base64 manualmente dentro de um
+  heredoc via `device_bash`) corrompeu `packages/types/src/index.ts` e
+  `packages/types/src/learning-catalog.test.ts` nesta sessao — os hashes MD5 no dispositivo
+  real nao bateram com os hashes da fonte validada em `/tmp/proxy2` (`grep` inclusive
+  classificou o arquivo corrompido como binario). Causa provavel: transcricao manual de um
+  blob base64 muito grande dentro da mensagem da ferramenta introduziu um caractere invalido.
+  **Correcao aplicada:** os dois arquivos foram re-escritos usando `SendUserFile` +
+  `mcp__remote-devices__device_commit_files` (transferencia binaria direta, sem base64 manual)
+  e o MD5 foi conferido identico entre a fonte e o arquivo no repositorio real apos a
+  reescrita. O mesmo metodo (`SendUserFile` + `device_commit_files`) foi usado para
+  `docs/product/learning-catalog-v1.md` e `docs/product/product-vision-v1.md`, com MD5
+  conferido em ambos. **Recomendacao para sessoes futuras:** preferir sempre
+  `SendUserFile`/`device_commit_files` a heredoc base64 manual para arquivos grandes.
+- ⚠️ **`.git/index.lock` presente novamente** em `C:\Dev\CodeChat\.git\index.lock`, recriado
+  por chamadas de `git status`/`git diff` feitas atraves do bridge nesta sessao (mesma
+  limitacao ja registrada em 2026-08-15 13:10). Nao bloqueou a escrita dos arquivos desta fase
+  (feita via `device_commit_files`, que nao depende de `git`), mas bloqueia qualquer
+  `git add`/`commit` ate ser removido por fora deste ambiente (Explorer ou terminal nativo no
+  Windows).
+- `tsconfig.json` aparece modificado no working tree (`"include": []` ->
+  `"include": ["vitest.config.ts", "tests/**/*.ts"]`) por origem externa a esta sessao — **nao
+  foi tocado, criado ou revertido por este trabalho**, preservado conforme regra de governanca
+  ("preservar alteracoes nao relacionadas").
+- Validacoes rodaram em ambiente-proxy, nao no monorepo real (ver acima) — mesma pendencia ja
+  conhecida da Fase 1.
+
+**Decisoes tomadas nesta sessao**
+
+- `Track` confirmado como camada acima de `Course`, conforme instrucao da tarefa.
+- IA explicitamente NAO modelada como parte do catalogo executavel nesta fase — nenhum tipo
+  criado referencia mentor de IA, politica de ajuda ou telemetria pedagogica.
+- Nenhuma decisao sobre Supabase, migrations, UI ou parser/engine real foi tomada — seguem fora
+  de escopo desta etapa.
+
+**Nenhum commit ou push foi realizado** (fora de autorizacao explicita, conforme regra de
+governanca).
+
+**Proxima retomada**
+
+1. Ler este arquivo primeiro.
+2. **Remover manualmente `.git/index.lock`** (ver risco acima) antes de qualquer operacao de
+   escrita no Git.
+3. Rodar `pnpm typecheck && pnpm lint && pnpm test && pnpm format:check` nativamente (terminal
+   real no Windows) para confirmar as 4 validacoes contra o monorepo completo, incluindo os
+   arquivos desta fase.
+4. Levar `docs/product/learning-catalog-v1.md` e `packages/types/src/index.ts`
+   (secao Learning Catalog v1) para revisao do Codex — em especial os 6 pontos listados em
+   "Decisoes locais tomadas" acima, com atencao especial ao ponto 3 (`TechnologyTag` aberto).
+5. Apos aprovacao e validacao real, aguardar autorizacao explicita do usuario para `git add` +
+   `commit` + `push` (Fase 1 + Learning Catalog v1, ou separados, conforme decisao do Codex).
 
 ### 2026-08-15 13:55:00 -03:00
 

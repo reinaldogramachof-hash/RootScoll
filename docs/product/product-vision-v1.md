@@ -41,7 +41,11 @@ O catalogo futuro deve permitir evolucao por trilhas e segmentos:
 - **Programacao**: Python, Java, PHP, Node.js e outras linguagens conforme
   prioridade de produto.
 - **Pratica profissional**: debugging, logs, banco de dados, deploy, testes,
-  seguranca basica, Docker e projetos de portfolio.
+  Docker e projetos de portfolio.
+- **Seguranca cibernetica e da informacao**: fundamentos de risco digital,
+  boas praticas de protecao, desenvolvimento seguro, privacidade, ameacas
+  comuns, uso responsavel de credenciais e consciencia de superficie de ataque
+  desde as primeiras licoes.
 
 Essas trilhas devem se apoiar no modelo pedagogico ja existente
 (`Course -> Module -> Lesson -> Challenge`) e nao devem acoplar conteudo
@@ -75,15 +79,23 @@ Regra de produto: **modo raiz primeiro; IA como mentor, nao como muleta**.
 
 ## Decisoes em aberto antes de implementacao
 
-Antes de qualquer implementacao de IA ou catalogo, ainda sera necessario
-formalizar:
+Antes de qualquer implementacao de IA, ainda sera necessario formalizar:
 
-- **Learning Catalog v1**: `Track`, `Course`, `Module`, `Lesson`, `Challenge`,
-  tags de tecnologia, segmento, linguagem, runtime e perfil de ambiente.
 - **AI Pedagogy Policy v1**: niveis de ajuda, limites de resposta, momentos em
   que a IA pode intervir, telemetria pedagogica e criterios de seguranca.
 - **Runtime Requirements v1**: quais trilhas rodam em `virtual-shell`,
   `pyodide`, `webcontainer` ou `remote-runner`.
+
+Ja formalizado: **Learning Catalog v1** (`Track`, `Course`, `Module`,
+`Lesson`, `Challenge`, tags de tecnologia, segmento, linguagem, runtime e
+perfil de ambiente) — ver `docs/product/learning-catalog-v1.md` e os
+contratos minimos em `packages/types/src/index.ts`.
+
+Radar aprovado: **Trilha 06 — Seguranca cibernetica e da informacao** deve
+fechar o bloco estrategico de estudos. O catalogo reconhece a trilha e seus
+segmentos iniciais, mas o curriculo detalhado, politicas de laboratorio,
+limites eticos e validadores especificos ainda devem ser formalizados antes de
+qualquer implementacao executavel.
 
 Nenhuma dessas decisoes autoriza Supabase, migrations, UI, parser, comandos ou
 IA executavel nesta etapa.
