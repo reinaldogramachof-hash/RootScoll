@@ -26,18 +26,21 @@ function StudentDashboard({
 
   return (
     <div className="screen dashboard">
-      <div className="screen__header">
-        <div>
+      <header className="screen__header dashboard__header">
+        <div className="screen__title-wrap">
           <p className="screen__eyebrow">{user.currentPhase}</p>
-          <h1 className="screen__title">Ola, {user.name}</h1>
+          <h1 className="screen__title">Olá, {user.name}</h1>
         </div>
-        <span className="screen__status">MVP local</span>
-      </div>
 
-      <p className="screen__lead">
-        Trilha atual: {currentTrack?.title ?? 'nenhuma selecionada'}. Foco desta retomada:{' '}
-        {user.currentCompetency}
-      </p>
+        <button
+          type="button"
+          className="dashboard__action dashboard__action--primary dashboard__action--header"
+          onClick={onEnterClassroom}
+          disabled={currentTrack?.status !== 'available'}
+        >
+          Entrar na Sala Terminal
+        </button>
+      </header>
 
       <div className="dashboard__metrics" aria-label="Resumo de progresso">
         <div className="dashboard__metric">
@@ -54,7 +57,7 @@ function StudentDashboard({
             <span style={{ width: `${currentTrack?.progress ?? 0}%` }} />
           </span>
         </div>
-        <div className="dashboard__metric">
+        <div className="dashboard__metric dashboard__metric--accent">
           <span className="dashboard__metric-label">Evidencias</span>
           <strong>{user.evidenceCount}</strong>
           <span>registros locais</span>
@@ -64,21 +67,25 @@ function StudentDashboard({
       <div className="dashboard__grid">
         <section className="dashboard__section dashboard__section--primary">
           <div>
-            <h2 className="dashboard__section-title">Retomada</h2>
+            <p className="dashboard__section-eyebrow">Trilha atual</p>
+            <h2 className="dashboard__section-title">
+              {currentTrack?.title ?? 'Nenhuma trilha selecionada'}
+            </h2>
             <p className="dashboard__section-text">
               {currentTrack?.status === 'available'
-                ? 'Sequencia atual: teoria curta, pratica guiada e avaliacao no terminal.'
+                ? `Foco desta retomada: ${user.currentCompetency}. Sequencia atual: teoria curta, pratica guiada e avaliacao no terminal.`
                 : 'Nenhuma trilha disponivel ainda para pratica guiada.'}
             </p>
           </div>
-          <button
-            type="button"
-            className="dashboard__action dashboard__action--primary"
-            onClick={onEnterClassroom}
-            disabled={currentTrack?.status !== 'available'}
-          >
-            Entrar na Sala Terminal
-          </button>
+        </section>
+
+        <section className="dashboard__section dashboard__section--secondary">
+          <h2 className="dashboard__section-title">Competencias em construcao</h2>
+          <ul className="dashboard__chips">
+            {currentTrack?.competencies.map((competency) => (
+              <li key={competency}>{competency}</li>
+            ))}
+          </ul>
         </section>
 
         <section className="dashboard__section">
@@ -93,26 +100,6 @@ function StudentDashboard({
           </ol>
         </section>
 
-        <section className="dashboard__section">
-          <h2 className="dashboard__section-title">Competencias em construcao</h2>
-          <ul className="dashboard__chips">
-            {currentTrack?.competencies.map((competency) => (
-              <li key={competency}>{competency}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="dashboard__section">
-          <h2 className="dashboard__section-title">Operacao do aluno</h2>
-          <div className="dashboard__actions">
-            <button type="button" className="dashboard__action" onClick={onOpenTracks}>
-              Trilhas e modulos
-            </button>
-            <button type="button" className="dashboard__action" onClick={onOpenProfile}>
-              Perfil de aprendizado
-            </button>
-          </div>
-        </section>
       </div>
     </div>
   );

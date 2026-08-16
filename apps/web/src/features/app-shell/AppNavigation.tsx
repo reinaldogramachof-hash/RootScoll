@@ -38,11 +38,12 @@ function AppNavigation({
         </span>
       </span>
 
-      <div className="app-nav__links">
+      <div className="app-nav__links" role="tablist" aria-label="Painéis do aluno">
         <button
           type="button"
           className={`app-nav__link ${screen === 'dashboard' ? 'app-nav__link--active' : ''}`}
           onClick={onOpenDashboard}
+          aria-selected={screen === 'dashboard'}
         >
           {NAV_LABELS.dashboard}
         </button>
@@ -50,6 +51,7 @@ function AppNavigation({
           type="button"
           className={`app-nav__link ${screen === 'tracks' ? 'app-nav__link--active' : ''}`}
           onClick={onOpenTracks}
+          aria-selected={screen === 'tracks'}
         >
           {NAV_LABELS.tracks}
         </button>
@@ -57,16 +59,19 @@ function AppNavigation({
           type="button"
           className={`app-nav__link ${screen === 'profile' ? 'app-nav__link--active' : ''}`}
           onClick={onOpenProfile}
+          aria-selected={screen === 'profile'}
         >
           {NAV_LABELS.profile}
         </button>
       </div>
 
-      <span className="app-nav__status">MVP local</span>
-      <span className="app-nav__user">{userName}</span>
-      <button type="button" className="app-nav__logout" onClick={onLogout}>
-        Sair
-      </button>
+      <div className="app-nav__meta">
+        <span className="app-nav__status">MVP local</span>
+        <span className="app-nav__user">{userName}</span>
+        <button type="button" className="app-nav__logout" onClick={onLogout}>
+          Sair
+        </button>
+      </div>
     </nav>
   );
 }
