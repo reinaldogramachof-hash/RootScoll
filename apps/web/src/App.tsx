@@ -1,7 +1,7 @@
-import TerminalApp from './features/terminal/TerminalApp';
+import AppShell from './features/app-shell/AppShell';
 
 function App() {
-  return <TerminalApp />;
+  return <AppShell />;
 }
 
 export default App;

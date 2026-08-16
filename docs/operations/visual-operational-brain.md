@@ -1,4 +1,4 @@
-# CodeChat — Cérebro Operacional Visual
+# CodeChat / RootScoll — Cérebro Operacional Visual
 
 > **Documento Executivo e Visual de Governança e Estado do Projeto**
 >
@@ -10,9 +10,9 @@
 
 ## 1. Resumo Executivo
 
-O **CodeChat** é uma plataforma educacional progressiva (PWA) projetada para capacitar estudantes e profissionais em transição de carreira, guiando o aluno do **zero absoluto à prontidão real para o mercado de desenvolvimento de software**.
+O **CodeChat** evolui como produto sob a marca **RootScoll**, uma plataforma educacional progressiva (PWA) projetada para capacitar estudantes e profissionais em transição de carreira, guiando o aluno do **zero absoluto à prontidão real para o mercado de desenvolvimento de software**.
 
-Ao contrário de plataformas puramente teóricas ou baseadas em quizzes passivos, o CodeChat adota uma metodologia prática onde o aprendizado ocorre diretamente no **terminal simulado**, enfrentando desafios reais, mensagens de erro autênticas e construindo autonomia técnica com rigor de engenharia.
+Ao contrário de plataformas puramente teóricas ou baseadas em quizzes passivos, a RootScoll adota uma metodologia prática onde o aprendizado ocorre diretamente no **terminal simulado**, enfrentando desafios reais, mensagens de erro autênticas e construindo autonomia técnica com rigor de engenharia. A identidade visual oficial está consolidada em `docs/frontend.md`.
 
 ```mermaid
 graph LR
@@ -165,6 +165,9 @@ A tabela abaixo resume os marcos técnicos oficialmente homologados no repositó
 | **Runtime Requirements v1**             | `bebc3ea`                           | Publicado  | Restrições conceituais por adapter (`virtual-shell`, `pyodide`, `webcontainer`, `remote-runner`).                |
 | **Shell Core Mínimo**                   | `49663d8`                           | Publicado  | Execução simulada dos comandos `pwd`, `ls`, `cd` e `mkdir` sobre filesystem virtual em memória.                  |
 | **Comandos de Arquivos do Terminal**    | `d6d0252`                           | Publicado  | Implementação de `touch`, `cat`, `echo`, `cp`, `mv`, `rm` e `tree` sobre o filesystem virtual em memória.        |
+| **Primeira Lição Executável Local**     | `c61fa72`                           | Publicado  | `apps/web` conectado ao `terminal-engine`, com lições piloto locais e validação em memória.                      |
+| **App Navigation v1**                   | `docs/product/app-navigation-v1.md` | Em revisão | Login mock, painel do aluno, perfil, trilhas e Sala Terminal como módulo interno; ainda não commitado.           |
+| **RootScoll Frontend Design System v1** | `docs/frontend.md`                  | Em revisão | Marca, tokens, tipografia, componentes, critérios visuais e plano de implantação frontend; ainda não commitado.  |
 
 ---
 
@@ -200,15 +203,18 @@ quadrantChart
 7. Runtime Requirements v1 publicado com perfis conceituais de runtime por adapter.
 8. **Shell Core Mínimo**: Execução simulada dos comandos `pwd`, `ls`, `cd` e `mkdir` sobre filesystem virtual em memória.
 9. **Comandos de Arquivos do Terminal**: Comandos `touch`, `cat`, `echo`, `cp`, `mv`, `rm` e `tree` sobre filesystem virtual em memória, com 46 testes do terminal-engine passando (cobrindo cenários de sucesso e erro).
+10. **Primeira Lição Executável Local**: fluxo local publicado em `c61fa72`, conectando `apps/web` ao `terminal-engine`.
+11. **RootScoll como identidade oficial**: `docs/frontend.md` criado como fonte de verdade visual em revisão local.
 
 ### ⏳ O Que Ainda Não Está Implementado (Próximas Etapas)
 
-1. **Primeira Lição Executável Local**: Primeira lição real da Fase 0 executada e validada localmente, garantindo o fluxo pedagógico de ponta a ponta.
-2. **Integração `apps/web` + `terminal-engine`**: Interface visual de terminal conectada com o motor virtual em memória.
-3. **Validadores Locais**: Mecanismo de validação real que compara o estado do terminal com as regras da lição localmente, sem acoplar a banco de dados.
-4. **Política Ética da Trilha 06**: Regras de isolamento e limites antes de qualquer exercício executável de segurança.
-5. **Persistência Remota / Supabase**: Criação de tabelas reais, autenticação e sincronização de progresso (Fora de escopo no momento).
-6. **Integração Real de IA**: Mecanismo de mentoria pedagógica e geração de dicas progressivas (Fora de escopo no momento).
+1. **Implantação dos tokens RootScoll no frontend**: converter a base visual atual para `docs/frontend.md` sem redesenho profundo prematuro.
+2. **Painéis Operacionais Densos**: ampliar painel do aluno, perfil, trilhas e sala Terminal como centros de controle da jornada.
+3. **Validadores Locais Reais**: mecanismo que compara `ExecutionResult` com `ValidationRule`, sem acoplar a banco de dados.
+4. **Roteador Real**: transformar a navegação mock em rotas reais planejadas por `docs/product/app-navigation-v1.md`.
+5. **Política Ética da Trilha 06**: regras de isolamento e limites antes de qualquer exercício executável de segurança.
+6. **Persistência Remota / Supabase**: criação de tabelas reais, autenticação e sincronização de progresso (fora de escopo no momento).
+7. **Integração Real de IA**: mecanismo de mentoria pedagógica e geração de dicas progressivas (fora de escopo no momento).
 
 ---
 
@@ -240,7 +246,7 @@ Ao conduzir a apresentação executiva deste projeto para a reitoria, coordenaç
 
 As próximas tarefas técnicas planejadas e recomendadas pelo time de engenharia focam em:
 
-- **Primeira Lição Executável Local**: Desenvolvimento do fluxo pedagógico completo (desafio -> execução -> validação) localmente para uma lição inaugural.
-- **Integração `apps/web` + `terminal-engine`**: Conexão entre a interface visual e a execução simulada no navegador.
-- **Validadores Locais**: Implementação de validadores de filesystem/stdout/stderr localmente.
-- **Governança de escopo**: Preservar o foco local, mantendo Supabase, migrations e IA fora do escopo imediato.
+- **Implantação do RootScoll Frontend Design System v1**: aplicar tokens, tipografia, focus states, botões, badges, cards, paineis e terminal a partir de `docs/frontend.md`.
+- **Painéis Operacionais Densos v1**: evoluir dashboard, perfil, trilhas e painel lateral da Sala Terminal para controle completo da jornada, ainda com dados mock/local.
+- **Validadores Locais Reais**: implementar avaliador `ValidationRule`/`ExecutionResult` sem Supabase, migrations ou persistência remota.
+- **Governança de escopo**: preservar o foco local e visual; auth real, Supabase e IA real seguem fora do escopo imediato.

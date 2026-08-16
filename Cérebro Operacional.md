@@ -27,24 +27,36 @@
 
 ## Snapshot atual
 
-- Projeto: CodeChat
+- Projeto: CodeChat / RootScoll
+- Marca oficial de produto/frontend: `RootScoll`
+- Fonte oficial de identidade visual frontend: `docs/frontend.md`
 - Diretorio oficial: `C:\Dev\CodeChat`
 - Branch: `main`
 - Remote: `origin/main`
-- Estado Git no ultimo registro: `git status -sb` no inicio desta sessao (Primeira Licao
-  Executavel Local) ja trazia 3 arquivos modificados por origem externa a esta sessao —
-  `Cérebro Operacional.md`, `docs/operations/visual-dashboard/index.html`,
-  `docs/operations/visual-operational-brain.md` — preservados, nao tocados. Nesta sessao, com
-  alteracoes locais NAO commitadas: `apps/web/package.json` modificado (dependencia
-  `@codechat/terminal-engine` adicionada), `apps/web/src/App.tsx` modificado (agora um wrapper
-  fino de `TerminalApp`), `apps/web/src/styles/app.css` modificado (grid de 3 linhas + estilos da
-  barra de licao/linha de input/erro), 7 arquivos novos em
-  `apps/web/src/features/{lessons,terminal}` (ver "Arquivos criados" no registro desta sessao) +
-  `Cérebro Operacional.md` modificado (este registro).
-- Lock Git no ultimo registro: `.git/index.lock` ausente no inicio da sessao.
-- Servidor local visual: `http://127.0.0.1:5174/`
-- Ultimo commit funcional publicado: `d6d0252 feat: add terminal file commands` (confirmado por
-  `git log`/`git branch -vv` nesta sessao).
+- **Nota de colisao de sessoes (historico, ver registro `2026-08-16 (Cowork/cloud) — Estrutura de
+Bloco Pedagogico Local` abaixo)**: durante a Task 8, outra sessao rodou a mesma tarefa em
+  paralelo, direto na maquina do usuario. O usuario decidiu substituir aquela implementacao pela
+  desta linha de execucao (Cowork). Resolvido; sem pendencia ativa — citado aqui so para quem
+  chegar depois entender por que ha uma nota extensa sobre isso no registro daquela sessao. O
+  Codex tambem renomeou `Mentor.tsx` -> `MentorWidget.tsx` nessa revisao (evitar colisao de casing
+  com `mentor.ts` no Windows) — ver registro da Task 9 abaixo para como isso foi sincronizado.
+- Estado Git no ultimo registro (apos Task 9 — App Navigation v1 + Shell de Acesso Local): NAO
+  commitado. Modificados: `apps/web/src/App.tsx`, `apps/web/src/styles/app.css`,
+  `apps/web/src/features/terminal/useTerminalSession.ts`,
+  `apps/web/src/features/learning-flow/{LearningFlowApp.tsx,Sidebar.tsx,useLearningFlow.ts}`.
+  Deletados (Task 8, ainda pendentes no working tree): `apps/web/src/features/lessons/{types,
+lessons,lessons.test}.ts`, `apps/web/src/features/terminal/TerminalApp.tsx`. Novos:
+  `apps/web/src/features/learning-flow/*` (Task 8, com `MentorWidget.tsx` no lugar do antigo
+  `Mentor.tsx`), `apps/web/src/features/terminal/TerminalScreen.tsx` (Task 8),
+  `apps/web/src/features/app-shell/*` (Task 9, novo), `docs/product/app-navigation-v1.md` (Task 9,
+  novo), `Cérebro Operacional.md` modificado (este registro).
+- Lock Git no ultimo registro: a ponte de arquivos desta sessao (`device_bash`) recria
+  `.git/index.lock` a cada `git status` rodado por ela e falha ao remove-lo ("Operation not
+  permitted") — padrao ja documentado, nao e um lock real de operacao Git em andamento; nao tratar
+  como bloqueio.
+- Servidor local visual: `http://127.0.0.1:5174/` (nao reverificado nesta sessao).
+- Ultimo commit funcional publicado: `c61fa72 feat: add first executable local lessons` (inalterado
+  — nenhum commit novo criado por nenhuma sessao ate agora).
 
 ## Grafo operacional
 
@@ -59,15 +71,36 @@ Fundacao monorepo
   -> Learning Catalog v1
   -> Runtime Requirements v1
   -> shell-core/terminal-engine minimo (pwd/ls/cd/mkdir — publicado em 49663d8)
-  -> terminal-engine: comandos de arquivos e manipulacao basica (touch/cat/echo/cp/mv/rm/tree —
-     publicado em d6d0252)
-  -> apps/web + terminal-engine: primeira licao executavel local (2 licoes-piloto, terminal
-     interativo real, painel de licao minimo — implementado e validado nesta sessao, pendente
-     commit)
+  -> terminal-engine: comandos de arquivos e manipulacao basica (touch/cat/echo/cp/mv/rm/tree — publicado em d6d0252)
+  -> apps/web + terminal-engine: primeira licao executavel local (2 licoes-piloto, terminal interativo real — publicado em c61fa72)
+  -> Estrutura de Bloco Pedagogico Local (LearningBlock: theory/practice/assessment/mentorHints;
+     fluxo Teoria -> Pratica -> Avaliacao -> Conclusao; terminal ativo so em pratica/avaliacao;
+     barra de progresso; sidebar recolhivel; mentor flutuante com dicas deterministicas —
+     implementado e validado, pendente commit)
+  -> App Navigation v1 + Shell de Acesso Local (docs/product/app-navigation-v1.md; shell mock em
+     apps/web/src/features/app-shell: login mock -> painel do aluno -> perfil/trilhas -> Sala de
+     Aula Terminal como modulo interno via LearningFlowApp; navegacao em memoria,
+     navigation-reducer puro; App.tsx agora raiz do shell, nao mais direto no LearningFlowApp —
+     implementado e validado nesta sessao, pendente commit)
+  -> RootScoll Frontend Design System v1 (docs/frontend.md; marca oficial RootScoll, tokens,
+     tipografia, componentes base, terminal, plataforma autenticada, sala Terminal, mentor e plano
+     de implantacao — documentado nesta sessao, pendente commit)
   -> Proximas tarefas:
+     -> implantar tokens/tipografia RootScoll em apps/web/src/styles antes da lapidacao profunda
+        dos paineis
      -> validadores locais mais ricos (ValidationRule/ExecutionResult reais, hoje so ha checagem
-        ad hoc por licao)
-     -> mais licoes-piloto / catalogo formal (Learning Catalog v1) ligado a UI
+        ad hoc por bloco em `assessment.isComplete`)
+     -> mais blocos-piloto / catalogo formal (Learning Catalog v1) ligado a UI
+     -> roteador real (react-router ou equivalente) para as rotas planejadas em
+        docs/product/app-navigation-v1.md (/login, /app, /app/perfil, /app/trilhas,
+        /app/trilhas/:trackId, /app/sala/terminal/:blockId) — hoje so ha estado em memoria, sem URL
+     -> tela de detalhe por trilha (/app/trilhas/:trackId) quando o catalogo mock crescer
+     -> itens "em breve" da sidebar da sala Terminal (historico de comandos, dicas desbloqueadas,
+        configuracoes do terminal, reiniciar exercicio, duvida ao professor/mentor IA) — ver
+        docs/product/app-navigation-v1.md, "Menu lateral oculto da sala Terminal"
+     -> integracao de outros runtimes (ex.: Pyodide) e painel academico foram sugeridos por uma
+        sessao paralela ja substituida na Task 8 — NAO confirmados por tarefa aprovada nesta linha
+        do tempo, requerem decisao explicita do Codex/usuario antes de virarem trabalho real
      -> sem Supabase/migrations/IA por enquanto
 ```
 
@@ -87,6 +120,7 @@ Fundacao monorepo
 | bebc3ea | Runtime Requirements v1                                         | Publicado |
 | 49663d8 | Shell Core / Terminal Engine Minimo (pwd/ls/cd/mkdir)           | Publicado |
 | d6d0252 | Comandos de arquivos do terminal (touch/cat/echo/cp/mv/rm/tree) | Publicado |
+| c61fa72 | Primeira licao executavel local (mkdir/touch em apps/web)       | Publicado |
 
 ## Decisoes de governanca
 
@@ -100,25 +134,406 @@ Fundacao monorepo
 
 ## Proximos passos ativos
 
-1. **Primeira licao executavel local — implementada e validada nesta sessao, pendente commit**:
-   `apps/web` agora executa comandos reais contra `packages/terminal-engine` (2 licoes-piloto:
-   criar pasta `projetos`, criar arquivo `README.md`). Proximos passos: remover
-   `.git/index.lock` se reaparecer, autorizacao de commit, e so entao expandir para mais licoes.
-2. **Validadores locais mais ricos**: a validacao desta fatia e uma funcao pura ad hoc por licao
-   (`Lesson.isComplete`, local a `apps/web`) — nao usa `ValidationRule`/`ExecutionResult` de
+1. **RootScoll Frontend Design System v1 — documentado nesta sessao, pendente commit**:
+   `docs/frontend.md` passa a ser a fonte oficial de verdade visual do frontend (marca RootScoll,
+   tagline `Learn by doing. Think from the Root.`, Modo Raiz, paleta, tokens semanticos,
+   tipografia, componentes base, terminal, plataforma autenticada, mentor, acessibilidade e plano
+   de implantacao). Proximo passo: implantar tokens/tipografia no CSS antes da lapidacao visual
+   profunda dos paineis.
+2. **App Navigation v1 + Shell de Acesso Local — implementado e validado nesta sessao, pendente
+   commit**: `docs/product/app-navigation-v1.md` (fluxo, papeis, rotas planejadas, menu lateral da
+   sala Terminal, limites) + shell mock em `apps/web/src/features/app-shell/` (login -> painel ->
+   perfil/trilhas -> Sala Terminal, navegacao em memoria via `navigation-reducer.ts` puro).
+   `App.tsx` agora renderiza `AppShell`, nao mais `LearningFlowApp` diretamente. Proximo passo:
+   revisao final/commit quando autorizado.
+3. **Estrutura de Bloco Pedagogico Local — implementada e validada na sessao anterior, ainda
+   pendente commit**: `LearningBlock` (theory/practice/assessment/mentorHints) em
+   `apps/web/src/features/learning-flow`, fluxo Teoria -> Pratica -> Avaliacao -> Conclusao;
+   `MentorWidget.tsx` (renomeado de `Mentor.tsx` pelo Codex, evita colisao de casing com
+   `mentor.ts` no Windows); `Sidebar.tsx` evoluida nesta sessao para expor tentativas e "Sair da
+   sala" (ver item 1).
+4. **Validadores locais mais ricos**: a validacao continua sendo uma funcao pura ad hoc por bloco
+   (`assessment.isComplete`, local a `apps/web`) — nao usa `ValidationRule`/`ExecutionResult` de
    `@codechat/types`, porque nenhum avaliador `(ExecutionResult, ValidationRule) ->
-ValidationOutcome` existe ainda em lugar nenhum do monorepo. Planejar esse avaliador real
-   continua como pendencia separada (existencia, conteudo, linhas, permissoes, cwd; codigo de
-   saida e stdout/stderr; sem acoplar `ExecutionResult` a `Challenge` ou progresso).
-3. Revisar e decidir a granularidade da Fase 0 (Lesson com Challenge implicito vs. Step
-   formalizado) e a estrategia de telemetria (eventos derivados, tabela propria, ou pipeline) —
-   seguem em aberto, nao tocadas por esta fatia.
-4. Formalizar a politica etica/isolamento da Trilha 06 antes de qualquer curriculo executavel de
-   seguranca.
-5. **Governanca de escopo**: manter as proximas entregas focadas em validacao pedagogica local e
-   expansao do catalogo de licoes-piloto, sem introduzir Supabase, migrations ou IA por enquanto.
+ValidationOutcome` existe ainda em lugar nenhum do monorepo. Continua pendencia separada.
+5. **Roteador real**: `docs/product/app-navigation-v1.md` planeja rotas (`/login`, `/app`,
+   `/app/perfil`, `/app/trilhas`, `/app/trilhas/:trackId`, `/app/sala/terminal/:blockId`) que hoje
+   so existem como estado em memoria (`AppScreen`), sem URL sincronizada nem `react-router`.
+   Introduzir isso e decisao de proxima fatia, nao coberta aqui.
+6. **Divergencia de trilhas mock pede revisao do Codex**: a lista de 6 trilhas mock em
+   `apps/web/src/features/app-shell/mock-data.ts` (Terminal e SO, Git/GitHub, Web, Programacao,
+   **Banco de Dados**, Seguranca) segue o texto literal desta tarefa, mas diverge da Learning
+   Catalog v1 ja publicada (`docs/product/learning-catalog-v1.md`), cuja 5ª trilha e
+   `professional-practice` ("Pratica profissional": debugging, logs, banco de dados, deploy,
+   testes, Docker) — banco de dados e um TOPICO dentro dela, nao uma trilha propria. Divergencia
+   preservada deliberadamente (modulo mock local, nao importa `@codechat/types`), documentada em
+   `docs/product/app-navigation-v1.md` e aqui — decisao de qual lista e a fonte de verdade fica
+   para o Codex quando o catalogo mock virar catalogo real.
+7. **Decisao pendente do Codex/usuario sobre a sessao paralela substituida na Task 8**: a
+   implementacao descartada propôs proximos passos que NAO foram aprovados como tarefa nesta linha
+   do tempo (integracao Pyodide, painel academico/turmas). Continuam so como contexto, nao
+   compromisso.
+8. **Governanca de escopo**: manter o foco em logicas de execucao/validacao locais e navegacao
+   mock, sem Supabase, migrations, banco de dados real, autenticacao real ou IA real. Risco de
+   processo ja identificado na Task 8 (rodar a mesma tarefa em duas sessoes em paralelo sobre o
+   mesmo working tree nao commitado) permanece registrado como licao — nao se repetiu nesta
+   sessao.
 
 ## Registro de sessoes
+
+### 2026-08-16 (Codex) — RootScoll Frontend Design System v1
+
+**Documentacao: identidade visual e plano de implantacao frontend**
+
+- Tarefa aprovada pelo usuario: transformar a identidade visual RootScoll em referencia oficial
+  de frontend, atualizar o Cérebro Operacional e o Cérebro Visual, revisar erros de terminal ainda
+  presentes e registrar o plano de implantacao do `frontend.md`.
+- Arquivo criado: `docs/frontend.md`.
+- Decisao registrada: **RootScoll** e a grafia oficial da marca. `docs/frontend.md` passa a ser a
+  fonte de verdade visual para agentes e futuras alteracoes de UI/UX.
+- Conteudo consolidado no `frontend.md`: essencia da marca, logotipo, paleta oficial, tokens
+  semanticos, gradiente, tipografia (Space Grotesk, Inter, IBM Plex Mono), layout, espacamento,
+  bordas, componentes base, terminal, plataforma autenticada, paineis densos, sala Terminal,
+  mentor deterministico, acessibilidade, linguagem verbal, padroes proibidos, criterios de aceite
+  visual e plano de implantacao em fases.
+- Assets de identidade conhecidos: `apps/web/src/images/logo.png`,
+  `apps/web/src/images/identidade1.png`, `apps/web/src/images/identidade2.png` (fornecidos pelo
+  usuario; ainda nao revisados para empacotamento final SVG/PWA).
+- Cérebro Operacional atualizado para registrar a marca oficial, a fonte visual e o novo proximo
+  passo: implantar tokens/tipografia RootScoll antes de lapidar profundamente os paineis internos.
+- Cérebro Operacional Visual atualizado para refletir RootScoll como marca de produto/frontend e
+  `docs/frontend.md` como referencia visual oficial.
+- Validacoes executadas por Codex no repo real apos reparo de formatacao:
+  `corepack pnpm@10.28.0 -r --if-present run typecheck`, `corepack pnpm@10.28.0 lint`,
+  `corepack pnpm@10.28.0 test` (119/119), `corepack pnpm@10.28.0 format:check` e
+  `corepack pnpm@10.28.0 --filter @codechat/web build` passaram.
+- Reparo de terminal aplicado nesta etapa: `format:check` falhou inicialmente apenas em
+  `docs/frontend.md`; corrigido com Prettier isolado nesse arquivo e validado novamente.
+- Limites preservados: nenhum Supabase, migration, backend, auth real ou IA real. Nenhum commit ou
+  push realizado nesta etapa.
+
+### 2026-08-16 (Cowork/cloud) — Execucao: App Navigation v1 + Shell de Acesso Local
+
+**Execucao: App Navigation v1 + Shell de Acesso Local (Task 9)**
+
+- Tarefa aprovada, escopo: definir e implementar a primeira versao local da arquitetura de acesso
+  e navegacao do CodeChat — Login mock -> Painel do Aluno -> Perfil -> Trilhas/Modulos -> Sala de
+  Aula Terminal — para a Sala Terminal deixar de ser uma tela isolada. Sem autenticacao real,
+  Supabase, RLS, backend ou IA real. Claude e o unico executor de codigo da aplicacao por enquanto;
+  Antigravity nao deve mexer nos mesmos arquivos.
+- Preflight: `Cérebro Operacional.md` lido (a versao no inicio desta sessao ja estava correta
+  quanto ao ultimo commit `c61fa72` e ao estado pendente da Task 8). `git status -sb` no inicio
+  confirmou o working tree exatamente como a Task 8 havia deixado — sem drift externo desde entao,
+  exceto a limpeza ja esperada de `_to_delete/` (apagada pelo usuario/Codex apos o relatorio
+  anterior). `.git/index.lock` ausente no inicio (a ponte de arquivos recria e falha ao remover a
+  cada `git status` rodado por ela — padrao ja documentado, nao tratado como bloqueio real).
+- **Achado antes de escrever qualquer arquivo novo**: comparando os arquivos reais da Task 8 com
+  os desta sessao, `Mentor.tsx`/`MentorWidget.tsx` — o Codex ja havia renomeado
+  `apps/web/src/features/learning-flow/Mentor.tsx` para `MentorWidget.tsx` (e atualizado o import
+  em `LearningFlowApp.tsx`), evitando a colisao de casing com `mentor.ts` (logica pura de selecao
+  de dica) que existiria num filesystem case-insensitive como o do Windows (`mentor.ts` e
+  `Mentor.tsx` seriam o mesmo arquivo la). Esta sessao sincronizou essa mudanca antes de continuar,
+  e manteve o cuidado com casing em todos os arquivos novos desta fatia (nenhum par de nomes que
+  difere so por maiuscula/minuscula).
+
+**Arquivos criados**
+
+- `docs/product/app-navigation-v1.md` — visao do fluxo (Login -> Painel -> Perfil/Trilhas -> Sala
+  Terminal), papeis previstos (aluno/professor/admin/mentor IA futuro), tabela de rotas planejadas
+  mapeadas para os 5 estados locais implementados, como a Sala Terminal se encaixa no fluxo, o
+  menu lateral oculto da sala (o que esta implementado vs. "em breve"), limites explicitos.
+- `apps/web/src/features/app-shell/types.ts` — `AppScreen` (5 estados), `UserRole` (4 papeis,
+  so `'aluno'` usado), `MockUser`, `Track`/`TrackModule`/`TrackStatus`. Tipos locais, nao importam
+  `@codechat/types`.
+- `apps/web/src/features/app-shell/mock-data.ts` — `MOCK_USER` + `TRACKS` (6 trilhas mock; ver
+  "Divergencia de trilhas mock" em Proximos passos ativos).
+- `apps/web/src/features/app-shell/navigation-reducer.ts` (+ `navigation-reducer.test.ts`, 12
+  `it()`) — `navigationReducer`/`NavState`/`NavEvent`, maquina de estados pura (login -> dashboard
+  -> profile/tracks -> terminal-classroom -> volta/logout), mesma filosofia de
+  `../learning-flow/flow-reducer.ts`.
+- `apps/web/src/features/app-shell/useAppNavigation.ts` — hook de orquestracao: compoe o reducer
+  com `MOCK_USER`/`TRACKS`, expoe acoes nomeadas (`login`, `logout`, `openProfile`, `openTracks`,
+  `backToDashboard`, `enterClassroom`).
+- `apps/web/src/features/app-shell/AppNavigation.tsx` — barra de navegacao superior (Painel/
+  Trilhas/Perfil/Sair), visivel so nas telas autenticadas fora da Sala Terminal.
+- `apps/web/src/features/app-shell/LoginScreen.tsx` — login mock (qualquer submit entra, dito
+  explicitamente na tela).
+- `apps/web/src/features/app-shell/StudentDashboard.tsx` — painel do aluno: trilha atual/progresso,
+  atalho para a Sala Terminal, atalhos para trilhas/perfil.
+- `apps/web/src/features/app-shell/ProfileScreen.tsx` — dados do usuario mock, somente leitura.
+- `apps/web/src/features/app-shell/TracksScreen.tsx` — catalogo de trilhas/modulos; so a trilha
+  com modulos `available` permite entrar na Sala Terminal.
+- `apps/web/src/features/app-shell/AppShell.tsx` — raiz do shell: renderiza `LoginScreen` /
+  `LearningFlowApp` (sala, sem `AppNavigation` ao redor) / telas autenticadas com
+  `AppNavigation` conforme `AppScreen`.
+
+**Arquivos alterados**
+
+- `apps/web/src/App.tsx` — renderiza `<AppShell />` em vez de `<LearningFlowApp />` diretamente.
+- `apps/web/src/features/learning-flow/LearningFlowApp.tsx` — aceita `onExitClassroom?: () =>
+void`, repassado a `Sidebar`. Sem `onOpenControlPanel` (a sidebar ja gerencia a propria
+  visibilidade via aba de alternancia; nao ha gatilho externo necessario — decisao registrada no
+  proprio componente).
+- `apps/web/src/features/learning-flow/Sidebar.tsx` — evoluida para painel de controle da operacao
+  de aprendizado: mantem o indice de blocos existente, acrescenta secao de progresso com
+  tentativas na etapa atual (`attemptCount`), lista estatica "Em breve" para os itens do menu
+  ainda sem dado real (historico de comandos, dicas desbloqueadas, configuracoes do terminal,
+  reiniciar exercicio, duvida ao professor/mentor IA), e o botao funcional "Sair da sala"
+  (`onExitClassroom`, ausente quando a prop nao e passada).
+- `apps/web/src/features/learning-flow/useLearningFlow.ts` — passa a expor `attemptCount` (dado
+  ja existia em `flowState`, so nao estava no retorno do hook).
+- `apps/web/src/styles/app.css` — adicionadas `.sidebar__planned`/`.sidebar__exit` e uma secao
+  nova "App Navigation v1" (`.login-screen`/`.login-card*`, `.app-shell`, `.app-nav*`, `.screen*`,
+  `.dashboard__*`, `.profile-screen__*`, `.tracks-screen__*`/`.track-row*`/`.track-module*`).
+  Nenhuma regra existente foi removida ou alterada.
+
+**Como navegar no app localmente**
+
+Tela inicial: login mock — qualquer e-mail/senha (ou campos vazios) e "Entrar" avança. Painel do
+aluno: mostra a trilha atual e progresso mock, com "Ir para a Sala Terminal" (so habilitado quando
+a trilha atual tem modulo `available`), "Ver trilhas e módulos" e "Ver meu perfil". A barra superior
+(Painel/Trilhas/Perfil/Sair) fica visível em todas as telas exceto login e Sala Terminal. Dentro da
+Sala Terminal, o visual fullscreen é o mesmo da Task 8; a sidebar direita (aba "‹"/"›") agora tem
+"Sair da sala", que volta ao painel.
+
+**Decisoes tecnicas tomadas**
+
+1. **Nenhum roteador real introduzido** — `AppScreen` continua um estado em memoria
+   (`useReducer`), sem `react-router`/URL sincronizada. A tabela de rotas planejadas em
+   `app-navigation-v1.md` é o alvo de produto; o roteador real fica para uma proxima fatia,
+   fora do escopo desta ("preparar o caminho estrutural", nao entregar navegacao por URL).
+2. **`/app/trilhas/:trackId` sem estado local proprio** — o catalogo mock tem poucas
+   trilhas/modulos e `tracks` ja lista modulos inline por trilha; uma tela de detalhe por trilha
+   so compensa quando o catalogo crescer. Documentado como decisao deliberada, nao omissao.
+3. **`onOpenControlPanel` nao implementado** — a sidebar ja gerencia a propria visibilidade
+   (toggle interno); nao havia necessidade real de um gatilho externo vindo do shell. So
+   `onExitClassroom` foi adicionado, por ser a unica acao sem equivalente na UI existente.
+4. **Itens do menu lateral sem dado real viram lista estatica "Em breve"**, em vez de simulados
+   com dado falso (ex.: nao inventei um "historico de comandos" fake) — mais honesto sobre o que
+   esta pronto e evita construir cima de um dado que nao existe (teria que ser refeito quando o
+   dado real chegar).
+5. **`packages/types` nao alterado** — `Track`/`TrackModule`/`MockUser`/`UserRole` sao tipos locais
+   a `apps/web/src/features/app-shell`, deliberadamente nao ligados a `LearningTrackId`/Learning
+   Catalog v1 (catalogo real, com IDs cruzados Track->Course->Module->Lesson->Challenge — pesado
+   demais para 6 trilhas mock estaticas).
+6. **Divergencia de trilhas mock vs. Learning Catalog v1** — ver item 5 em "Proximos passos
+   ativos": a lista de 6 trilhas desta tarefa (com "Banco de Dados" como trilha propria) diverge
+   do catalogo formal ja publicado (5ª trilha e "Pratica profissional", banco de dados e um topico
+   dentro dela). Preservada conforme o texto literal da tarefa, documentada para revisao do Codex
+   em vez de silenciosamente unificada com o catalogo.
+
+**Validacoes executadas**
+
+- Proxy real de rede na nuvem (`/tmp/proxy-web`, mesma tecnica das sessoes anteriores —
+  `pnpm-workspace.yaml` proprio + `corepack pnpm@10.28.0 install` genuino):
+  - `corepack pnpm@10.28.0 -r --if-present run typecheck` — passou nos 4 pacotes/apps.
+  - `corepack pnpm@10.28.0 lint` — passou sem avisos.
+  - `corepack pnpm@10.28.0 test` — passou, **116 testes em 10 arquivos** (12 novos em
+    `navigation-reducer.test.ts`; restante inalterado das sessoes anteriores).
+  - `corepack pnpm@10.28.0 format:check` — passou para todos os arquivos desta fatia (os 4 avisos
+    remanescentes sao `apps/web/dist/*` de builds anteriores e `pnpm-lock.yaml` pre-existente, nao
+    tocados por esta fatia).
+  - `corepack pnpm@10.28.0 --filter @codechat/web build` — build de producao concluido, verificado
+    tambem com `vite preview` servindo o HTML/JS/CSS gerados.
+- Tentativa de validacao real via `device_bash` (maquina do usuario): `corepack pnpm@10.28.0 -v`
+  falhou com o mesmo erro ja documentado (`Proxy response (403) !== 200 when HTTP Tunneling` — a
+  VM da ponte de arquivos nao tem acesso a rede). Tambem tentei rodar `prettier` local ja instalado
+  no repositorio real (`node_modules/.bin/prettier`) para checar so os arquivos `docs/product/*.md`
+  — falhou com `Cannot find module '.../node_modules/prettier/bin/prettier.cjs'`, o `node_modules`
+  la nao resolve corretamente a partir da VM da ponte (mesma limitacao de ambiente, nao um erro
+  desta fatia). **Nenhuma dessas duas tentativas e validacao real do monorepo.**
+- Apos a transferencia, checagem de colisao de casing em todo `apps/web/src` (`find ... | sort -f
+| uniq -Di`, case-insensitive): nenhuma colisao encontrada.
+- Todos os 17 arquivos transferidos (`SendUserFile` -> `file_uuid` -> `device_commit_files`)
+  tiveram MD5 conferido identico dos dois lados apos a transferencia, 0 rejeicoes.
+
+**Limites preservados**
+
+- Sem autenticacao real, Supabase, migrations, backend real ou IA real.
+- Sem alteracao em `packages/types`.
+- Sem commit ou push realizados no Git.
+- Nenhum dashboard administrativo, landing page ou hero de marketing — telas sobrias, densas,
+  sem mosaico de cards decorativos, sem numeros/promessas inventados alem do progresso mock ja
+  declarado.
+- Nao recriada a pasta `_to_delete/` (apagada pelo Codex/usuario apos a Task 8).
+- Nenhum arquivo com nome que difere de outro so por maiuscula/minuscula.
+
+### 2026-08-16 (Cowork/cloud) — Execucao: Estrutura de Bloco Pedagogico Local
+
+**Execucao: Estrutura de Bloco Pedagogico Local (substitui a sessao paralela abaixo)**
+
+- Tarefa aprovada (texto identico ao da sessao `2026-08-16 01:00:00 -03:00` registrada logo
+  abaixo): evoluir a primeira licao executavel para um fluxo sequencial de 4 etapas — teoria,
+  pratica, avaliacao local, feedback/mentor discreto — com `LearningBlock` local em `apps/web`
+  (`theory`/`practice`/`assessment`/`mentorHints`), UI uma-etapa-por-vez, terminal ativo so em
+  pratica/avaliacao, barra de progresso, sidebar direita recolhivel, mentor flutuante
+  determinístico. Sem Supabase/migrations/IA real; sem alterar `packages/types`.
+- Preflight: `Cérebro Operacional.md` lido (a versao no inicio desta sessao ja estava desatualizada
+  quanto ao ultimo commit — apontava `d6d0252`/Fase 1 no topo do "Snapshot atual" antes da secao
+  ser corrigida por esta sessao). `git status -sb`, `git branch -vv` e `git log --oneline` no
+  inicio confirmaram `c61fa72` como ultimo commit publicado, branch `main` rastreando
+  `origin/main`, working tree limpo (sem `.git/index.lock`).
+- **Colisao de sessoes detectada durante a transferencia dos arquivos para o repositorio real**:
+  ao reconferir `git status -sb` no repositorio real antes de transferir (passo padrao desta
+  metodologia), o working tree ja continha uma implementacao DIFERENTE e completa do mesmo
+  escopo — `LearningBlockApp.tsx`, `useBlockSession.ts`, `learning-flow.test.ts`,
+  `apps/web/src/App.tsx`/`app.css` ja modificados, e uma entrada ja escrita em
+  `Cérebro Operacional.md` (a sessao `2026-08-16 01:00:00 -03:00` registrada abaixo). Essa
+  implementacao NAO veio desta sessao (Cowork/cloud) — a analise das ferramentas disponiveis (esta
+  sessao so alcanca o disco do usuario via ponte de arquivos, nunca escreveu nada la antes deste
+  ponto) e da propria entrada registrada (validacoes reais de `pnpm`/`tsc`/`eslint`/`vitest`/
+  `build`, que exigem rede/toolchain real — indisponivel nesta sessao, so num proxy de nuvem)
+  aponta para outra sessao/agente rodando localmente na maquina do usuario, em paralelo, sobre a
+  mesma tarefa aprovada. Pausado o fluxo, o usuario foi consultado diretamente (nao presumido) e
+  **decidiu explicitamente substituir** a implementacao paralela pela desta sessao.
+
+**Arquivos criados** (`apps/web/src/features/learning-flow/`)
+
+- `types.ts` — `LearningStep`, `TheoryContent`, `PracticeContent`, `AssessmentContent`,
+  `MentorHint`, `LearningBlock`.
+- `blocks.ts` (+ `blocks.test.ts`, 11 `it()`) — os 2 blocos-piloto reorganizados (criar pasta
+  `projetos`; criar `README.md`), cada um com teoria, pratica, avaliacao (mesma logica
+  `isComplete` da Fase 1) e 3 dicas de mentor progressivas.
+- `mentor.ts` (+ `mentor.test.ts`, 6 `it()`) — `selectHint(hints, attemptCount)`, pura,
+  deterministica: retorna a dica de maior `afterAttempts` ja alcancada, sem IA.
+- `flow-reducer.ts` (+ `flow-reducer.test.ts`, 16 `it()`) — `flowReducer`/`FlowState`/`FlowEvent`,
+  maquina de estados pura (teoria -> pratica -> avaliacao -> conclusao, com avanco entre blocos),
+  mais `isFlowFinished`.
+- `step-labels.ts` — rotulos pt-BR das 4 etapas, compartilhados por `ProgressBar`/`Sidebar`.
+- `useLearningFlow.ts` — hook de orquestracao: compoe `useTerminalSession` (simplificado) +
+  `flowReducer` + `selectHint`. Unico ponto do app que conhece `LEARNING_BLOCKS`.
+- `ProgressBar.tsx`, `TheoryPanel.tsx`, `ConclusionPanel.tsx`, `Sidebar.tsx`, `MentorWidget.tsx`,
+  `LearningFlowApp.tsx` — UI: `LearningFlowApp` e a nova raiz, preserva a janela de terminal
+  fullscreen (titlebar de 3 pontos) e alterna, dentro dela, teoria/terminal+avaliacao/conclusao.
+
+**Arquivos criados** (`apps/web/src/features/terminal/`)
+
+- `TerminalScreen.tsx` — tela de terminal (linhas + input) extraida de `TerminalApp.tsx` (Fase 1),
+  agora reutilizavel, renderizada so nas etapas `practice`/`assessment`.
+
+**Arquivos alterados**
+
+- `apps/web/src/features/terminal/useTerminalSession.ts` — simplificado: removida toda logica de
+  `LESSONS`/`Lesson`/`LessonStatus`; agora so mecanica de terminal (filesystem, linhas, input),
+  `submitCommand()` retorna `TerminalCommandOutcome | undefined` em vez de nada, e expõe
+  `pushLine`. Quem decide o que fazer com o resultado e `useLearningFlow`.
+- `apps/web/src/App.tsx` — renderiza `<LearningFlowApp />` em vez de `<TerminalApp />`.
+- `apps/web/src/styles/app.css` — removidas as classes `.lesson-bar*` (orfas, unico consumidor era
+  o `TerminalApp.tsx` deletado); adicionadas `.progress-bar*`, `.step-content`/`.step-panel*`,
+  `.assessment-banner*`, `.sidebar*`, `.mentor*`. `grid-template-rows` de `.terminal-window`
+  mantido em 3 linhas (titlebar/progress-bar/conteudo) — mesma contagem de linhas de antes, so
+  trocando o papel da 2a linha (era `.lesson-bar`, agora `.progress-bar`).
+
+**Arquivos deletados/removidos do fluxo ativo**
+
+- `apps/web/src/features/lessons/{types,lessons,lessons.test}.ts` — superados por
+  `learning-flow/{types,blocks,blocks.test}.ts`.
+- `apps/web/src/features/terminal/TerminalApp.tsx` — superado por `learning-flow/LearningFlowApp.tsx`
+  - `terminal/TerminalScreen.tsx`.
+- `apps/web/src/features/learning-flow/{LearningBlockApp.tsx,useBlockSession.ts,learning-flow.test.ts}`
+  — implementacao da sessao paralela substituida (ver nota de colisao acima). A pasta orfa
+  `_to_delete/` criada temporariamente foi removida em revisao posterior, pois quebrava
+  `typecheck`/`test`.
+
+**Decisoes tecnicas tomadas**
+
+1. **Pratica e avaliacao compartilham o MESMO terminal renderizado** (mesma sessao/filesystem
+   continuos) — a etapa `assessment` representa o momento em que `assessment.isComplete` passou a
+   ser verdadeiro DENTRO da pratica, nao uma tela separada; um banner de veredito aparece junto ao
+   terminal com um botao "Continuar" para so entao ir a conclusao. Satisfaz literalmente "o
+   terminal so deve ficar ativo na etapa pratica/avaliacao pratica" sem duplicar a UI do terminal.
+2. **`useTerminalSession` reescrito para ser agnostico de licao/bloco** — antes (Fase 1) conhecia
+   `LESSONS` diretamente; agora so executa comandos e devolve o resultado. Evita o problema de
+   dependencia circular "hook precisa do proprio retorno de outro hook": `useLearningFlow` chama
+   `terminal.submitCommand()` e inspeciona o retorno, em vez de injetar um callback dentro de
+   `useTerminalSession`.
+3. **Toda logica nao trivial extraida para funcoes puras testaveis sem DOM** (`selectHint`,
+   `flowReducer`, `assessment.isComplete`) — mesma filosofia de testes da Fase 1 (sem
+   `@testing-library/react`/`jsdom`, ausentes do monorepo); componentes React ficam finos.
+4. **Sidebar/Mentor como elementos `position: fixed`, fora do fluxo do documento** — nao alteram o
+   grid/layout do `.terminal-window`; a sidebar nasce recolhida (`translateX(100%)`, só uma aba
+   fina sempre visivel) e o mentor e um popover pequeno no canto inferior direito, nunca ocupando a
+   tela nem parecendo um chat principal.
+5. **Dica do mentor dispensavel por texto exato (`dismissedHintText`)** — dispensar a dica atual
+   esconde so aquele texto; uma dica NOVA (tier mais alto, liberada por mais tentativas) volta a
+   aparecer normalmente.
+6. **`packages/types` nao alterado** — mesma justificativa da Fase 1 (Learning Catalog v1 modela um
+   catalogo completo, sem avaliador de `ValidationRule` implementado em lugar nenhum do monorepo;
+   construir isso agora seria expandir escopo).
+
+**Validacoes executadas**
+
+- Proxy real de rede na nuvem (`/tmp/proxy-web`, mesma tecnica da Fase 1: `pnpm-workspace.yaml`
+  proprio + `corepack pnpm@10.28.0 install` genuino, resolvendo symlinks de workspace de verdade):
+  - `corepack pnpm@10.28.0 -r --if-present run typecheck` — passou nos 4 pacotes/apps.
+  - `corepack pnpm@10.28.0 lint` — passou sem avisos.
+  - `corepack pnpm@10.28.0 test` — passou, **104 testes em 9 arquivos** (16 novos em
+    `flow-reducer.test.ts`, 11 novos em `blocks.test.ts`, 6 novos em `mentor.test.ts`, restante
+    inalterado da Fase 1).
+  - `corepack pnpm@10.28.0 format:check` — passou para todos os arquivos desta fatia (os 4
+    avisos remanescentes sao `apps/web/dist/*` de um build anterior e `pnpm-lock.yaml`
+    pre-existente, nao tocados por esta fatia).
+  - `corepack pnpm@10.28.0 --filter @codechat/web build` — build de producao concluido
+    (`vite build`), verificado tambem com `vite preview` servindo o HTML/JS/CSS gerados.
+- Tentativa de validacao real via `device_bash` (maquina do usuario): `corepack pnpm@10.28.0 -v`
+  falhou com o mesmo erro ja documentado em sessoes anteriores (`Proxy response (403) !== 200 when
+HTTP Tunneling` — a VM da ponte de arquivos nao tem acesso a rede). **Nao e validacao real do
+  monorepo** — mantido so como tentativa obrigatoria documentada.
+- Todos os arquivos transferidos ao repositorio real (`SendUserFile` -> `file_uuid` ->
+  `device_commit_files`) tiveram MD5 conferido identico dos dois lados apos a transferencia (19
+  arquivos, 0 rejeicoes).
+
+**Limites preservados**
+
+- Sem Supabase, migrations, banco de dados real ou IA real.
+- Sem alteracao em `packages/types`.
+- Sem commit ou push realizados no Git.
+- Nenhum dashboard administrativo, landing page ou painel de cards foi criado — sidebar e mentor
+  sao elementos pequenos, flutuantes, que nao competem com o terminal.
+
+### 2026-08-16 01:00:00 -03:00 (sessao paralela, substituida — ver nota de colisao acima)
+
+**Execucao: Bloco Pedagogico Local + UI de Apoio**
+
+- Tarefa aprovada, escopo: evolucao da interface e do fluxo de licoes para um modelo de blocos pedagogicos com 4 estagios conceituais (teoria, pratica livre, avaliacao do desafio e conclusao) com terminal ativo apenas na pratica/avaliacao. Inclui UI de apoio (barra de progresso dos estagios, sidebar lateral de suporte que nasce recolhida e mentor flutuante determinístico com dicas baseadas no estado e etapa).
+- Preflight: `Cérebro Operacional.md` e docs operacionais lidos. `git status -sb` no inicio da sessao trazia o commit `c61fa72` ja publicado como ultimo commit funcional.
+
+**Arquivos criados**
+
+- `apps/web/src/features/learning-flow/types.ts` — definicao de `BlockStage`, `LearningBlock` e interfaces associadas.
+- `apps/web/src/features/learning-flow/blocks.ts` — dois blocos de aprendizado locais reorganizando as duas licoes piloto (criar pasta projetos, criar README.md) com os 4 estagios e mentor.
+- `apps/web/src/features/learning-flow/useBlockSession.ts` — hook de controle de sessao pedagógica local em memoria, gerando historico, executando comandos via terminal-engine e checando validacoes.
+- `apps/web/src/features/learning-flow/LearningBlockApp.tsx` — componente principal contendo o cabeçalho de progresso, sidebar lateral colapsavel, mentor flutuante e paineis adaptativos de leitura e conclusao.
+- `apps/web/src/features/learning-flow/learning-flow.test.ts` — testes logicos unitarios cobrindo a integridade dos blocos, regras de validacao e dicas do mentor determinístico.
+
+**Arquivos alterados**
+
+- `apps/web/src/App.tsx` — atualizado para renderizar `LearningBlockApp` como componente raiz.
+- `apps/web/src/styles/app.css` — estilização completa da nova interface (sidebar colapsável, progress-bar de estágios, mentor flutuante, cards de teoria e conclusão e transições com glassmorphism).
+- `Cérebro Operacional.md` — este registro.
+
+**Decisoes tecnicas tomadas**
+
+1. **Isolamento de tipos em `apps/web`**: Nao houve alteracao em `packages/types` ou `@codechat/types`, mantendo a tipagem local e exclusiva do fluxo sequencial no modulo `learning-flow` do frontend, mantendo coerencia com o escopo em memoria.
+2. **Terminal ativo apenas na pratica/avaliacao**: O terminal fica oculto na teoria e desativado/congelado na conclusao, dando lugar aos cards pedagogicos de leitura e feedback.
+3. **Mentor determinístico em memoria**: As dicas do mentor sao baseadas em regras de strings e estado do filesystem virtual no próprio objeto do bloco, eliminando qualquer chamada de rede ou API externa de IA.
+4. **Sidebar nasce recolhida**: A sidebar lateral direita inicia recolhida por padrao para preservar o foco imersivo no terminal fullscreen.
+
+**Validacoes executadas**
+
+- `tsc --noEmit` em todo o monorepo passed.
+- `eslint .` passed sem avisos.
+- `vitest run` passou com **107 testes em 10 arquivos de testes** apos o reparo do Codex
+  (`_to_delete/` removida e componente visual do mentor renomeado para `MentorWidget.tsx` para
+  evitar colisao de casing com `mentor.ts` no Windows).
+- `prettier --check .` passed sem avisos.
+- `vite build` no `@codechat/web` concluido com sucesso.
+
+**Limites preservados**
+
+- Sem banco de dados, Supabase ou migrations.
+- Sem IA real ou chamadas externas.
+- Sem commit ou push realizados no Git.
 
 ### 2026-08-16 00:10:00 -03:00
 

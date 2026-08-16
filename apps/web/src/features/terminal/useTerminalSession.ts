@@ -1,8 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { createInitialFilesystemState, runCommand } from '@codechat/terminal-engine';
-import type { TerminalFilesystemState } from '@codechat/terminal-engine';
-import { LESSONS } from '../lessons/lessons';
-import type { Lesson, LessonStatus } from '../lessons/types';
+import type { TerminalCommandOutcome, TerminalFilesystemState } from '@codechat/terminal-engine';
 import { promptLabel, splitLines } from './terminal-format';
 
 export type TerminalLineKind = 'system' | 'comment' | 'prompt' | 'output' | 'error' | 'success';
@@ -19,46 +17,36 @@ function nextLineId(): number {
   return lineIdCounter;
 }
 
-function lessonIntroLines(lesson: Lesson): TerminalOutputLine[] {
-  return [
-    { id: nextLineId(), kind: 'comment', text: `# ${lesson.title}` },
-    { id: nextLineId(), kind: 'comment', text: `# Objetivo: ${lesson.objective}` },
-  ];
-}
-
-function initialLines(): TerminalOutputLine[] {
-  const lines: TerminalOutputLine[] = [
-    { id: nextLineId(), kind: 'system', text: 'CodeChat Terminal — Fase 0' },
-  ];
-  const firstLesson = LESSONS[0];
-  if (firstLesson !== undefined) {
-    lines.push(...lessonIntroLines(firstLesson));
-  }
-  return lines;
-}
-
 /**
- * Sessão de terminal desta fatia: liga `@codechat/terminal-engine`
+ * Mecânica de terminal desta fatia: liga `@codechat/terminal-engine`
  * (`runCommand`/`createInitialFilesystemState`) ao ciclo de vida de uma
- * lição local (`../lessons`). Todo o estado vive em memória, no componente
- * React — sem `localStorage`/`sessionStorage`, sem backend, consistente com
- * `persistence: 'session'` do perfil `virtual-shell`
- * (`docs/architecture/runtime-requirements-v1.md`): a sessão dura enquanto a
- * página estiver aberta, nunca entre sessões.
+ * sessão de linhas em memória — sem `localStorage`/`sessionStorage`, sem
+ * backend, consistente com `persistence: 'session'` do perfil
+ * `virtual-shell` (`docs/architecture/runtime-requirements-v1.md`).
+ *
+ * Deliberadamente agnóstico de lição/bloco pedagógico (ver Implementation
+ * Report, "Decisões técnicas"): antes desta fatia (Fase 1), este hook
+ * conhecia `LESSONS` diretamente; agora ele só executa comandos e expõe o
+ * resultado — quem decide o que fazer com o resultado (avaliação, dicas do
+ * mentor, avanço de etapa) é `../learning-flow/useLearningFlow.ts`, que
+ * compõe este hook chamando `submitCommand()` e inspecionando o retorno, em
+ * vez de este hook aceitar um callback injetado (evita a dependência
+ * circular "hook precisa do próprio retorno de outro hook").
  */
 export function useTerminalSession() {
   const [filesystem, setFilesystem] = useState<TerminalFilesystemState>(() =>
     createInitialFilesystemState(),
   );
-  const [lines, setLines] = useState<readonly TerminalOutputLine[]>(() => initialLines());
+  const [lines, setLines] = useState<readonly TerminalOutputLine[]>(() => [
+    { id: nextLineId(), kind: 'system', text: 'CodeChat Terminal — Fase 0' },
+  ]);
   const [inputValue, setInputValue] = useState('');
-  const [lessonIndex, setLessonIndex] = useState(0);
-  const [lessonStatus, setLessonStatus] = useState<LessonStatus>('pending');
 
-  const currentLesson = LESSONS[lessonIndex];
-  const hasNextLesson = LESSONS[lessonIndex + 1] !== undefined;
+  const pushLine = useCallback((kind: TerminalLineKind, text: string) => {
+    setLines((prev) => [...prev, { id: nextLineId(), kind, text }]);
+  }, []);
 
-  const submitCommand = useCallback(() => {
+  const submitCommand = useCallback((): TerminalCommandOutcome | undefined => {
     const commandLine = inputValue;
     setInputValue('');
 
@@ -68,7 +56,7 @@ export function useTerminalSession() {
     ]);
 
     if (commandLine.trim().length === 0) {
-      return;
+      return undefined;
     }
 
     const outcome = runCommand(filesystem, commandLine);
@@ -87,52 +75,21 @@ export function useTerminalSession() {
       })),
     ];
 
-    const justCompleted =
-      lessonStatus === 'pending' &&
-      currentLesson !== undefined &&
-      currentLesson.isComplete(outcome.filesystem);
-
-    if (justCompleted && currentLesson !== undefined) {
-      setLessonStatus('success');
-      outputLines.push({ id: nextLineId(), kind: 'success', text: currentLesson.successMessage });
-    }
-
     if (outputLines.length > 0) {
       setLines((prev) => [...prev, ...outputLines]);
     }
-  }, [inputValue, filesystem, currentLesson, lessonStatus]);
 
-  const advanceLesson = useCallback(() => {
-    const nextIndex = lessonIndex + 1;
-    const nextLesson = LESSONS[nextIndex];
-    if (nextLesson === undefined) {
-      return;
-    }
-    setLessonIndex(nextIndex);
-    setLessonStatus('pending');
-    setLines((prev) => [
-      ...prev,
-      { id: nextLineId(), kind: 'system', text: '' },
-      ...lessonIntroLines(nextLesson),
-    ]);
-  }, [lessonIndex]);
-
-  const progress = useMemo(
-    () => ({ current: lessonIndex + 1, total: LESSONS.length }),
-    [lessonIndex],
-  );
+    return outcome;
+  }, [inputValue, filesystem]);
 
   return {
     lines,
     inputValue,
     setInputValue,
     submitCommand,
+    pushLine,
     cwd: filesystem.cwd,
     prompt: promptLabel(filesystem.cwd),
-    currentLesson,
-    lessonStatus,
-    hasNextLesson,
-    advanceLesson,
-    progress,
+    filesystem,
   };
 }
