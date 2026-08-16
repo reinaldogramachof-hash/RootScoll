@@ -44,7 +44,7 @@ body {
   display: grid;
   min-width: 0;
   min-height: 0;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
   overflow: hidden;
   border: 1px solid rgba(243, 240, 232, 0.14);
   border-radius: 8px;
@@ -153,5 +153,98 @@ body {
 
   .terminal-screen {
     font-size: 14px;
+  }
+}
+
+.lesson-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+  border-bottom: 1px solid rgba(243, 240, 232, 0.1);
+  background: #1a1c14;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: #aaa496;
+}
+
+.lesson-bar__progress {
+  color: #6f9d78;
+  font-weight: 600;
+}
+
+.lesson-bar__title {
+  color: #f4d69a;
+  font-weight: 600;
+}
+
+.lesson-bar__objective {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: #cfc9b8;
+}
+
+.lesson-bar__status {
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.lesson-bar__status--pending {
+  background: rgba(238, 178, 93, 0.16);
+  color: #eeb25d;
+}
+
+.lesson-bar__status--success {
+  background: rgba(99, 196, 122, 0.18);
+  color: #63c47a;
+}
+
+.lesson-bar__next {
+  cursor: pointer;
+  border: 1px solid rgba(99, 196, 122, 0.4);
+  border-radius: 4px;
+  background: rgba(99, 196, 122, 0.12);
+  padding: 2px 10px;
+  color: #63c47a;
+  font: inherit;
+}
+
+.lesson-bar__next:hover {
+  background: rgba(99, 196, 122, 0.22);
+}
+
+.terminal-line--error {
+  color: #eb6f63;
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+}
+
+.terminal-input-line__prompt {
+  color: #9ef0a3;
+  white-space: pre;
+}
+
+.terminal-input-line__input {
+  min-width: 0;
+  flex: 1 1 auto;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #f3f0e8;
+  font: inherit;
+  caret-color: #f06f4f;
+}
+
+@media (max-width: 720px) {
+  .lesson-bar {
+    font-size: 12px;
   }
 }

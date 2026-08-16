@@ -735,6 +735,25 @@
                         <code>remote-runner</code>.
                       </td>
                     </tr>
+                    <tr>
+                      <td><strong>Shell Core Mínimo</strong></td>
+                      <td><code class="code-ref">49663d8</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>
+                        Execução simulada dos comandos <code>pwd</code>, <code>ls</code>,
+                        <code>cd</code> e <code>mkdir</code> sobre filesystem virtual em memória.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><strong>Comandos de Arquivos do Terminal</strong></td>
+                      <td><code class="code-ref">d6d0252</code></td>
+                      <td><span class="badge badge-success">Publicado</span></td>
+                      <td>
+                        Implementação de <code>touch</code>, <code>cat</code>, <code>echo</code>,
+                        <code>cp</code>, <code>mv</code>, <code>rm</code> e <code>tree</code> sobre
+                        o filesystem virtual em memória.
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -795,6 +814,14 @@
                       <strong>Runtime Requirements v1:</strong> restrições conceituais dos 4
                       adapters publicadas.
                     </li>
+                    <li>
+                      <strong>Shell Core Mínimo:</strong> comandos `pwd`, `ls`, `cd` e `mkdir`
+                      funcionando em memória.
+                    </li>
+                    <li>
+                      <strong>Comandos de Arquivos:</strong> comandos `touch`, `cat`, `echo`, `cp`,
+                      `mv`, `rm` e `tree` em memória.
+                    </li>
                   </ul>
                 </div>
 
@@ -805,16 +832,16 @@
                   </div>
                   <ul class="scope-list">
                     <li>
-                      <strong>Shell Core / Terminal Engine Mínimo:</strong> Primeiros comandos da
-                      Fase 0 com filesystem virtual em memória.
+                      <strong>Primeira Lição Executável Local:</strong> Fluxo pedagógico completo
+                      executando e validando localmente.
                     </li>
                     <li>
-                      <strong>Parser & Execução de Comandos:</strong> Implementação do
-                      terminal-engine e shell.
+                      <strong>Integração apps/web + terminal-engine:</strong> Terminal visual
+                      conectado com a engine em memória.
                     </li>
                     <li>
-                      <strong>Engine de Validação em Runtime:</strong> Função que compara a saída
-                      com a regra da lição.
+                      <strong>Validadores Locais:</strong> Validação de filesystem/stdout/stderr
+                      localmente.
                     </li>
                     <li>
                       <strong>Política Ética da Trilha 06:</strong> isolamento e limites antes de
@@ -822,11 +849,11 @@
                     </li>
                     <li>
                       <strong>Supabase & Banco Remoto:</strong> Migrations e persistência de dados
-                      em nuvem.
+                      em nuvem (Fora de escopo no momento).
                     </li>
                     <li>
                       <strong>Integração com IA:</strong> Mecanismo de mentoria pedagógica e geração
-                      de dicas.
+                      de dicas (Fora de escopo no momento).
                     </li>
                   </ul>
                 </div>
@@ -992,11 +1019,13 @@
                 <span class="badge badge-blue">Próxima Fatia Recomendada</span>
                 <span class="badge badge-amber">Fase 1</span>
               </div>
-              <h3 class="banner-title">Shell Core / Terminal Engine Mínimo</h3>
+              <h3 class="banner-title">
+                Primeira Lição Executável, Integração e Validadores Locais
+              </h3>
               <p class="banner-text">
-                Implementação incremental dos primeiros comandos da Fase 0, preservando filesystem
-                virtual em memória, contratos agnósticos de execução e validadores determinísticos,
-                sem Supabase, migrations, IA executável ou UI nova.
+                Desenvolvimento da primeira lição executável e validada localmente, integração do
+                terminal-engine com a interface visual apps/web e criação dos validadores de
+                filesystem/stdout/stderr, sem Supabase, migrations ou IA por enquanto.
               </p>
               <div class="banner-action-buttons">
                 <button

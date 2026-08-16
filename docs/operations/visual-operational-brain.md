@@ -163,6 +163,8 @@ A tabela abaixo resume os marcos técnicos oficialmente homologados no repositó
 | **Trilha 06 em Radar**                  | `docs/product/product-vision-v1.md` | Registrado | Segurança cibernética e da informação como pilar estratégico de formação, ainda sem currículo executável.        |
 | **Learning Catalog v1**                 | `0d29750`                           | Publicado  | Catálogo formalizado com 6 trilhas, 20 segmentos e contratos `Track -> Course -> Module -> Lesson -> Challenge`. |
 | **Runtime Requirements v1**             | `bebc3ea`                           | Publicado  | Restrições conceituais por adapter (`virtual-shell`, `pyodide`, `webcontainer`, `remote-runner`).                |
+| **Shell Core Mínimo**                   | `49663d8`                           | Publicado  | Execução simulada dos comandos `pwd`, `ls`, `cd` e `mkdir` sobre filesystem virtual em memória.                  |
+| **Comandos de Arquivos do Terminal**    | `d6d0252`                           | Publicado  | Implementação de `touch`, `cat`, `echo`, `cp`, `mv`, `rm` e `tree` sobre o filesystem virtual em memória.        |
 
 ---
 
@@ -196,15 +198,17 @@ quadrantChart
 5. Diretrizes de governança e documentação viva (`Cérebro Operacional.md`).
 6. Learning Catalog v1 publicado com 6 trilhas e 20 segmentos.
 7. Runtime Requirements v1 publicado com perfis conceituais de runtime por adapter.
+8. **Shell Core Mínimo**: Execução simulada dos comandos `pwd`, `ls`, `cd` e `mkdir` sobre filesystem virtual em memória.
+9. **Comandos de Arquivos do Terminal**: Comandos `touch`, `cat`, `echo`, `cp`, `mv`, `rm` e `tree` sobre filesystem virtual em memória, com 46 testes do terminal-engine passando (cobrindo cenários de sucesso e erro).
 
 ### ⏳ O Que Ainda Não Está Implementado (Próximas Etapas)
 
-1. **Shell Core / Terminal Engine Mínimo**: Primeiros comandos da Fase 0 com filesystem virtual em memória.
-2. **Parser e Execução de Comandos**: Implementação incremental das engines de terminal e adaptadores.
-3. **Funções Reais de Validação**: Mecanismo que compara o resultado do comando com a regra da lição.
+1. **Primeira Lição Executável Local**: Primeira lição real da Fase 0 executada e validada localmente, garantindo o fluxo pedagógico de ponta a ponta.
+2. **Integração `apps/web` + `terminal-engine`**: Interface visual de terminal conectada com o motor virtual em memória.
+3. **Validadores Locais**: Mecanismo de validação real que compara o estado do terminal com as regras da lição localmente, sem acoplar a banco de dados.
 4. **Política Ética da Trilha 06**: Regras de isolamento e limites antes de qualquer exercício executável de segurança.
-5. **Persistência Remota / Supabase**: Criação de tabelas reais, autenticação e sincronização de progresso.
-6. **Integração Real de IA**: Mecanismo de mentoria pedagógica e geração de dicas progressivas.
+5. **Persistência Remota / Supabase**: Criação de tabelas reais, autenticação e sincronização de progresso (Fora de escopo no momento).
+6. **Integração Real de IA**: Mecanismo de mentoria pedagógica e geração de dicas progressivas (Fora de escopo no momento).
 
 ---
 
@@ -234,8 +238,9 @@ Ao conduzir a apresentação executiva deste projeto para a reitoria, coordenaç
 
 ## 10. Próxima Fatia Recomendada
 
-A próxima entrega técnica planejada e recomendada pelo time de engenharia é a **Fase 1 — Shell Core / Terminal Engine Mínimo**:
+As próximas tarefas técnicas planejadas e recomendadas pelo time de engenharia focam em:
 
-- Implementar uma fatia mínima do terminal virtual com poucos comandos da Fase 0.
-- Preservar `ExecutionResult` agnóstico, filesystem virtual em memória e validadores determinísticos.
-- Evitar implementação em massa dos 21 comandos; avançar por lotes pequenos, testáveis e revisados.
+- **Primeira Lição Executável Local**: Desenvolvimento do fluxo pedagógico completo (desafio -> execução -> validação) localmente para uma lição inaugural.
+- **Integração `apps/web` + `terminal-engine`**: Conexão entre a interface visual e a execução simulada no navegador.
+- **Validadores Locais**: Implementação de validadores de filesystem/stdout/stderr localmente.
+- **Governança de escopo**: Preservar o foco local, mantendo Supabase, migrations e IA fora do escopo imediato.

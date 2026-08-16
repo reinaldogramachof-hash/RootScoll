@@ -31,24 +31,20 @@
 - Diretorio oficial: `C:\Dev\CodeChat`
 - Branch: `main`
 - Remote: `origin/main`
-- Estado Git no ultimo registro: `git status -sb` no inicio desta sessao (Comandos de arquivos e
-  manipulacao basica) ja estava limpo (`## main...origin/main`, 0 arquivos pendentes) — a fatia
-  Shell Core/Terminal Engine Minimo, registrada na sessao anterior como "pendente commit", ja
-  havia sido commitada e publicada externamente como `49663d8` antes do inicio desta sessao (ver
-  correcao de imprecisao abaixo). Nesta sessao, com alteracoes locais NAO commitadas: 5 arquivos
-  modificados (`docs/architecture/terminal-engine.md`,
-  `packages/terminal-engine/src/{commands/types.ts, core/run-command.ts, filesystem/tree.ts,
-index.ts}`) + 8 arquivos novos (`packages/terminal-engine/src/commands/{touch,cat,echo,cp,mv,rm,
-tree}.ts` + `packages/terminal-engine/src/file-manipulation.test.ts`) +
+- Estado Git no ultimo registro: `git status -sb` no inicio desta sessao (Primeira Licao
+  Executavel Local) ja trazia 3 arquivos modificados por origem externa a esta sessao —
+  `Cérebro Operacional.md`, `docs/operations/visual-dashboard/index.html`,
+  `docs/operations/visual-operational-brain.md` — preservados, nao tocados. Nesta sessao, com
+  alteracoes locais NAO commitadas: `apps/web/package.json` modificado (dependencia
+  `@codechat/terminal-engine` adicionada), `apps/web/src/App.tsx` modificado (agora um wrapper
+  fino de `TerminalApp`), `apps/web/src/styles/app.css` modificado (grid de 3 linhas + estilos da
+  barra de licao/linha de input/erro), 7 arquivos novos em
+  `apps/web/src/features/{lessons,terminal}` (ver "Arquivos criados" no registro desta sessao) +
   `Cérebro Operacional.md` modificado (este registro).
-- Lock Git no ultimo registro: `.git/index.lock` presente novamente apos `git status` executado
-  pelo bridge (mesma limitacao recorrente e nao corrigivel por este ambiente — ver sessoes
-  anteriores). Nao bloqueou a escrita dos arquivos desta fatia (feita via `device_commit_files`,
-  que nao depende de `git`), mas bloqueia qualquer `git add`/`commit` ate ser removido por fora
-  deste ambiente (Explorer ou terminal nativo no Windows).
+- Lock Git no ultimo registro: `.git/index.lock` ausente no inicio da sessao.
 - Servidor local visual: `http://127.0.0.1:5174/`
-- Ultimo commit funcional publicado: `49663d8 feat: implement minimal terminal shell core`
-  (confirmado por `git log`/`git branch -vv` nesta sessao).
+- Ultimo commit funcional publicado: `d6d0252 feat: add terminal file commands` (confirmado por
+  `git log`/`git branch -vv` nesta sessao).
 
 ## Grafo operacional
 
@@ -64,31 +60,33 @@ Fundacao monorepo
   -> Runtime Requirements v1
   -> shell-core/terminal-engine minimo (pwd/ls/cd/mkdir — publicado em 49663d8)
   -> terminal-engine: comandos de arquivos e manipulacao basica (touch/cat/echo/cp/mv/rm/tree —
-     implementados e validados nesta sessao, pendente commit)
-  -> Proximas decisoes arquiteturais
-     -> granularidade Lesson/Step/Challenge
-     -> telemetria: derivada, tabela propria ou pipeline
-     -> validadores reais de filesystem/stdout/stderr
-     -> politica etica da Trilha 06 Seguranca
-     -> politica de IA pedagogica
-     -> estrategia Supabase real antes de migrations
+     publicado em d6d0252)
+  -> apps/web + terminal-engine: primeira licao executavel local (2 licoes-piloto, terminal
+     interativo real, painel de licao minimo — implementado e validado nesta sessao, pendente
+     commit)
+  -> Proximas tarefas:
+     -> validadores locais mais ricos (ValidationRule/ExecutionResult reais, hoje so ha checagem
+        ad hoc por licao)
+     -> mais licoes-piloto / catalogo formal (Learning Catalog v1) ligado a UI
+     -> sem Supabase/migrations/IA por enquanto
 ```
 
 ## Marcos confirmados
 
-| Commit  | Descricao                                             | Estado    |
-| ------- | ----------------------------------------------------- | --------- |
-| bc52763 | Fundacao do monorepo CodeChat                         | Publicado |
-| e3ab4af | Domain Model v1 e Engine Contracts v1                 | Publicado |
-| c09bf74 | Planejamento de database e RLS                        | Publicado |
-| 3ca2096 | Curriculo Fase 0 e contratos de conteudo              | Publicado |
-| bd82a83 | Prototipo visual fullscreen focado no terminal        | Publicado |
-| a4c53f7 | Contratos TypeScript iniciais da Fase 1               | Publicado |
-| cdf220e | Registro de sessao do Cerebro Operacional             | Publicado |
-| fedb314 | Dashboard executivo do Cerebro Operacional            | Publicado |
-| 0d29750 | Learning Catalog v1 formalizado (6 trilhas)           | Publicado |
-| bebc3ea | Runtime Requirements v1                               | Publicado |
-| 49663d8 | Shell Core / Terminal Engine Minimo (pwd/ls/cd/mkdir) | Publicado |
+| Commit  | Descricao                                                       | Estado    |
+| ------- | --------------------------------------------------------------- | --------- |
+| bc52763 | Fundacao do monorepo CodeChat                                   | Publicado |
+| e3ab4af | Domain Model v1 e Engine Contracts v1                           | Publicado |
+| c09bf74 | Planejamento de database e RLS                                  | Publicado |
+| 3ca2096 | Curriculo Fase 0 e contratos de conteudo                        | Publicado |
+| bd82a83 | Prototipo visual fullscreen focado no terminal                  | Publicado |
+| a4c53f7 | Contratos TypeScript iniciais da Fase 1                         | Publicado |
+| cdf220e | Registro de sessao do Cerebro Operacional                       | Publicado |
+| fedb314 | Dashboard executivo do Cerebro Operacional                      | Publicado |
+| 0d29750 | Learning Catalog v1 formalizado (6 trilhas)                     | Publicado |
+| bebc3ea | Runtime Requirements v1                                         | Publicado |
+| 49663d8 | Shell Core / Terminal Engine Minimo (pwd/ls/cd/mkdir)           | Publicado |
+| d6d0252 | Comandos de arquivos do terminal (touch/cat/echo/cp/mv/rm/tree) | Publicado |
 
 ## Decisoes de governanca
 
@@ -102,31 +100,275 @@ Fundacao monorepo
 
 ## Proximos passos ativos
 
-1. Revisar e decidir a granularidade da Fase 0:
-   - manter uma licao curta como um `Challenge` implicito;
-   - ou formalizar `Step`s ja na Fase 1.
-2. Definir estrategia de telemetria:
-   - eventos derivados das entidades existentes;
-   - tabela propria de analytics;
-   - ou pipeline/event store fora do Postgres.
-3. **Terminal-engine — comandos de arquivos e manipulacao basica, implementados e validados nesta
-   sessao, pendente commit**: `touch`/`cat`/`echo`/`cp`/`mv`/`rm`/`tree` sobre o filesystem virtual
-   em memoria (`packages/terminal-engine/src`), somados aos 4 comandos ja publicados em `49663d8`.
-   Proximos passos: remover `.git/index.lock` via ambiente nativo, autorizacao de commit, e so
-   entao continuar com os proximos comandos da Fase 0 (10 comandos + 3 operadores restantes,
-   incluindo pipe/redirecionamento e permissoes/chmod) em fatia(s) separada(s).
-4. Planejar validadores reais de filesystem/stdout/stderr:
-   - existencia, conteudo, linhas, permissoes, cwd;
-   - codigo de saida e stdout/stderr;
-   - sem acoplar `ExecutionResult` a `Challenge` ou progresso.
-5. Formalizar a politica etica/isolamento da Trilha 06 antes de qualquer curriculo executavel de seguranca.
-6. Preparar a proxima instrucao para Claude Code:
-   - proximo recorte de comandos da Fase 0 (pipe/redirecionamento, permissoes/chmod, ou os
-     comandos de sistema restantes) ou especificacao de `TerminalSession`/perfis de SO;
-   - manter escopo sem Supabase, migrations, IA executavel ou UI nova;
-   - validar sempre com `pnpm typecheck`, `pnpm lint`, `pnpm format:check` e `pnpm test`.
+1. **Primeira licao executavel local — implementada e validada nesta sessao, pendente commit**:
+   `apps/web` agora executa comandos reais contra `packages/terminal-engine` (2 licoes-piloto:
+   criar pasta `projetos`, criar arquivo `README.md`). Proximos passos: remover
+   `.git/index.lock` se reaparecer, autorizacao de commit, e so entao expandir para mais licoes.
+2. **Validadores locais mais ricos**: a validacao desta fatia e uma funcao pura ad hoc por licao
+   (`Lesson.isComplete`, local a `apps/web`) — nao usa `ValidationRule`/`ExecutionResult` de
+   `@codechat/types`, porque nenhum avaliador `(ExecutionResult, ValidationRule) ->
+ValidationOutcome` existe ainda em lugar nenhum do monorepo. Planejar esse avaliador real
+   continua como pendencia separada (existencia, conteudo, linhas, permissoes, cwd; codigo de
+   saida e stdout/stderr; sem acoplar `ExecutionResult` a `Challenge` ou progresso).
+3. Revisar e decidir a granularidade da Fase 0 (Lesson com Challenge implicito vs. Step
+   formalizado) e a estrategia de telemetria (eventos derivados, tabela propria, ou pipeline) —
+   seguem em aberto, nao tocadas por esta fatia.
+4. Formalizar a politica etica/isolamento da Trilha 06 antes de qualquer curriculo executavel de
+   seguranca.
+5. **Governanca de escopo**: manter as proximas entregas focadas em validacao pedagogica local e
+   expansao do catalogo de licoes-piloto, sem introduzir Supabase, migrations ou IA por enquanto.
 
 ## Registro de sessoes
+
+### 2026-08-16 00:10:00 -03:00
+
+**Execucao: Fase 1 — Primeira Licao Executavel Local**
+
+- Tarefa aprovada, escopo: primeira experiencia executavel local da Fase 0, conectando
+  `apps/web` a `packages/terminal-engine` — sem Supabase, sem migrations, sem IA, sem backend
+  real, sem persistencia remota. Fluxo exigido: aplicacao carrega uma licao local -> aluno digita
+  comando no terminal -> comando roda no filesystem virtual -> estado da sessao preservado em
+  memoria -> validacao local informa sucesso/falha -> painel minimo mostra licao atual, objetivo
+  e status.
+- Preflight: `Cérebro Operacional.md` lido integralmente (a versao no inicio da sessao ja estava
+  correta quanto ao ultimo commit — `d6d0252` — e ja listava esta tarefa como proximo passo
+  ativo, entao nenhuma correcao de imprecisao foi necessaria desta vez). `git status -sb` no
+  inicio da sessao: limpo alem dos 3 arquivos de origem externa ja conhecidos (`Cérebro
+Operacional.md`, `docs/operations/visual-dashboard/index.html`,
+  `docs/operations/visual-operational-brain.md`) — preservados, nao tocados nesta fatia.
+  `.git/index.lock` ausente no inicio. Branch `main` rastreando `origin/main` confirmado em
+  `d6d0252`.
+
+**Arquivos criados**
+
+- `apps/web/src/features/lessons/types.ts` — tipo local `Lesson` (id, title, objective,
+  suggestedCommands, successMessage, `isComplete(filesystem) -> boolean`) e `LessonStatus`
+  (`'pending' | 'success'`).
+- `apps/web/src/features/lessons/lessons.ts` — as 2 licoes-piloto aprovadas: Licao 1 (criar
+  `projetos`), Licao 2 (criar `README.md`), cada uma com `isComplete` usando `getNode` de
+  `@codechat/terminal-engine`.
+- `apps/web/src/features/lessons/lessons.test.ts` — 9 `it()`: valida os ids das 2 licoes e o
+  comportamento de `isComplete` de cada uma contra estados reais produzidos por
+  `createInitialFilesystemState`/`runCommand` (inclui casos negativos: arquivo no lugar de
+  diretorio e vice-versa, comandos de exploracao que nao completam a licao).
+- `apps/web/src/features/terminal/terminal-format.ts` — utilitarios puros, sem React:
+  `promptLabel(cwd)` (prompt dinamico `aluno@plena:~$`/`aluno@plena:~/sub$`, exigido pelo
+  curriculo) e `splitLines(text)` (quebra stdout/stderr em linhas de exibicao, removendo so o
+  `\n` final).
+- `apps/web/src/features/terminal/terminal-format.test.ts` — 9 `it()` cobrindo `promptLabel` e
+  `splitLines` (incluindo caso do `echo` sem argumento, que produz uma linha vazia).
+- `apps/web/src/features/terminal/useTerminalSession.ts` — hook React que liga
+  `createInitialFilesystemState`/`runCommand` (`@codechat/terminal-engine`) ao ciclo de vida de
+  uma licao: mantem `filesystem`, o historico de linhas exibidas, o indice/status da licao atual,
+  e expoe `submitCommand`/`advanceLesson`. Estado 100% em memoria (React `useState`), sem
+  `localStorage`/`sessionStorage`.
+- `apps/web/src/features/terminal/TerminalApp.tsx` — componente de UI: preserva a janela de
+  terminal fullscreen ja aprovada (titlebar com os 3 pontos, tela escura monoespaçada),
+  acrescenta uma barra fina de licao (titulo, objetivo, status, botao "Proxima licao" quando
+  concluida) entre a titlebar e a tela, e substitui o cursor estatico por um `<input>` real dentro
+  de um `<form>` (Enter executa o comando via `submitCommand`).
+
+**Arquivos alterados**
+
+- `apps/web/package.json` — adicionada `"@codechat/terminal-engine": "workspace:*"` as
+  dependencies. Esta e a primeira dependencia de `apps/web` num package do monorepo (antes so
+  tinha `react`/`react-dom`/`vite`/`@vitejs/plugin-react`) — permitido explicitamente por
+  `docs/architecture/dependency-rules.md` ("apps/web ... podem realizar composicao dos modulos de
+  packages/*").
+- `apps/web/src/App.tsx` — reescrito: de um componente monolitico com linhas de terminal
+  hardcoded para um wrapper fino que renderiza `<TerminalApp />`
+  (`features/terminal/TerminalApp.tsx`).
+- `apps/web/src/styles/app.css` — `grid-template-rows` de `.terminal-window` alterado de
+  `auto minmax(0, 1fr)` (2 linhas) para `auto auto minmax(0, 1fr)` (3 linhas, para acomodar a
+  nova barra de licao entre a titlebar e a tela); + novas classes aditivas (`.lesson-bar*`,
+  `.terminal-line--error`, `.terminal-input-line*`) — nenhuma classe/regra existente foi removida
+  ou teve seu valor alterado alem da linha de `grid-template-rows`.
+- `Cérebro Operacional.md` — este registro.
+
+**Decisoes tecnicas tomadas** (dentro do escopo aprovado, para revisao do Codex)
+
+1. **Tipo `Lesson` local a `apps/web`, NAO reaproveitando `LessonCatalogEntry`/
+   `ChallengeCatalogEntry`/`ValidationRule` de `@codechat/types`** — `packages/types` nao foi
+   alterado por esta fatia. Motivos: (a) `LessonCatalogEntry`/`ChallengeCatalogEntry` modelam um
+   catalogo completo (`Track -> Course -> Module -> Lesson -> Challenge`, com `trackId`/
+   `moduleId`/`courseId` cruzados) — pesado demais para 2 licoes-piloto locais sem catalogo por
+   tras; (b) nao existe, em nenhum lugar do monorepo, uma funcao
+   `(ExecutionResult, ValidationRule) -> ValidationOutcome` que avalie `ValidationRule` de
+   verdade — isso ja era uma pendencia separada e explicita em "Proximos passos ativos" antes
+   desta sessao; construir esse avaliador agora seria expandir escopo alem do pedido ("primeira
+   experiencia executavel local", nao "motor de validacao real"). **Pede revisao explicita do
+   Codex.**
+2. **Validacao local ad hoc (`Lesson.isComplete: (filesystem) -> boolean`)** em vez de qualquer
+   forma de `ValidationRule` — funcao pura que consulta o filesystem virtual via `getNode`
+   (`@codechat/terminal-engine`, ja publica). Suficiente para provar o fluxo ponta-a-ponta exigido
+   pela tarefa; explicitamente marcado como pendencia (nao definitivo) em "Proximos passos
+   ativos".
+3. **Caminhos das licoes usam `/home/aluno`, nao `/home/student`** — o texto da tarefa mencionava
+   `/home/student/projetos` como exemplo, mas `createInitialFilesystemState` (ja publica em
+   `@codechat/terminal-engine`, fatia da Shell Core Minima) fixa `cwd: '/home/aluno'`, alinhado a
+   convencao real do curriculo (`docs/product/curriculum-phase-0.md`, secao 3: `usuario: aluno`).
+   Usar `/home/student` exigiria reimplementar o estado inicial do filesystem so para esta fatia,
+   divergindo do resto do `terminal-engine`. **Pede revisao do Codex** caso `/home/student` fosse
+   uma decisao de nomenclatura deliberada, nao apenas um exemplo generico do texto da tarefa.
+4. **Terminal com `<input>` real dentro de um `<form>`** (em vez de capturar `keydown` num `div`
+   focavel) — usa o submit nativo do formulario para tratar Enter, mais acessivel (label
+   associado ao input via `htmlFor`/`id`) e mais simples que reimplementar deteccao de tecla.
+   Clique em qualquer lugar da janela foca o input (`onClick` no `<main>`), mantendo a sensacao de
+   "terminal em foco constante" do prototipo visual original.
+5. **Barra de licao como uma linha fina dentro da janela do terminal** (nao uma sidebar/painel
+   separado) — para nao "trocar a direcao visual fullscreen terminal ja aprovada" (regra
+   explicita da tarefa). Unica mudanca estrutural no CSS existente foi o `grid-template-rows`
+   (2 -> 3 linhas) para acomodar essa barra; toda cor/tipografia/paleta original foi preservada.
+6. **`useTerminalSession` guarda `lessonStatus` separado de `currentLesson.isComplete(...)`** —
+   `isComplete` e recalculada a cada comando, mas o status exibido (`pending`/`success`) so muda
+   uma vez por licao (a licao nao "desconclui" se o aluno depois apagar a pasta/arquivo), para
+   nao confundir o aluno com um painel que oscila. Mensagem de sucesso e adicionada as linhas do
+   terminal apenas na transicao `pending -> success`, nao a cada comando subsequente.
+7. **`avancarLicao` (`advanceLesson`) e uma acao explicita do aluno (botao), nao automatica** —
+   evita pular a licao concluida antes do aluno ler a mensagem de sucesso/explorar o resultado;
+   consistente com o ritmo pedagogico esperado (`docs/product/curriculum-phase-0.md`: dicas
+   progressivas, sem avanco forcado).
+
+**Como a fatia respeita Runtime Requirements v1**
+
+`useTerminalSession` usa exclusivamente `runCommand`/`createInitialFilesystemState`
+(`@codechat/terminal-engine`, perfil `virtual-shell`: `networkAccess: 'none'`,
+`processExecution: 'simulated'`, `persistence: 'session'`, `sandboxIsolation: 'interpreter'`) —
+nenhuma chamada de rede, nenhum processo real, nenhuma persistencia em disco/`localStorage`. O
+estado da sessao vive inteiramente em `useState` do React, consistente com `persistence:
+'session'`: dura enquanto a pagina estiver aberta, nunca sobrevive a um reload. Nenhum outro
+adapter (`pyodide`/`webcontainer`/`remote-runner`) e tocado por esta fatia.
+
+**Testes criados**
+
+- `apps/web/src/features/lessons/lessons.test.ts` (9 `it()`): ids estaveis das 2 licoes;
+  `isComplete` false no estado inicial e apos comandos de exploracao (`pwd`/`ls`) para ambas;
+  `isComplete` true apos o comando correto (`mkdir projetos`/`touch README.md`); `isComplete`
+  false quando existe um no do tipo errado no mesmo caminho (arquivo em vez de diretorio, e
+  vice-versa); Licao 2 permanece completa apos um comando de leitura (`cat`) que nao remove o
+  arquivo.
+- `apps/web/src/features/terminal/terminal-format.test.ts` (9 `it()`): `promptLabel` abrevia
+  `/home/aluno` para `~`, subdiretorios para `~/<resto>`, mantem caminhos fora do home por
+  extenso; `splitLines` remove so o `\n` final, preserva linhas em branco no meio, retorna array
+  vazio para string vazia, nao adiciona linha extra sem `\n` final, e trata `'\n'` (saida do
+  `echo` sem argumentos) como uma linha vazia.
+- Nao foram adicionados testes de DOM/render (`@testing-library/react`/`jsdom`) nesta fatia —
+  ver "Decisoes tecnicas"/pendencias: essas dependencias nao existem no repositorio, e adicionar
+  uma dependencia nova sem conseguir rodar `pnpm install` real no bridge deste ambiente seria um
+  risco nao validavel nesta sessao. Toda a logica nao-trivial desta fatia (validadores de licao,
+  formatacao de prompt/linhas) e pura e coberta pelos 2 arquivos de teste acima; a composicao
+  React (`TerminalApp.tsx`) e enxuta o suficiente (renderizacao direta do estado do hook, sem
+  logica condicional complexa) para nao exigir teste de DOM nesta fatia.
+
+**Comandos executados**
+
+- Leitura completa de `Cérebro Operacional.md`; leitura de `apps/web/src/{App.tsx, index.tsx,
+index.ts, styles/app.css}`, `apps/web/{package.json, tsconfig.json, vite.config.ts,
+index.html}`, `docs/architecture/dependency-rules.md`, `docs/product/curriculum-phase-0.md`
+  (secoes 1-4), `packages/types/src/index.ts` (para avaliar reuso de `LessonCatalogEntry`/
+  `ChallengeCatalogEntry`/`ValidationRule`).
+- `git status -sb`, checagem de `.git/index.lock`, `git branch -vv`, `git log --oneline -8`
+  (pre-check); `git status -sb` + checagem de `.git/index.lock` (pos-escrita).
+- **Validacao com `pnpm install` REAL** (novidade desta sessao): construido um ambiente-proxy
+  completo (`/tmp/proxy-web`) espelhando `packages/config`, `packages/types`, `packages/terminal-
+engine` (estado real atual, re-sincronizado) e o novo `apps/web`, com `pnpm-workspace.yaml`
+  proprio — rodado num ambiente com acesso real de rede (diferente do bridge do dispositivo, que
+  nunca teve rede), permitindo `corepack pnpm@10.28.0 install` de verdade pela primeira vez em
+  todas as sessoes deste projeto. Isso resolveu de fato o link de workspace
+  `@codechat/terminal-engine` (`apps/web/node_modules/@codechat/terminal-engine ->
+../../../../packages/terminal-engine`), validando a resolucao real do pnpm, nao uma simulacao
+  via symlink manual como nas fatias anteriores.
+- Tentativa real (bridge do dispositivo, sem rede, para registro/comparacao):
+  `corepack pnpm@10.28.0 --filter @codechat/web typecheck` diretamente contra o repositorio.
+
+**Validacoes executadas e resultados**
+
+No ambiente-proxy (`/tmp/proxy-web`, com `pnpm install` real via rede):
+
+- `pnpm -r --if-present run typecheck` -> **passou** nos 4 projetos com script
+  (`packages/config`, `packages/types`, `packages/terminal-engine`, `apps/web`) (exit 0). Unico
+  ajuste necessario: o `tsconfig.json` de `packages/terminal-engine` reaproveitado de uma sessao
+  anterior (`/tmp/proxy4`) tinha um `extends` com profundidade de caminho especifica daquele
+  proxy (`../../config/...`) — corrigido para `../config/...`, igual ao arquivo real do
+  repositorio (conferido por `diff` contra o arquivo real antes de seguir); nenhuma mudanca foi
+  feita no arquivo real, que ja estava correto.
+- `eslint .` -> **passou**, 0 erros/avisos (exit 0).
+- `prettier --check .` -> falhou na primeira passada (1 arquivo,
+  `apps/web/src/features/terminal/useTerminalSession.ts` — quebra de linha para caber em
+  `printWidth: 100`; `pnpm-lock.yaml`, gerado pelo `pnpm install` deste proxy, tambem apareceu no
+  aviso mas nao faz parte da entrega, ignorado); corrigido com `prettier --write`; reexecutado
+  (excluindo `pnpm-lock.yaml`) -> **passou**.
+- `vitest run` -> **passou**, **80/80 testes** (7 arquivos: os 4 ja existentes de
+  `packages/types`/`packages/terminal-engine` inalterados, + `lessons.test.ts` e
+  `terminal-format.test.ts`, novos) (exit 0).
+- `pnpm --filter @codechat/web build` (`vite build`) -> **passou**: 51 modulos, `dist/index.html`
+  - CSS + JS gerados sem erro (exit 0).
+- `pnpm --filter @codechat/web dev` -> servidor subiu em `http://127.0.0.1:5173/` sem erros no
+  log; `curl` na raiz e em `/src/index.tsx` retornaram HTTP 200; o modulo transformado de
+  `TerminalApp.tsx` foi inspecionado via `curl` e nao apresentou erro de transformacao do
+  React/Vite. Servidor encerrado ao final do teste.
+
+Tentativa real contra o repositorio: `corepack pnpm@10.28.0 --filter @codechat/web typecheck`
+falhou pelo mesmo motivo ja documentado em todas as sessoes anteriores — **o bridge do
+dispositivo nao tem acesso de rede** (`Error when performing the request to
+https://registry.npmjs.org/pnpm/-/pnpm-10.28.0.tgz`, `Proxy response (403) !== 200 when HTTP
+Tunneling`). **Isso nao e validacao real do monorepo** — mesma pendencia explicita de sempre;
+mas, pela primeira vez, a validacao em ambiente-proxy incluiu um `pnpm install` genuino (nao uma
+simulacao de symlink), o que aumenta a confianca de que a resolucao de workspace vai funcionar
+identicamente no `pnpm install` nativo que roda no Windows.
+
+**Riscos / pendencias**
+
+- Pendencia de validacao real do monorepo completo (`pnpm install`/`typecheck`/`lint`/
+  `format:check`/`test`/`build` nativos no Windows) — mesma pendencia recorrente de toda sessao
+  anterior a esta, por falta de acesso de rede do bridge do dispositivo.
+- Decisao tecnica #3 (`/home/aluno` em vez de `/home/student`) e a unica desta fatia que diverge
+  do texto literal da tarefa — sinalizada explicitamente acima como ponto de revisao obrigatoria
+  do Codex.
+- Nenhum teste de DOM/render foi adicionado (ver "Testes criados") — se o Codex/Arquiteto decidir
+  investir em `@testing-library/react`/`jsdom` para testar a composicao visual diretamente, isso
+  fica para uma fatia futura dedicada (traz uma dependencia nova que nao pode ser validada com
+  `pnpm install` real neste ambiente sem a rota de proxy completa ja usada aqui).
+- A validacao local desta fatia (`Lesson.isComplete`) e deliberadamente mais simples que o
+  `ValidationRule`/`ExecutionResult` completo de `@codechat/types` (ver decisao tecnica #1/#2) —
+  pendencia explicita ja registrada em "Proximos passos ativos" (item 2).
+
+**Pontos especificos para o Codex revisar**
+
+1. Decisao tecnica #1: tipo `Lesson` local a `apps/web`, sem reaproveitar `LessonCatalogEntry`/
+   `ChallengeCatalogEntry`/`ValidationRule` de `@codechat/types` nesta fatia.
+2. Decisao tecnica #3: uso de `/home/aluno` (convencao real do `terminal-engine`/curriculo) em
+   vez do `/home/student` mencionado no texto da tarefa.
+3. Decisao tecnica #7: avanco de licao como acao explicita do aluno (botao "Proxima licao"), nao
+   automatico ao completar o objetivo.
+4. Ausencia de testes de DOM/render nesta fatia (ver "Riscos/pendencias") — confirmar se isso e
+   aceitavel para esta etapa ou se deve ser resolvido antes do commit.
+
+**Decisoes tomadas nesta sessao**
+
+- `apps/web` agora depende de `@codechat/terminal-engine` (`workspace:*`) — primeira dependencia
+  de `apps/web` a um package do monorepo; permitido por `docs/architecture/dependency-rules.md`.
+- Modelo de licao/validacao mantido local a `apps/web`, deliberadamente distinto do Learning
+  Catalog v1 (`@codechat/types`) — `packages/types` nao foi alterado.
+  nesta fatia.
+- Direcao visual fullscreen terminal preservada; unica mudanca estrutural de CSS foi
+  `grid-template-rows` (2 -> 3 linhas) para acomodar a barra de licao.
+- Nenhuma decisao sobre Supabase, migrations, backend real ou IA foi tomada — seguem fora de
+  escopo desta etapa.
+
+**Nenhum commit ou push foi realizado** (fora de autorizacao explicita, conforme regra de
+governanca).
+
+**Proxima retomada**
+
+1. Ler este arquivo primeiro.
+2. Confirmar `git status -sb` e remover `.git/index.lock` via ambiente nativo, se presente.
+3. Levar `apps/web/src/features/{lessons,terminal}/*`, `apps/web/package.json` e os pontos
+   especificos listados acima para revisao final/commit — em especial as decisoes tecnicas #1 e
+   #3.
+4. Apos aprovacao do usuario, executar `git add` + `commit` + `push`.
+5. So entao considerar: mais licoes-piloto, validadores locais mais ricos, ou integracao maior
+   com o Learning Catalog v1 — nunca tudo de uma vez.
 
 ### 2026-08-15 18:45:00 -03:00
 
