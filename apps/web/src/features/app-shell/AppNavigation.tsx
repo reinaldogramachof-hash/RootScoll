@@ -1,5 +1,5 @@
 import type { AppScreen } from './types';
-import logo from '../../images/logo.png';
+import logo from '../../images/logo.svg';
 
 export interface AppNavigationProps {
   readonly screen: AppScreen;
@@ -17,11 +17,8 @@ const NAV_LABELS: Partial<Record<AppScreen, string>> = {
 };
 
 /**
- * Barra de navegação superior do shell — visível em todas as telas
- * autenticadas (painel/perfil/trilhas), ausente no login e na sala Terminal
- * (que preserva o visual fullscreen próprio, sem competir com esta barra).
- * Simples, textual, sem menu hambúrguer nem mega-menu — "navegação clara,
- * mesmo que mock/local", não um produto de navegação em si.
+ * Navegacao superior do shell autenticado. A Sala Terminal segue fullscreen e
+ * nao recebe esta barra para manter o foco do ambiente de pratica.
  */
 function AppNavigation({
   screen,
@@ -32,34 +29,40 @@ function AppNavigation({
   onLogout,
 }: AppNavigationProps) {
   return (
-    <nav className="app-nav" aria-label="Navegação principal">
+    <nav className="app-nav" aria-label="Navegacao principal">
       <span className="app-nav__brand">
         <img className="app-nav__brand-logo" src={logo} alt="" aria-hidden="true" />
-        RootScoll
+        <span>
+          RootScoll
+          <small>Escola Raiz</small>
+        </span>
       </span>
 
-      <button
-        type="button"
-        className={`app-nav__link ${screen === 'dashboard' ? 'app-nav__link--active' : ''}`}
-        onClick={onOpenDashboard}
-      >
-        {NAV_LABELS.dashboard}
-      </button>
-      <button
-        type="button"
-        className={`app-nav__link ${screen === 'tracks' ? 'app-nav__link--active' : ''}`}
-        onClick={onOpenTracks}
-      >
-        {NAV_LABELS.tracks}
-      </button>
-      <button
-        type="button"
-        className={`app-nav__link ${screen === 'profile' ? 'app-nav__link--active' : ''}`}
-        onClick={onOpenProfile}
-      >
-        {NAV_LABELS.profile}
-      </button>
+      <div className="app-nav__links">
+        <button
+          type="button"
+          className={`app-nav__link ${screen === 'dashboard' ? 'app-nav__link--active' : ''}`}
+          onClick={onOpenDashboard}
+        >
+          {NAV_LABELS.dashboard}
+        </button>
+        <button
+          type="button"
+          className={`app-nav__link ${screen === 'tracks' ? 'app-nav__link--active' : ''}`}
+          onClick={onOpenTracks}
+        >
+          {NAV_LABELS.tracks}
+        </button>
+        <button
+          type="button"
+          className={`app-nav__link ${screen === 'profile' ? 'app-nav__link--active' : ''}`}
+          onClick={onOpenProfile}
+        >
+          {NAV_LABELS.profile}
+        </button>
+      </div>
 
+      <span className="app-nav__status">MVP local</span>
       <span className="app-nav__user">{userName}</span>
       <button type="button" className="app-nav__logout" onClick={onLogout}>
         Sair

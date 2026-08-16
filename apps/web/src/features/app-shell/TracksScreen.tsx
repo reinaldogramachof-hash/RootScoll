@@ -7,36 +7,69 @@ export interface TracksScreenProps {
 }
 
 /**
- * Catálogo local de trilhas e módulos — lista densa, não um mosaico de
- * cards. Só a trilha com módulos `available` permite entrar na Sala
- * Terminal; as demais aparecem como "em breve", sem prometer datas ou
- * números que não existem.
+ * Catalogo executivo local. A tela preserva as 6 macrotrilhas de navegacao e
+ * mostra sinais das trilhas granulares do curriculo v2 sem criar rotas reais.
  */
 function TracksScreen({ tracks, onBack, onEnterClassroom }: TracksScreenProps) {
   return (
     <div className="screen tracks-screen">
-      <h1 className="screen__title">Trilhas</h1>
+      <div className="screen__header">
+        <div>
+          <p className="screen__eyebrow">Catalogo de aprendizado</p>
+          <h1 className="screen__title">Trilhas</h1>
+        </div>
+        <span className="screen__status">6 macrotrilhas</span>
+      </div>
+
+      <p className="screen__lead">
+        Navegacao executiva em seis areas, com aprofundamento interno orientado pelo curriculo Zero
+        to Junior v2.
+      </p>
 
       <ul className="tracks-screen__list">
         {tracks.map((track) => (
           <li key={track.id} className={`track-row track-row--${track.status}`}>
             <div className="track-row__header">
-              <span className="track-row__title">{track.title}</span>
+              <div>
+                <span className="track-row__phase">{track.phase}</span>
+                <h2 className="track-row__title">{track.title}</h2>
+              </div>
               <span className={`track-row__status track-row__status--${track.status}`}>
-                {track.status === 'available' ? 'Disponível' : 'Em breve'}
+                {track.status === 'available' ? 'Disponivel' : 'Em breve'}
               </span>
             </div>
+
             <p className="track-row__description">{track.description}</p>
+
+            <div className="track-row__progress" aria-label={`Progresso de ${track.title}`}>
+              <span>
+                <strong>{track.progress}%</strong> concluido
+              </span>
+              <span className="dashboard__meter" aria-hidden="true">
+                <span style={{ width: `${track.progress}%` }} />
+              </span>
+            </div>
+
+            <ul className="track-row__competencies">
+              {track.competencies.map((competency) => (
+                <li key={competency}>{competency}</li>
+              ))}
+            </ul>
+
+            <p className="track-row__evidence">{track.evidence}</p>
+
             <ul className="track-row__modules">
               {track.modules.map((module) => (
                 <li key={module.id} className={`track-module track-module--${module.status}`}>
+                  <span>{module.mode}</span>
                   {module.title}
                 </li>
               ))}
             </ul>
+
             {track.status === 'available' && (
               <button type="button" className="track-row__action" onClick={onEnterClassroom}>
-                Entrar na Sala Terminal →
+                Entrar na Sala Terminal
               </button>
             )}
           </li>
@@ -44,7 +77,7 @@ function TracksScreen({ tracks, onBack, onEnterClassroom }: TracksScreenProps) {
       </ul>
 
       <button type="button" className="screen__back" onClick={onBack}>
-        ← Voltar ao painel
+        Voltar ao painel
       </button>
     </div>
   );

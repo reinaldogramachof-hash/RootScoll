@@ -103,8 +103,9 @@ mindmap
       Privacidade e Credenciais
 ```
 
-Observação: o catálogo v1 publicado mantém 6 trilhas macro; a pesquisa curricular Zero to Junior
-propõe 14 trilhas granulares como visão pedagógica futura.
+Observação: o catálogo v1 publicado mantém 6 trilhas macro. O currículo v2 recomenda preservar essas
+6 macrotrilhas como navegação executiva e usar as 14 trilhas granulares como progressão pedagógica
+interna.
 
 ---
 
@@ -119,32 +120,32 @@ timeline
     Terminal Local : Shell core mínimo : Comandos de arquivos : Primeira lição executável
     App Shell : Bloco pedagógico local : Login mock : Painel : Perfil : Trilhas : Sala Terminal
     Identidade : Frontend Design System v1 : Tokens : Tipografia : Fundação visual RootScoll
-    Pesquisa Estratégica : Zero to Junior : Posicionamento regulatório Brasil
+    Pesquisa Estratégica : Zero to Junior v2 : Posicionamento regulatório Brasil
 ```
 
 ---
 
 ## 6. Marcos Técnicos
 
-| Marco Técnico                         | Commit / Referência                                | Status     | Impacto no Projeto                                                            |
-| :------------------------------------ | :------------------------------------------------- | :--------- | :---------------------------------------------------------------------------- |
-| Fundação do Monorepo                  | `bc52763`                                          | Publicado  | Estrutura modular com pnpm workspaces e TypeScript.                           |
-| Domain Model v1 e Engine Contracts v1 | `e3ab4af`                                          | Publicado  | Entidades pedagógicas e contratos de execução.                                |
-| Planejamento de Database e RLS        | `c09bf74`                                          | Publicado  | Modelo conceitual sem acoplamento prematuro.                                  |
-| Currículo Fase 0                      | `3ca2096`                                          | Publicado  | Primeiras lições e gramática de validação.                                    |
-| Protótipo Visual Fullscreen           | `bd82a83`                                          | Publicado  | Direção visual inicial aprovada.                                              |
-| Contratos TypeScript Fase 1           | `a4c53f7`                                          | Publicado  | `ExecutionResult`, `ValidationRule`, filesystem virtual.                      |
-| Dashboard Executivo                   | `fedb314`                                          | Publicado  | Cérebro visual e dashboard navegável.                                         |
-| Product Vision v1                     | `docs/product/product-vision-v1.md`                | Publicado  | Norte de produto, IA pedagógica e trilhas estratégicas.                       |
-| Learning Catalog v1                   | `0d29750`                                          | Publicado  | 6 trilhas macro, segmentos e contratos `Track -> Course -> Module -> Lesson`. |
-| Runtime Requirements v1               | `bebc3ea`                                          | Publicado  | Perfis conceituais por adapter/runtime.                                       |
-| Shell Core Mínimo                     | `49663d8`                                          | Publicado  | `pwd`, `ls`, `cd`, `mkdir` em filesystem virtual.                             |
-| Comandos de Arquivos do Terminal      | `d6d0252`                                          | Publicado  | `touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`.                             |
-| Primeira Lição Executável Local       | `c61fa72`                                          | Publicado  | `apps/web` conectado ao `terminal-engine`.                                    |
-| App Shell RootScoll + Frontend System | `53699be`                                          | Publicado  | App shell, fluxo pedagógico local, imagens e `docs/frontend.md`.              |
-| Currículo Zero to Junior              | `docs/product/zero-to-junior-curriculum-v1.md`     | Em revisão | 14 trilhas granulares; precisa de aprofundamento de fontes e granularidade.   |
-| Fundação Visual RootScoll             | `apps/web/src/styles/{tokens,typography}.css`      | Em revisão | Tokens, tipografia, foco e retokenização visual; pendente commit.             |
-| Posicionamento Regulatório Brasil     | `docs/product/regulatory-positioning-brazil-v1.md` | Em revisão | Tese comercial/regulatória segura para Brasil; exige parecer jurídico futuro. |
+| Marco Técnico                         | Commit / Referência                                | Status     | Impacto no Projeto                                                                |
+| :------------------------------------ | :------------------------------------------------- | :--------- | :-------------------------------------------------------------------------------- |
+| Fundação do Monorepo                  | `bc52763`                                          | Publicado  | Estrutura modular com pnpm workspaces e TypeScript.                               |
+| Domain Model v1 e Engine Contracts v1 | `e3ab4af`                                          | Publicado  | Entidades pedagógicas e contratos de execução.                                    |
+| Planejamento de Database e RLS        | `c09bf74`                                          | Publicado  | Modelo conceitual sem acoplamento prematuro.                                      |
+| Currículo Fase 0                      | `3ca2096`                                          | Publicado  | Primeiras lições e gramática de validação.                                        |
+| Protótipo Visual Fullscreen           | `bd82a83`                                          | Publicado  | Direção visual inicial aprovada.                                                  |
+| Contratos TypeScript Fase 1           | `a4c53f7`                                          | Publicado  | `ExecutionResult`, `ValidationRule`, filesystem virtual.                          |
+| Dashboard Executivo                   | `fedb314`                                          | Publicado  | Cérebro visual e dashboard navegável.                                             |
+| Product Vision v1                     | `docs/product/product-vision-v1.md`                | Publicado  | Norte de produto, IA pedagógica e trilhas estratégicas.                           |
+| Learning Catalog v1                   | `0d29750`                                          | Publicado  | 6 trilhas macro, segmentos e contratos `Track -> Course -> Module -> Lesson`.     |
+| Runtime Requirements v1               | `bebc3ea`                                          | Publicado  | Perfis conceituais por adapter/runtime.                                           |
+| Shell Core Mínimo                     | `49663d8`                                          | Publicado  | `pwd`, `ls`, `cd`, `mkdir` em filesystem virtual.                                 |
+| Comandos de Arquivos do Terminal      | `d6d0252`                                          | Publicado  | `touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`.                                 |
+| Primeira Lição Executável Local       | `c61fa72`                                          | Publicado  | `apps/web` conectado ao `terminal-engine`.                                        |
+| App Shell RootScoll + Frontend System | `53699be`                                          | Publicado  | App shell, fluxo pedagógico local, imagens e `docs/frontend.md`.                  |
+| Currículo Zero to Junior v2           | `docs/product/zero-to-junior-curriculum-v2.md`     | Em revisão | 6 macrotrilhas + 14 trilhas internas, competências, 20 blocos MVP, projetos e IA. |
+| Fundação Visual RootScoll             | `apps/web/src/styles/{tokens,typography}.css`      | Em revisão | Tokens, tipografia, foco e retokenização visual; pendente commit.                 |
+| Posicionamento Regulatório Brasil     | `docs/product/regulatory-positioning-brazil-v1.md` | Em revisão | Tese comercial/regulatória segura para Brasil; exige parecer jurídico futuro.     |
 
 ---
 
@@ -163,7 +164,7 @@ timeline
 ### Em Revisão Local
 
 1. Fundação visual RootScoll no `apps/web`.
-2. Currículo Zero to Junior.
+2. Currículo Zero to Junior v2.
 3. Posicionamento regulatório Brasil.
 
 ### Ainda Não Implementado
@@ -217,8 +218,8 @@ Evitar:
 
 1. **Fechar a fundação visual RootScoll**: revisar diffs do Claude, rodar validações reais, commit e
    push se aprovado.
-2. **Aprofundar currículo Zero to Junior**: usar Gemini/Antigravity para enriquecer fontes,
-   granularidade aula-a-aula e critérios de avaliação.
+2. **Construir telas a partir do currículo v2**: dashboard por competências, detalhe de trilha,
+   sala Terminal com evidências, painel lateral denso e perfil com portfólio/post-mortems.
 3. **Consolidar posicionamento regulatório**: submeter `regulatory-positioning-brazil-v1.md` a
    advogado antes de copy pública, certificado/atestado ou venda B2B.
 4. **Próxima fatia de código**: validadores locais formais ou lapidação UI/UX dos painéis densos,

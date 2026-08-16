@@ -25,6 +25,12 @@ export interface MockUser {
   readonly name: string;
   readonly email: string;
   readonly role: UserRole;
+  /** Marco pedagógico local usado nas telas mock do shell. */
+  readonly currentPhase: string;
+  /** Competência em foco nesta retomada local. */
+  readonly currentCompetency: string;
+  /** Evidências mock registradas no portfólio local. */
+  readonly evidenceCount: number;
   /** `Track.id` da trilha em andamento. */
   readonly currentTrackId: string;
   /** Progresso geral do aluno, 0–100. Número mock, não calculado. */
@@ -37,12 +43,17 @@ export interface TrackModule {
   readonly id: string;
   readonly title: string;
   readonly status: TrackStatus;
+  readonly mode: 'teoria' | 'pratica' | 'avaliacao' | 'projeto' | 'planejado';
 }
 
 export interface Track {
   readonly id: string;
   readonly title: string;
   readonly description: string;
+  readonly phase: string;
+  readonly progress: number;
+  readonly competencies: readonly string[];
+  readonly evidence: string;
   readonly status: TrackStatus;
   readonly modules: readonly TrackModule[];
 }

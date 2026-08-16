@@ -1,5 +1,5 @@
 /*
- * RootScoll — Fundação visual (Task 10)
+ * RootScoll ÔÇö Funda├º├úo visual (Task 10)
  * Tokens e tipografia vivem em arquivos dedicados; este arquivo aplica-os
  * aos componentes existentes do app shell, learning flow e terminal.
  * Fonte oficial do design system: docs/frontend.md.
@@ -19,7 +19,7 @@
   box-sizing: border-box;
 }
 
-/* Foco visível — obrigatório em todo elemento navegável (docs/frontend.md §17). */
+/* Foco vis├¡vel ÔÇö obrigat├│rio em todo elemento naveg├ível (docs/frontend.md ┬º17). */
 :focus-visible {
   outline: 2px solid var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
@@ -139,9 +139,9 @@ body {
   color: var(--success);
 }
 
-/* Não referenciado em nenhum componente atualmente (classe reservada para uso
-   futuro do cursor piscante); cor alinhada à paleta para não destoar caso
-   volte a ser usada. Candidata a remoção na próxima lapidação UI/UX. */
+/* N├úo referenciado em nenhum componente atualmente (classe reservada para uso
+   futuro do cursor piscante); cor alinhada ├á paleta para n├úo destoar caso
+   volte a ser usada. Candidata a remo├º├úo na pr├│xima lapida├º├úo UI/UX. */
 .terminal-cursor {
   display: inline-block;
   color: var(--warning);
@@ -206,10 +206,10 @@ body {
 }
 
 /* ------------------------------------------------------------------------
- * Barra de progresso do bloco pedagógico (etapa Teoria -> Prática ->
- * Avaliação -> Conclusão + contagem de blocos). Fina, entre a titlebar e o
- * conteúdo — mesma linha do antigo `.lesson-bar` (Fase 1), agora orientada a
- * etapas em vez de a uma única lição.
+ * Barra de progresso do bloco pedag├│gico (etapa Teoria -> Pr├ítica ->
+ * Avalia├º├úo -> Conclus├úo + contagem de blocos). Fina, entre a titlebar e o
+ * conte├║do ÔÇö mesma linha do antigo `.lesson-bar` (Fase 1), agora orientada a
+ * etapas em vez de a uma ├║nica li├º├úo.
  * ------------------------------------------------------------------------ */
 
 .progress-bar {
@@ -269,10 +269,10 @@ body {
 }
 
 /* ------------------------------------------------------------------------
- * Conteúdo de etapa — ocupa o mesmo espaço do antigo `.terminal-screen`
- * sozinho: ou o terminal (prática/avaliação), ou um painel de conteúdo
- * (teoria/conclusão). `.terminal-screen` mantém seu próprio scroll interno;
- * `.step-panel` recebe tratamento equivalente para teoria/conclusão.
+ * Conte├║do de etapa ÔÇö ocupa o mesmo espa├ºo do antigo `.terminal-screen`
+ * sozinho: ou o terminal (pr├ítica/avalia├º├úo), ou um painel de conte├║do
+ * (teoria/conclus├úo). `.terminal-screen` mant├®m seu pr├│prio scroll interno;
+ * `.step-panel` recebe tratamento equivalente para teoria/conclus├úo.
  * ------------------------------------------------------------------------ */
 
 .step-content {
@@ -329,7 +329,7 @@ body {
   background: rgba(54, 230, 165, 0.22);
 }
 
-/* Faixa de veredito exibida junto ao terminal quando a avaliação passa. */
+/* Faixa de veredito exibida junto ao terminal quando a avalia├º├úo passa. */
 .assessment-banner {
   display: flex;
   flex-wrap: wrap;
@@ -362,11 +362,11 @@ body {
 }
 
 /* ------------------------------------------------------------------------
- * Sidebar lateral direita — painel de controle oculto/recolhível. Nasce
+ * Sidebar lateral direita ÔÇö painel de controle oculto/recolh├¡vel. Nasce
  * recolhida (fora da tela, `translateX(100%)`), fixa fora do fluxo do
- * documento: não altera o layout do `.terminal-window` nem compete com o
- * terminal. Só a aba de alternância (`.sidebar__toggle`) fica sempre
- * visível, na borda direita.
+ * documento: n├úo altera o layout do `.terminal-window` nem compete com o
+ * terminal. S├│ a aba de altern├óncia (`.sidebar__toggle`) fica sempre
+ * vis├¡vel, na borda direita.
  * ------------------------------------------------------------------------ */
 
 .sidebar {
@@ -451,7 +451,7 @@ body {
 }
 
 /* ------------------------------------------------------------------------
- * Mentor flutuante — pequeno, discreto, no canto inferior direito. Nunca
+ * Mentor flutuante ÔÇö pequeno, discreto, no canto inferior direito. Nunca
  * ocupa a tela toda nem se parece com um chat principal.
  * ------------------------------------------------------------------------ */
 
@@ -543,9 +543,9 @@ body {
 }
 
 /* ==========================================================================
- * App Navigation v1 (Task 9) — shell de acesso local: login mock -> painel
+ * App Navigation v1 (Task 9) ÔÇö shell de acesso local: login mock -> painel
  * -> perfil/trilhas -> sala Terminal. Ver docs/product/app-navigation-v1.md.
- * Paleta e tipografia RootScoll (docs/frontend.md); telas densas e sóbrias,
+ * Paleta e tipografia RootScoll (docs/frontend.md); telas densas e s├│brias,
  * sem hero/landing/mosaico de cards decorativos.
  * ========================================================================== */
 
@@ -914,12 +914,12 @@ body {
 }
 
 .track-module--available::before {
-  content: '✓ ';
+  content: 'Ô£ô ';
   color: var(--primary);
 }
 
 .track-module--coming-soon::before {
-  content: '· ';
+  content: '┬À ';
 }
 
 .track-row__action {
@@ -953,10 +953,10 @@ body {
 }
 
 /* ==========================================================================
- * Componentes base RootScoll (docs/frontend.md §9) — classes utilitárias
- * canônicas disponibilizadas para a próxima lapidação UI/UX. As telas atuais
- * mantêm suas classes BEM específicas (já retonalizadas acima); migrá-las
- * para estas classes utilitárias é trabalho da próxima etapa, não desta.
+ * Componentes base RootScoll (docs/frontend.md ┬º9) ÔÇö classes utilit├írias
+ * can├┤nicas disponibilizadas para a pr├│xima lapida├º├úo UI/UX. As telas atuais
+ * mant├¬m suas classes BEM espec├¡ficas (j├í retonalizadas acima); migr├í-las
+ * para estas classes utilit├írias ├® trabalho da pr├│xima etapa, n├úo desta.
  * ========================================================================== */
 
 .btn {
@@ -1041,3 +1041,513 @@ body {
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(54, 230, 165, 0.12);
 }
+
+/* ==========================================================================
+ * Lapidacao UI/UX - fluxo de acesso ate a Sala Terminal.
+ * ========================================================================== */
+
+.app-shell {
+  height: 100vh;
+  overflow: auto;
+}
+
+/* ============================================================
+ * Layout principal — split 60 / 40
+ * ============================================================ */
+
+.login-screen {
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* ============================================================
+ * PAINEL ESQUERDO — Boas-vindas (fundo claro)
+ * ============================================================ */
+
+.login-welcome {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 40px 56px;
+  background: linear-gradient(145deg, #f0faf6 0%, #e8f4ff 55%, #f0faf6 100%);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Dot-pattern tecnico no fundo */
+.login-welcome::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(54, 230, 165, 0.13) 1px, transparent 1px);
+  background-size: 26px 26px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Linha decorativa divisoria direita */
+.login-welcome::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 8%;
+  bottom: 8%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(54, 230, 165, 0.45) 40%, rgba(58, 184, 255, 0.35) 70%, transparent);
+  z-index: 1;
+}
+
+.login-welcome > * {
+  position: relative;
+  z-index: 2;
+}
+
+.login-welcome__eyebrow {
+  margin: 0 0 12px;
+  color: #36e6a5;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.login-welcome__logo-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.login-welcome__logo {
+  width: 52px;
+  height: 52px;
+  filter: drop-shadow(0 0 8px rgba(54, 230, 165, 0.35));
+  animation: float-gently 4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+.login-welcome__wordmark {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #081b20;
+  letter-spacing: -0.02em;
+}
+
+.login-welcome__headline {
+  margin: 0 0 6px;
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(1.6rem, 2.4vw, 2.4rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #081b20;
+  letter-spacing: -0.025em;
+}
+
+.login-welcome__tagline {
+  margin: 0 0 20px;
+  font-family: var(--font-heading), sans-serif;
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  font-weight: 700;
+  color: #36e6a5;
+  letter-spacing: -0.02em;
+}
+
+.login-welcome__features {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-welcome__feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 13px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(54, 230, 165, 0.2);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.login-welcome__feature-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(54, 230, 165, 0.12);
+}
+
+.login-welcome__feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(54, 230, 165, 0.15), rgba(58, 184, 255, 0.15));
+  border: 1px solid rgba(54, 230, 165, 0.25);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #36e6a5;
+  flex-shrink: 0;
+}
+
+.login-welcome__feature-item div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.login-welcome__feature-item strong {
+  font-size: 13px;
+  font-weight: 600;
+  color: #081b20;
+}
+
+.login-welcome__feature-item span {
+  font-size: 12px;
+  color: #5a7a8a;
+}
+
+/* Terminal animado */
+.login-welcome__terminal {
+  border-radius: 10px;
+  background: #0d1117;
+  border: 1px solid rgba(54, 230, 165, 0.2);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  animation: fade-up 0.7s ease 0.32s both;
+}
+
+.login-welcome__terminal-dots {
+  display: flex;
+  gap: 6px;
+  padding: 9px 13px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.login-welcome__terminal-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.login-welcome__terminal-dots span:nth-child(1) { background: #ff5f57; }
+.login-welcome__terminal-dots span:nth-child(2) { background: #febc2e; }
+.login-welcome__terminal-dots span:nth-child(3) { background: #28c840; }
+
+.login-welcome__terminal-body {
+  margin: 0;
+  padding: 14px 16px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #c9d1d9;
+  white-space: pre-wrap;
+  word-break: break-all;
+  min-height: 90px;
+}
+
+.login-welcome__terminal-cursor {
+  display: inline-block;
+  color: #36e6a5;
+  animation: blink-cursor 0.9s step-end infinite;
+  font-size: 10px;
+}
+
+/* ============================================================
+ * PAINEL DIREITO — Login arena (dark + chuva de codigo)
+ * ============================================================ */
+
+.login-arena {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 24px;
+  background-color: #050811;
+  overflow: hidden;
+}
+
+.login-arena__rain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+/* ============================================================
+ * Card de login
+ * ============================================================ */
+
+.login-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  background: rgba(10, 14, 26, 0.92);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(54, 230, 165, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(54, 230, 165, 0.05);
+  animation: fade-up 0.55s ease 0.1s both;
+}
+
+.login-card__logo {
+  display: block;
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 6px auto;
+  animation: float-gently 4s ease-in-out infinite, glow-pulse 3s ease-in-out infinite alternate;
+}
+
+.login-card__tabs {
+  display: flex;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+}
+
+.login-card__tab {
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: rgba(245, 247, 251, 0.03);
+  padding: 5px 10px;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 12px;
+  transition: all 150ms ease;
+  flex: 1;
+}
+
+.login-card__tab:hover {
+  background: rgba(245, 247, 251, 0.07);
+  color: var(--text-primary);
+}
+
+.login-card__tab--active {
+  border-color: rgba(54, 230, 165, 0.3);
+  background: rgba(54, 230, 165, 0.1);
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.login-card__header {
+  margin-bottom: 2px;
+}
+
+.login-card__title {
+  font-size: 1.2rem;
+  text-align: left;
+}
+
+.login-card__subtitle {
+  margin: 3px 0 0;
+  text-align: left;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.login-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.login-card__field span {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.login-card__field input {
+  min-height: 40px;
+}
+
+.login-card__password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.login-card__password-wrapper input {
+  width: 100%;
+  padding-right: 75px;
+}
+
+.login-card__password-toggle {
+  position: absolute;
+  right: 8px;
+  height: calc(100% - 16px);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0 8px;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 12px;
+  transition: color 150ms ease;
+}
+
+.login-card__password-toggle:hover {
+  color: var(--text-primary);
+}
+
+.login-card__extra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.login-card__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 12px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.login-card__checkbox input {
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+.login-card__forgot {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 12px;
+  transition: color 150ms ease;
+}
+
+.login-card__forgot:hover {
+  color: var(--primary);
+}
+
+.login-card__note {
+  line-height: 1.5;
+  text-align: left;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ============================================================
+ * Classes legadas — mantidas para nao quebrar outros refs
+ * ============================================================ */
+
+.login-panel__status,
+.dashboard__chips,
+.track-row__competencies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.login-panel__status span,
+.dashboard__chips li,
+.track-row__competencies li {
+  border: 1px solid rgba(58, 184, 255, 0.22);
+  border-radius: var(--radius-sm);
+  background: rgba(58, 184, 255, 0.07);
+  padding: 5px 8px;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.login-panel__status span {
+  color: var(--secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.screen__eyebrow,
+.track-row__phase {
+  margin: 0 0 6px;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+ * Animacoes globais da tela de login
+ * ============================================================ */
+
+@keyframes float-gently {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-8px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes glow-pulse {
+  0%   { filter: drop-shadow(0 0 4px rgba(54, 230, 165, 0.15)) drop-shadow(0 0 12px rgba(58, 184, 255, 0.1)); }
+  100% { filter: drop-shadow(0 0 12px rgba(54, 230, 165, 0.45)) drop-shadow(0 0 28px rgba(58, 184, 255, 0.3)); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ============================================================
+ * Responsividade — mobile (max-width: 768px)
+ * ============================================================ */
+
+@media (max-width: 768px) {
+  .login-screen {
+    grid-template-columns: 1fr;
+  }
+
+  .login-welcome {
+    display: none;
+  }
+
+  .login-arena {
+    min-height: 100vh;
+    padding: 20px 16px;
+  }
+
+  .login-card {
+    max-width: 100%;
+    padding: 24px 18px;
+  }
+}
+

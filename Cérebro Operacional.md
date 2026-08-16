@@ -51,8 +51,10 @@ app shell and frontend system` (autor `test <test@example.com>`), tip de `main`/
 - Estado Git ao final desta sessao (Task 10 — Fundacao visual RootScoll): NAO commitado. Novos:
   `apps/web/src/styles/tokens.css`, `apps/web/src/styles/typography.css`,
   `apps/web/src/vite-env.d.ts` e `docs/product/regulatory-positioning-brazil-v1.md`. Tambem seguem
-  em revisao os documentos curriculares Zero to Junior criados por Antigravity
-  (`docs/product/*curriculum*`, `docs/product/zero-to-junior-curriculum-v1.md`). Modificados:
+  em revisao os documentos curriculares Zero to Junior v1/v2
+  (`docs/product/*curriculum*`, `docs/product/zero-to-junior-curriculum-v1.md`,
+  `docs/product/zero-to-junior-curriculum-v2.md`, `docs/product/curriculum-research-notes-v2.md`).
+  Modificados:
   `apps/web/src/styles/app.css` (retonalizacao completa + novas classes utilitarias
   `.btn*`/`.card`/`.badge`/`.input`), `apps/web/index.html` (titulo/meta RootScoll),
   `apps/web/src/features/app-shell/{LoginScreen.tsx,AppNavigation.tsx}` (texto de marca +
@@ -106,6 +108,11 @@ Fundacao monorepo
      RootScoll como plataforma/ecossistema de apoio a aprendizagem tecnica; curso livre/trilha livre
      com ressalvas; proibicao de promessa MEC/diploma/curso tecnico/emprego; certificados/atestados
      dependem de parecer juridico antes de producao — documentado, em revisao, pendente commit
+  -> Curriculo Zero to Junior v2 (docs/product/zero-to-junior-curriculum-v2.md +
+     docs/product/curriculum-research-notes-v2.md): 6 macrotrilhas como navegacao executiva,
+     14 trilhas granulares como progressao pedagogica interna, matriz de competencias,
+     primeiros 20 blocos MVP, projetos progressivos e politica de IA por fase — documentado,
+     em revisao, pendente commit
   -> Proximas tarefas:
      -> lapidacao UI/UX profunda dos paineis densos (dashboard/perfil/trilhas/sidebar) — Fase D do
         plano de implantacao (docs/frontend.md §23), deliberadamente fora do escopo desta fatia
@@ -148,6 +155,7 @@ Fundacao monorepo
 | d6d0252 | Comandos de arquivos do terminal (touch/cat/echo/cp/mv/rm/tree)                         | Publicado |
 | c61fa72 | Primeira licao executavel local (mkdir/touch em apps/web)                               | Publicado |
 | 53699be | App shell RootScoll (Task 8+9) + RootScoll Frontend Design System v1 (docs/frontend.md) | Publicado |
+| 3f99c4b | Fundacao visual RootScoll + docs estrategicos/curriculares                              | Publicado |
 
 ## Decisoes de governanca
 
@@ -175,11 +183,12 @@ Fundacao monorepo
    plataforma/ecossistema de apoio a aprendizagem tecnica, com cursos/trilhas livres apenas sob
    ressalva, sem promessa de MEC, diploma, curso tecnico, certificacao oficial ou emprego. Antes de
    copy publica, certificado/atestado ou venda B2B, exige parecer juridico especializado.
-3. **Pesquisa e Curriculo Zero to Junior — em revisao, pendente commit**: revisar a densidade
-   pedagogica dos documentos `docs/product/zero-to-junior-curriculum-v1.md`,
-   `docs/product/curriculum-research-notes-v1.md` e
-   `docs/product/curriculum-implementation-roadmap-v1.md`; a entrega atual estabelece a espinha
-   dorsal das 14 trilhas, mas ainda precisa de fontes e granularidade aula-a-aula.
+3. **Curriculo Zero to Junior v2 — documentado, em revisao, pendente commit**:
+   `docs/product/zero-to-junior-curriculum-v2.md` e
+   `docs/product/curriculum-research-notes-v2.md` incorporam a pesquisa Gemini em linguagem
+   acionavel: competencias de Dev Junior 2026, 6 macrotrilhas + 14 trilhas internas, primeiros
+   20 blocos MVP, projetos progressivos, avaliacoes por competencia e politica de IA por fase.
+   Proximo passo de produto: usar a v2 para construir as telas de dashboard/trilhas/sala.
 4. **RootScoll Frontend Design System v1 — publicado em `53699be`**: `docs/frontend.md` e a fonte
    oficial de verdade visual do frontend (marca RootScoll, tagline `Learn by doing. Think from the
 Root.`, Modo Raiz, paleta, tokens semanticos, tipografia, componentes base, terminal, plataforma
@@ -223,6 +232,51 @@ ValidationOutcome` existe ainda em lugar nenhum do monorepo. Continua pendencia 
     sessao.
 
 ## Registro de sessoes
+
+### 2026-08-16 (Codex) - Lapidacao UI/UX do acesso ate a Sala Terminal
+
+**Aplicacao: fluxo login -> painel -> perfil/trilhas -> Sala Terminal**
+
+- Servidor local confirmado em `http://127.0.0.1:5174/` com resposta `200 OK`; processo Node ativo
+  na porta `5174` (PID `10168`).
+- `apps/web/src/images/logo.png` consta removido e `apps/web/src/images/logo.svg` consta novo no
+  working tree. As referencias do login e da navegacao foram atualizadas para `logo.svg`.
+- Telas lapidadas nesta fatia: `LoginScreen.tsx`, `AppNavigation.tsx`, `StudentDashboard.tsx`,
+  `ProfileScreen.tsx`, `TracksScreen.tsx`, `mock-data.ts`, `types.ts` e `styles/app.css`.
+- Mudanca de produto aplicada: o shell local agora mostra progresso geral, progresso por trilha,
+  competencias, evidencias locais, proximos blocos e CTA direto para a Sala Terminal.
+- Limites preservados: sem autenticacao real, sem Supabase, sem backend, sem roteador real, sem IA
+  real e sem alteracao no motor da Sala Terminal.
+- Validacoes executadas e aprovadas: `corepack pnpm@10.28.0 -r --if-present run typecheck`,
+  `corepack pnpm@10.28.0 test`, `corepack pnpm@10.28.0 format:check`,
+  `corepack pnpm@10.28.0 --filter @codechat/web build` e `git diff --check`.
+- Observacao tecnica: o build funciona, mas o `logo.svg` atual gera asset de aproximadamente
+  `1,915.16 kB` (`gzip: 1,441.87 kB`); otimizar o SVG antes de uma etapa de performance/publicacao.
+- Verificacao por Playwright via Node REPL nao foi concluida por falha de importacao do pacote
+  (`The requested module './index.js' does not provide an export named 'default'`), antes de abrir a
+  pagina. Evidencias finais desta fatia: build, typecheck, testes, formatacao, diff check e HTTP 200.
+
+### 2026-08-16 (Codex) — Curriculo Zero to Junior v2
+
+**Documentacao: curadoria da pesquisa Gemini e base para construcao das telas pedagogicas**
+
+- Material de pesquisa externa recebido: `Currículo Dev Júnior RootScoll.md`.
+- Arquivos criados: `docs/product/curriculum-research-notes-v2.md` e
+  `docs/product/zero-to-junior-curriculum-v2.md`.
+- Arquivos atualizados: `docs/product/learning-catalog-v1.md`,
+  `docs/product/curriculum-implementation-roadmap-v1.md`, `Cérebro Operacional.md` e
+  `docs/operations/visual-operational-brain.md`.
+- Decisao pedagogica registrada: preservar 6 macrotrilhas como navegacao executiva e usar as 14
+  trilhas granulares como progressao pedagogica interna. Isso reduz complexidade de UI sem perder
+  profundidade curricular.
+- Conteudo consolidado: matriz de competencias do Dev Junior 2026, tecnicas pedagogicas (worked
+  examples, Parsons Problems, faded guidance, projetos quebrados e post-mortems), primeiros 20
+  blocos MVP, projetos progressivos, avaliacoes por competencia e politica de uso de IA por fase.
+- Limites preservados: nenhuma alteracao em codigo de aplicacao, runtime, Supabase, auth real,
+  backend, IA real ou certificados/atestados em producao.
+- Proxima construcao recomendada: telas de produto baseadas no curriculo v2 — dashboard por
+  competencias, detalhe de trilha, sala Terminal com evidencias, painel lateral denso e perfil com
+  portfolio/post-mortems.
 
 ### 2026-08-16 (Codex) — Posicionamento Regulatorio Brasil v1
 

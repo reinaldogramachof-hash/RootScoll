@@ -3,15 +3,20 @@
 > Documento de planejamento da implementação técnica e de produto do currículo "Zero to Junior" (14 trilhas) na plataforma RootScoll.
 > Regra de Ouro: Funcionalidades complexas (Supabase, Backend Real, IA) devem sempre respeitar a validação das fundações locais antes de qualquer desenvolvimento.
 
-O currículo ideal detalhado em `zero-to-junior-curriculum-v1.md` exige uma evolução gradual da arquitetura atual (que hoje foca apenas em mock de terminal e execução em memória).
+O currículo ideal detalhado em `zero-to-junior-curriculum-v2.md` exige uma evolução gradual da
+arquitetura atual (que hoje foca em app shell local, sala Terminal, terminal-engine em memória e
+documentação estratégica).
 
 ## Fase 1: Documentação e Catálogo (Fase Atual)
 
 - **Objetivo**: Ter o norte pedagógico perfeitamente delineado antes de escrever motores complexos.
 - **Entregas**:
   - Homologação visual oficial (`docs/frontend.md`).
-  - Documentação da jornada completa Zero to Junior.
-  - Ajuste do `learning-catalog-v1.md` (no nível documental) para comportar a visão das 14 trilhas.
+  - Documentação da jornada completa Zero to Junior v2.
+  - Ajuste do `learning-catalog-v1.md` (no nível documental) para registrar a decisão pendente entre
+    6 macrotrilhas e 14 trilhas granulares.
+  - Curadoria de pesquisa (`docs/product/curriculum-research-notes-v2.md`) separando fontes fortes,
+    fontes secundárias, hipóteses e decisões RootScoll.
 - **Limites**: Sem banco de dados, sem auth real, sem chamadas a LLMs.
 
 ## Fase 2: Blocos Executáveis Locais
@@ -21,6 +26,8 @@ O currículo ideal detalhado em `zero-to-junior-curriculum-v1.md` exige uma evol
   - Implementação real de um avaliador (comparar `ExecutionResult` com `ValidationRule`) funcionando no client-side.
   - Expansão do `terminal-engine` para suportar `pipe` (|) e redirecionamentos (`>`, `>>`) necessários para finalizar a Trilha de Terminal.
   - Interface do "Painel Operacional" (Sidebar densa) na Sala Terminal.
+  - Primeiros 20 blocos MVP descritos no currículo v2, cobrindo terminal, Git inicial, diário de
+    bordo técnico e primeiros passos de HTML/CSS.
 - **Limites**: Persistência restrita a `localStorage` ou variáveis em memória. O aluno perde o progresso se limpar o cache.
 
 ## Fase 3: Validadores Mais Ricos e Runtimes Variados

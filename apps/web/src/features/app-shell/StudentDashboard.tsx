@@ -9,10 +9,9 @@ export interface StudentDashboardProps {
 }
 
 /**
- * Painel do aluno — ponto central do fluxo pós-login. Sóbrio e denso, não
- * um mosaico de cards decorativos: uma seção de estado (trilha atual,
- * progresso) e uma lista de próximas ações, texto realista, sem números
- * inventados além do progresso mock já declarado em `MOCK_USER`.
+ * Painel do aluno: cockpit local pos-login, sem persistencia real. Mostra a
+ * rota ate a Sala Terminal e os sinais pedagogicos necessarios para a proxima
+ * lapidacao de produto.
  */
 function StudentDashboard({
   user,
@@ -21,42 +20,100 @@ function StudentDashboard({
   onOpenProfile,
   onEnterClassroom,
 }: StudentDashboardProps) {
+  const availableModules =
+    currentTrack?.modules.filter((module) => module.status === 'available') ?? [];
+  const nextModules = availableModules.slice(0, 4);
+
   return (
     <div className="screen dashboard">
-      <h1 className="screen__title">Olá, {user.name}</h1>
+      <div className="screen__header">
+        <div>
+          <p className="screen__eyebrow">{user.currentPhase}</p>
+          <h1 className="screen__title">Ola, {user.name}</h1>
+        </div>
+        <span className="screen__status">MVP local</span>
+      </div>
+
       <p className="screen__lead">
-        Progresso geral: {user.overallProgress}%. Trilha atual:{' '}
-        {currentTrack?.title ?? 'nenhuma selecionada'}.
+        Trilha atual: {currentTrack?.title ?? 'nenhuma selecionada'}. Foco desta retomada:{' '}
+        {user.currentCompetency}
       </p>
 
-      <section className="dashboard__section">
-        <h2 className="dashboard__section-title">Continuar aprendendo</h2>
-        <p className="dashboard__section-text">
-          {currentTrack?.status === 'available'
-            ? `Retome a sala de aula de "${currentTrack.title}" de onde parou.`
-            : 'Nenhuma trilha disponível ainda para prática guiada.'}
-        </p>
-        <button
-          type="button"
-          className="dashboard__action dashboard__action--primary"
-          onClick={onEnterClassroom}
-          disabled={currentTrack?.status !== 'available'}
-        >
-          Ir para a Sala Terminal →
-        </button>
-      </section>
-
-      <section className="dashboard__section">
-        <h2 className="dashboard__section-title">Explorar</h2>
-        <div className="dashboard__actions">
-          <button type="button" className="dashboard__action" onClick={onOpenTracks}>
-            Ver trilhas e módulos
-          </button>
-          <button type="button" className="dashboard__action" onClick={onOpenProfile}>
-            Ver meu perfil
-          </button>
+      <div className="dashboard__metrics" aria-label="Resumo de progresso">
+        <div className="dashboard__metric">
+          <span className="dashboard__metric-label">Progresso geral</span>
+          <strong>{user.overallProgress}%</strong>
+          <span className="dashboard__meter" aria-hidden="true">
+            <span style={{ width: `${user.overallProgress}%` }} />
+          </span>
         </div>
-      </section>
+        <div className="dashboard__metric">
+          <span className="dashboard__metric-label">Trilha atual</span>
+          <strong>{currentTrack?.progress ?? 0}%</strong>
+          <span className="dashboard__meter" aria-hidden="true">
+            <span style={{ width: `${currentTrack?.progress ?? 0}%` }} />
+          </span>
+        </div>
+        <div className="dashboard__metric">
+          <span className="dashboard__metric-label">Evidencias</span>
+          <strong>{user.evidenceCount}</strong>
+          <span>registros locais</span>
+        </div>
+      </div>
+
+      <div className="dashboard__grid">
+        <section className="dashboard__section dashboard__section--primary">
+          <div>
+            <h2 className="dashboard__section-title">Retomada</h2>
+            <p className="dashboard__section-text">
+              {currentTrack?.status === 'available'
+                ? 'Sequencia atual: teoria curta, pratica guiada e avaliacao no terminal.'
+                : 'Nenhuma trilha disponivel ainda para pratica guiada.'}
+            </p>
+          </div>
+          <button
+            type="button"
+            className="dashboard__action dashboard__action--primary"
+            onClick={onEnterClassroom}
+            disabled={currentTrack?.status !== 'available'}
+          >
+            Entrar na Sala Terminal
+          </button>
+        </section>
+
+        <section className="dashboard__section">
+          <h2 className="dashboard__section-title">Proximos blocos</h2>
+          <ol className="dashboard__timeline">
+            {nextModules.map((module) => (
+              <li key={module.id}>
+                <span>{module.mode}</span>
+                <strong>{module.title}</strong>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="dashboard__section">
+          <h2 className="dashboard__section-title">Competencias em construcao</h2>
+          <ul className="dashboard__chips">
+            {currentTrack?.competencies.map((competency) => (
+              <li key={competency}>{competency}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="dashboard__section">
+          <h2 className="dashboard__section-title">Operacao do aluno</h2>
+          <div className="dashboard__actions">
+            <button type="button" className="dashboard__action" onClick={onOpenTracks}>
+              Trilhas e modulos
+            </button>
+            <button type="button" className="dashboard__action" onClick={onOpenProfile}>
+              Perfil de aprendizado
+            </button>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

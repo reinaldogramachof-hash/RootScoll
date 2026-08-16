@@ -121,7 +121,11 @@ modeladas na **Fase 1** como `LearningTrackId`:
 | `professional-practice` | Prática Profissional                  | `database`, `deploy`, `testing`, `debugging`                                  |
 | `cybersecurity`         | Segurança Cibernética e da Informação | `cybersecurity`, `information-security`, `secure-development`, `digital-risk` |
 
-> **Decisão Pendente (Codex/Usuário)**: A pesquisa profunda de currículo gerou o documento ideal `docs/product/zero-to-junior-curriculum-v1.md`, que expande essas 6 trilhas genéricas em **14 trilhas granulares**. Por enquanto, este catálogo v1 (em código) permanece com as 6 trilhas para permitir a execução da Fase 1, mas precisará ser refatorado futuramente para comportar as 14 trilhas do currículo ideal.
+> **Decisão Pendente (Codex/Usuário)**: a pesquisa curricular v2
+> (`docs/product/zero-to-junior-curriculum-v2.md`) recomenda manter as 6 trilhas macro deste catálogo
+> como navegação executiva e usar as 14 trilhas granulares como progressão pedagógica interna. Por
+> enquanto, este catálogo v1 permanece com as 6 trilhas para preservar a execução da fase local; a
+> convergência entre catálogo, UI e currículo v2 será uma decisão de próxima fatia.
 
 `LearningSegment` é a taxonomia de granularidade mais fina, usada tanto para
 compor `LearningTrack.segments` quanto para decidir o requisito de runtime de
