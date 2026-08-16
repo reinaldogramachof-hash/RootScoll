@@ -1,252 +1,225 @@
-# CodeChat / RootScoll — Cérebro Operacional Visual
+# RootScoll — Cérebro Operacional Visual
 
-> **Documento Executivo e Visual de Governança e Estado do Projeto**
->
-> Destinado à consulta executiva, alinhamento institucional e validação com a Direção da universidade e liderança técnica.
->
-> **Dashboard navegável**: abra `docs/operations/visual-dashboard/index.html` no navegador para uma apresentação guiada em HTML/CSS/JS no estilo Graphfy.
+> **Documento executivo e visual de governança e estado do projeto**
+> Destinado à consulta executiva, alinhamento institucional e validação com direção de produto,
+> liderança técnica e parceiros educacionais.
 
 ---
 
 ## 1. Resumo Executivo
 
-O **CodeChat** evolui como produto sob a marca **RootScoll**, uma plataforma educacional progressiva (PWA) projetada para capacitar estudantes e profissionais em transição de carreira, guiando o aluno do **zero absoluto à prontidão real para o mercado de desenvolvimento de software**.
+O **RootScoll** é uma plataforma educacional progressiva projetada para capacitar estudantes e
+profissionais em transição de carreira, guiando o aluno do zero absoluto à prontidão real para o
+mercado de desenvolvimento de software.
 
-Ao contrário de plataformas puramente teóricas ou baseadas em quizzes passivos, a RootScoll adota uma metodologia prática onde o aprendizado ocorre diretamente no **terminal simulado**, enfrentando desafios reais, mensagens de erro autênticas e construindo autonomia técnica com rigor de engenharia. A identidade visual oficial está consolidada em `docs/frontend.md`.
+Ao contrário de plataformas puramente teóricas ou baseadas em quizzes passivos, o RootScoll adota
+uma metodologia prática onde o aprendizado ocorre em uma sala de aula técnica, com terminal,
+desafios, erros reais, avaliação por competência e orientação pedagógica progressiva.
 
 ```mermaid
 graph LR
-    A["Iniciante Zero"] --> B["Prática Real no Terminal"]
-    B --> C["Erros Reais e Depuração"]
-    C --> D["Autonomia e Raciocínio"]
-    D --> E["Dev Pronto para o Mercado"]
-
-    style A fill:#1e293b,stroke:#475569,stroke-width:2px,color:#fff
-    style B fill:#0f766e,stroke:#14b8a6,stroke-width:2px,color:#fff
-    style C fill:#0369a1,stroke:#38bdf8,stroke-width:2px,color:#fff
-    style D fill:#4338ca,stroke:#818cf8,stroke-width:2px,color:#fff
-    style E fill:#15803d,stroke:#22c55e,stroke-width:2px,color:#fff
+    A["Iniciante Zero"] --> B["Teoria Guiada"]
+    B --> C["Prática Real no Terminal"]
+    C --> D["Erro, Depuração e Mentor"]
+    D --> E["Avaliação por Competência"]
+    E --> F["Dev Júnior em Formação"]
 ```
 
 ---
 
-## 2. Visão de Produto e Pilares Estratégicos
+## 2. Pilares Estratégicos
 
-### 2.1. O Diferencial: Modo Raiz
+### 2.1. Modo Raiz
 
-O **Modo Raiz** é a espinha dorsal metodológica do CodeChat. A interface foca na experiência autêntica de desenvolvimento:
+O **Modo Raiz** é a espinha dorsal metodológica do RootScoll:
 
-- **Prática Real**: O aluno interage com um ambiente de terminal fiel, executando comandos e manipulando arquivos.
-- **Erros Autênticos**: Falhas de sintaxe, permissão e caminhos não são mascaradas; o aluno aprende a ler a saída e a corrigir o problema.
-- **Foco Total na Tela**: Interface limpa e imersiva (terminal fullscreen), eliminando distrações visuais e elementos dispensáveis.
+- **Prática real**: o aluno executa comandos, manipula arquivos e constrói projetos.
+- **Erros autênticos**: falhas não são mascaradas; o aluno aprende a ler saída, logs e mensagens.
+- **Teoria antes da prática**: cada bloco tem aprendizado teórico, aplicação prática e avaliação.
+- **Avaliação objetiva**: acerto deve ser validado por regras, testes, execução ou evidência técnica.
+- **Mentor controlado**: a IA futura orienta progressivamente, mas não resolve pelo aluno.
 
-### 2.2. IA como Mentor Pedagógico Controlado (Não Muleta)
-
-A Inteligência Artificial atua estritamente como um facilitador pedagógico sob regras de governança rigorosas:
+### 2.2. IA como Mentor Pedagógico Controlado
 
 ```mermaid
 flowchart TD
-    subgraph PERMITIDO["✅ Papel da IA (Mentor Controlado)"]
-        P1["Explicar a causa de um erro após a tentativa do aluno"]
-        P2["Fornecer dicas graduais (Hints) sem dar a resposta pronta"]
-        P3["Adaptar o nível de desafio ao ritmo de aprendizado"]
-        P4["Simular sabatinas e entrevistas técnicas de consolidação"]
+    subgraph PERMITIDO["Permitido"]
+        P1["Explicar causa de erro após tentativa"]
+        P2["Oferecer dicas graduais"]
+        P3["Apontar conceito relacionado"]
+        P4["Simular entrevista técnica"]
     end
 
-    subgraph PROIBIDO["❌ Fora de Escopo (Anti-Muleta)"]
-        X1["Resolver o desafio pelo aluno"]
-        X2["Entregar o comando ou código final pronto"]
-        X3["Substituir a tentativa e o esforço prático"]
-        X4["Atuar como chat genérico desconectado da lição"]
+    subgraph PROIBIDO["Proibido"]
+        X1["Resolver o desafio"]
+        X2["Entregar comando final"]
+        X3["Substituir validação determinística"]
+        X4["Prometer aprovação, emprego ou certificação oficial"]
     end
-
-    style PERMITIDO fill:#064e3b,stroke:#059669,stroke-width:2px,color:#fff
-    style PROIBIDO fill:#7f1d1d,stroke:#dc2626,stroke-width:2px,color:#fff
 ```
 
 ---
 
-## 3. Mapa Visual de Governança dos Agentes
+## 3. Governança dos Agentes
 
-O projeto opera sob um modelo de governança com papéis bem delimitados, garantindo rastreabilidade, qualidade e zero regressão:
-
-```mermaid
-graph TD
-    User["👤 Usuário / Direção<br/><b>Decisor de Produto e Negócio</b>"]
-    Codex["🧠 Codex (ChatGPT / Work)<br/><b>Arquiteto, Tech Lead e Revisor</b>"]
-    Claude["⚡ Claude Code<br/><b>Dev Sênior Executor</b>"]
-    Antigravity["🛡️ Antigravity (Dev Sênior)<br/><b>Suporte Operacional, Validações e Checks</b>"]
-
-    User -->|"Diretrizes e autorizações"| Codex
-    Codex -->|"Especificações e fatias técnicas"| Claude
-    Claude -->|"Código e contratos"| Antigravity
-    Antigravity -->|"Evidências de teste e integridade"| Codex
-    Codex -->|"Aprovações e consolidação"| User
-
-    style User fill:#3b0764,stroke:#a855f7,stroke-width:2px,color:#fff
-    style Codex fill:#1e3a8a,stroke:#3b82f6,stroke-width:2px,color:#fff
-    style Claude fill:#7c2d12,stroke:#ea580c,stroke-width:2px,color:#fff
-    style Antigravity fill:#14532d,stroke:#22c55e,stroke-width:2px,color:#fff
-```
-
-| Papel                 | Responsabilidade Principal   | Escopo de Ação                                                                                               |
-| :-------------------- | :--------------------------- | :----------------------------------------------------------------------------------------------------------- |
-| **Direção / Usuário** | Direção de Produto e Negócio | Aprovação de fases, definição de valor e autorização de publicação.                                          |
-| **Codex**             | Arquiteto e Tech Lead        | Desenho arquitetural, revisão de código e governança técnica.                                                |
-| **Claude Code**       | Dev Sênior Executor          | Implementação técnica em fatias curtas, testáveis e desacopladas.                                            |
-| **Antigravity**       | Suporte Operacional e QA     | Validação local contínua (`typecheck`, `lint`, `test`, `format`), inspeção de locks e relatórios executivos. |
+| Papel                  | Responsabilidade Principal   | Escopo de Ação                                                                                    |
+| :--------------------- | :--------------------------- | :------------------------------------------------------------------------------------------------ |
+| **Direção / Usuário**  | Direção de Produto e Negócio | Aprovação de fases, definição de valor, autorização de commit/push e decisões comerciais.         |
+| **Codex**              | Arquiteto e Tech Lead        | Desenho arquitetural, revisão, validação de escopo, governança técnica e consolidação documental. |
+| **Claude Code**        | Dev Sênior Executor          | Implementação técnica em fatias curtas, testáveis e desacopladas.                                 |
+| **Antigravity**        | Suporte Operacional e QA     | Pesquisa, documentação, validações locais, inspeção de locks e relatórios executivos.             |
+| **Gemini Deep Search** | Pesquisa externa             | Pesquisa profunda de mercado, regulação, produto e legislação para posterior curadoria do Codex.  |
 
 ---
 
-## 4. Mapa das Trilhas Estratégicas de Formação
-
-O currículo educacional é estruturado em trilhas modulares que cobrem todo o espectro da formação técnica:
+## 4. Trilhas Estratégicas
 
 ```mermaid
 mindmap
-  root((CodeChat))
-    Trilha Terminal e SO
-      Linux Base e Avançado
+  root((RootScoll))
+    Terminal e Sistemas Operacionais
+      Linux
       macOS
       Windows CMD e PowerShell
-    Trilha Git e GitHub
-      Controle de Versão
+    Git e GitHub
+      Versionamento
       Branching e Merging
-      Pull Requests e Colaboração
-    Trilha Desenvolvimento Web
-      HTML Semântico e CSS
-      JavaScript Moderno
-      React e APIs REST
-    Trilha Programação
+      Pull Requests
+    Desenvolvimento Web
+      HTML Semântico
+      CSS e Responsividade
+      JavaScript e APIs
+    Programação
+      JavaScript e TypeScript
       Python e Node.js
-      Java e PHP
-      Estruturas de Dados e Algoritmos
-    Trilha Prática Profissional
-      Bancos de Dados SQL
+      Estruturas de Dados
+    Prática Profissional
+      Banco de Dados
       Testes e Debugging
-      Docker, CI/CD e Deploy
-    Trilha Segurança Cibernética e da Informação
-      Risco Digital e Boas Práticas
+      Deploy e Logs
+    Segurança Cibernética e Informação
+      Risco Digital
       Desenvolvimento Seguro
-      Privacidade, Credenciais e Superfície de Ataque
+      Privacidade e Credenciais
 ```
+
+Observação: o catálogo v1 publicado mantém 6 trilhas macro; a pesquisa curricular Zero to Junior
+propõe 14 trilhas granulares como visão pedagógica futura.
 
 ---
 
-## 5. Mapa Visual das Fases do Projeto
+## 5. Linha do Tempo
 
 ```mermaid
 timeline
-    title Evolução e Ciclo de Vida do CodeChat
-    Fase 0 : Fundação do Monorepo : Modelagem de Domínio : Contratos de Conteúdo : Protótipo Visual Fullscreen
-    Fase 1 (Atual) : Contratos TypeScript Iniciais : Learning Catalog v1 : Runtime Requirements v1 : Shell Core Mínimo
-    Fase 2 : Validação Pedagógica Local : Terminal Engine Mínimo : Telemetria Educacional
-    Fase 3 : Integração de Backend e Supabase : Persistência de Progresso : PWA Offline-First
-    Fase 4 : Mentoria IA Integrada : Painel Acadêmico / Turmas : Prontidão para Produção
+    title Evolução do RootScoll
+    Fundação : Monorepo : Domínio : Banco/RLS conceitual : Currículo Fase 0
+    Visual Inicial : Protótipo fullscreen terminal : Cérebro Operacional : Dashboard executivo
+    Catálogo e Runtime : Learning Catalog v1 : Runtime Requirements v1
+    Terminal Local : Shell core mínimo : Comandos de arquivos : Primeira lição executável
+    App Shell : Bloco pedagógico local : Login mock : Painel : Perfil : Trilhas : Sala Terminal
+    Identidade : Frontend Design System v1 : Tokens : Tipografia : Fundação visual RootScoll
+    Pesquisa Estratégica : Zero to Junior : Posicionamento regulatório Brasil
 ```
 
 ---
 
-## 6. Status Técnico Atual e Fatias Concluídas
+## 6. Marcos Técnicos
 
-A tabela abaixo resume os marcos técnicos oficialmente homologados no repositório:
-
-| Marco Técnico                           | Commit / Referência                 | Status     | Impacto no Projeto                                                                                               |
-| :-------------------------------------- | :---------------------------------- | :--------- | :--------------------------------------------------------------------------------------------------------------- |
-| **Fundação do Monorepo**                | `bc52763`                           | Publicado  | Estrutura modular (`apps/` e `packages/`) com pnpm workspaces e TypeScript rigoroso.                             |
-| **Modelagem de Domínio e Contratos v1** | `e3ab4af`                           | Publicado  | Definição formal das entidades pedagógicas e fronteiras técnicas.                                                |
-| **Planejamento de Banco e RLS**         | `c09bf74`                           | Publicado  | Estrutura relacional planejada e regras de segurança sem acoplamento prematuro.                                  |
-| **Currículo Fase 0 e Validações**       | `3ca2096`                           | Publicado  | Gramática de validação declarativa e lições inaugurais de terminal.                                              |
-| **Protótipo Visual Fullscreen**         | `bd82a83`                           | Publicado  | Interface imersiva de terminal aprovada pela direção de produto.                                                 |
-| **Contratos TypeScript Fase 1**         | `a4c53f7`                           | Publicado  | Tipos de execução desacoplados (`ExecutionResult`, `ValidationRule`, `VirtualFileSystemSnapshot`).               |
-| **Visão de Produto Registrada**         | `docs/product/product-vision-v1.md` | Registrado | Posicionamento comercial, política de IA pedagógica e mapa de trilhas.                                           |
-| **Trilha 06 em Radar**                  | `docs/product/product-vision-v1.md` | Registrado | Segurança cibernética e da informação como pilar estratégico de formação, ainda sem currículo executável.        |
-| **Learning Catalog v1**                 | `0d29750`                           | Publicado  | Catálogo formalizado com 6 trilhas, 20 segmentos e contratos `Track -> Course -> Module -> Lesson -> Challenge`. |
-| **Runtime Requirements v1**             | `bebc3ea`                           | Publicado  | Restrições conceituais por adapter (`virtual-shell`, `pyodide`, `webcontainer`, `remote-runner`).                |
-| **Shell Core Mínimo**                   | `49663d8`                           | Publicado  | Execução simulada dos comandos `pwd`, `ls`, `cd` e `mkdir` sobre filesystem virtual em memória.                  |
-| **Comandos de Arquivos do Terminal**    | `d6d0252`                           | Publicado  | Implementação de `touch`, `cat`, `echo`, `cp`, `mv`, `rm` e `tree` sobre o filesystem virtual em memória.        |
-| **Primeira Lição Executável Local**     | `c61fa72`                           | Publicado  | `apps/web` conectado ao `terminal-engine`, com lições piloto locais e validação em memória.                      |
-| **App Navigation v1**                   | `docs/product/app-navigation-v1.md` | Em revisão | Login mock, painel do aluno, perfil, trilhas e Sala Terminal como módulo interno; ainda não commitado.           |
-| **RootScoll Frontend Design System v1** | `docs/frontend.md`                  | Em revisão | Marca, tokens, tipografia, componentes, critérios visuais e plano de implantação frontend; ainda não commitado.  |
-
----
-
-## 7. O Que Já Está Validado vs. O Que Ainda Não Está Implementado
-
-Para garantir transparência executiva com a Direção, o escopo é categorizado com clareza:
-
-```mermaid
-quadrantChart
-    title Matriz de Estado de Entrega
-    x-axis "Não Iniciado" --> "Validado e Testado"
-    y-axis "Planejado / Documentado" --> "Implementado"
-    "Monorepo e Workspaces": [0.95, 0.95]
-    "Contratos TypeScript": [0.90, 0.90]
-    "Protótipo Visual Terminal": [0.85, 0.85]
-    "Visão de Produto": [0.80, 0.40]
-    "Gramática de Validação": [0.75, 0.45]
-    "Learning Catalog v1": [0.85, 0.60]
-    "Runtime Requirements v1": [0.82, 0.55]
-    "Engine de Validação Real": [0.20, 0.20]
-    "Supabase e Migrations": [0.15, 0.15]
-    "Integração de IA": [0.10, 0.10]
-```
-
-### ✅ O Que Já Está Validado
-
-1. Arquitetura de Monorepo configurada com build, linting e testes automatizados.
-2. Contratos técnicos TypeScript isolados e validados por suíte de testes unitários (`vitest`).
-3. Protótipo visual de terminal em tela cheia validado em ambiente local (`http://127.0.0.1:5174/`).
-4. Gramática declarativa de regras de validação documentada e consistente.
-5. Diretrizes de governança e documentação viva (`Cérebro Operacional.md`).
-6. Learning Catalog v1 publicado com 6 trilhas e 20 segmentos.
-7. Runtime Requirements v1 publicado com perfis conceituais de runtime por adapter.
-8. **Shell Core Mínimo**: Execução simulada dos comandos `pwd`, `ls`, `cd` e `mkdir` sobre filesystem virtual em memória.
-9. **Comandos de Arquivos do Terminal**: Comandos `touch`, `cat`, `echo`, `cp`, `mv`, `rm` e `tree` sobre filesystem virtual em memória, com 46 testes do terminal-engine passando (cobrindo cenários de sucesso e erro).
-10. **Primeira Lição Executável Local**: fluxo local publicado em `c61fa72`, conectando `apps/web` ao `terminal-engine`.
-11. **RootScoll como identidade oficial**: `docs/frontend.md` criado como fonte de verdade visual em revisão local.
-
-### ⏳ O Que Ainda Não Está Implementado (Próximas Etapas)
-
-1. **Implantação dos tokens RootScoll no frontend**: converter a base visual atual para `docs/frontend.md` sem redesenho profundo prematuro.
-2. **Painéis Operacionais Densos**: ampliar painel do aluno, perfil, trilhas e sala Terminal como centros de controle da jornada.
-3. **Validadores Locais Reais**: mecanismo que compara `ExecutionResult` com `ValidationRule`, sem acoplar a banco de dados.
-4. **Roteador Real**: transformar a navegação mock em rotas reais planejadas por `docs/product/app-navigation-v1.md`.
-5. **Política Ética da Trilha 06**: regras de isolamento e limites antes de qualquer exercício executável de segurança.
-6. **Persistência Remota / Supabase**: criação de tabelas reais, autenticação e sincronização de progresso (fora de escopo no momento).
-7. **Integração Real de IA**: mecanismo de mentoria pedagógica e geração de dicas progressivas (fora de escopo no momento).
+| Marco Técnico                         | Commit / Referência                                | Status     | Impacto no Projeto                                                            |
+| :------------------------------------ | :------------------------------------------------- | :--------- | :---------------------------------------------------------------------------- |
+| Fundação do Monorepo                  | `bc52763`                                          | Publicado  | Estrutura modular com pnpm workspaces e TypeScript.                           |
+| Domain Model v1 e Engine Contracts v1 | `e3ab4af`                                          | Publicado  | Entidades pedagógicas e contratos de execução.                                |
+| Planejamento de Database e RLS        | `c09bf74`                                          | Publicado  | Modelo conceitual sem acoplamento prematuro.                                  |
+| Currículo Fase 0                      | `3ca2096`                                          | Publicado  | Primeiras lições e gramática de validação.                                    |
+| Protótipo Visual Fullscreen           | `bd82a83`                                          | Publicado  | Direção visual inicial aprovada.                                              |
+| Contratos TypeScript Fase 1           | `a4c53f7`                                          | Publicado  | `ExecutionResult`, `ValidationRule`, filesystem virtual.                      |
+| Dashboard Executivo                   | `fedb314`                                          | Publicado  | Cérebro visual e dashboard navegável.                                         |
+| Product Vision v1                     | `docs/product/product-vision-v1.md`                | Publicado  | Norte de produto, IA pedagógica e trilhas estratégicas.                       |
+| Learning Catalog v1                   | `0d29750`                                          | Publicado  | 6 trilhas macro, segmentos e contratos `Track -> Course -> Module -> Lesson`. |
+| Runtime Requirements v1               | `bebc3ea`                                          | Publicado  | Perfis conceituais por adapter/runtime.                                       |
+| Shell Core Mínimo                     | `49663d8`                                          | Publicado  | `pwd`, `ls`, `cd`, `mkdir` em filesystem virtual.                             |
+| Comandos de Arquivos do Terminal      | `d6d0252`                                          | Publicado  | `touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`.                             |
+| Primeira Lição Executável Local       | `c61fa72`                                          | Publicado  | `apps/web` conectado ao `terminal-engine`.                                    |
+| App Shell RootScoll + Frontend System | `53699be`                                          | Publicado  | App shell, fluxo pedagógico local, imagens e `docs/frontend.md`.              |
+| Currículo Zero to Junior              | `docs/product/zero-to-junior-curriculum-v1.md`     | Em revisão | 14 trilhas granulares; precisa de aprofundamento de fontes e granularidade.   |
+| Fundação Visual RootScoll             | `apps/web/src/styles/{tokens,typography}.css`      | Em revisão | Tokens, tipografia, foco e retokenização visual; pendente commit.             |
+| Posicionamento Regulatório Brasil     | `docs/product/regulatory-positioning-brazil-v1.md` | Em revisão | Tese comercial/regulatória segura para Brasil; exige parecer jurídico futuro. |
 
 ---
 
-## 8. Riscos e Controles Operacionais
+## 7. Validado vs. Pendente
 
-| Risco Potencial                                 | Nível | Mecanismo de Controle Aplicado                                                                                          |
-| :---------------------------------------------- | :---: | :---------------------------------------------------------------------------------------------------------------------- |
-| **Acoplamento Prematuro de Backend**            | Médio | Não criar migrations ou tabelas Supabase antes do motor pedagógico local estar validado.                                |
-| **Complexidade Excessiva no Terminal**          | Médio | Implementar comandos em fatias mínimas e testáveis, evitando simular 21 utilitários de uma só vez.                      |
-| **Vazamento de Regras Pedagógicas na Execução** | Alto  | `ExecutionResult` é 100% agnóstico e desconhece o conceito de `Challenge` ou `Progress`.                                |
-| **Dependência Excessiva de IA pelo Aluno**      | Alto  | Regra rígida de produto: IA não resolve exercícios, não fornece respostas prontas e só atua sob demanda após tentativa. |
-| **Regressões no Código-Base**                   | Baixo | Pipeline de checagem obrigatório antes de qualquer avanço (`typecheck`, `lint`, `test`, `format:check`).                |
+### Validado / Publicado
+
+1. Monorepo e workspaces.
+2. Contratos TypeScript iniciais.
+3. Documentação de domínio, banco conceitual, runtime e catálogo.
+4. Terminal engine mínimo e comandos de arquivo.
+5. Primeira lição executável local.
+6. App shell local com login mock, painel, perfil, trilhas e sala Terminal.
+7. `docs/frontend.md` como fonte visual oficial RootScoll.
+
+### Em Revisão Local
+
+1. Fundação visual RootScoll no `apps/web`.
+2. Currículo Zero to Junior.
+3. Posicionamento regulatório Brasil.
+
+### Ainda Não Implementado
+
+1. Avaliador formal `(ExecutionResult, ValidationRule) -> ValidationOutcome`.
+2. Roteador real com URLs.
+3. Persistência remota e autenticação real.
+4. Supabase, migrations e RLS real.
+5. IA real.
+6. Dashboard professor/admin.
+7. Certificados/atestados em produção.
 
 ---
 
-## 9. Como Apresentar para a Direção da Universidade
+## 8. Riscos e Controles
 
-Ao conduzir a apresentação executiva deste projeto para a reitoria, coordenação ou investidores, recomenda-se a seguinte linha de abordagem:
+| Risco                              | Nível | Controle                                                                               |
+| :--------------------------------- | :---: | :------------------------------------------------------------------------------------- |
+| Promessa educacional indevida      | Alto  | Usar posicionamento de plataforma/ecossistema; evitar diploma, técnico, MEC e emprego. |
+| Certificado com linguagem insegura | Alto  | Preferir atestado/participação até parecer jurídico.                                   |
+| IA virar muleta                    | Alto  | IA orienta, mas validação de acerto permanece determinística.                          |
+| Supabase prematuro                 | Médio | Manter local-first até aprovação de schema/RLS.                                        |
+| Execução de código do aluno        | Alto  | Sandbox, isolamento e logs antes de runtime remoto real.                               |
+| Conflito entre agentes             | Médio | Separar frentes: Claude em código visual, Antigravity/Gemini em pesquisa/documentação. |
 
-1. **Abertura (O Problema)**: "Estudantes de tecnologia frequentemente aprendem programação em ambientes artificiais e chegam ao mercado sem saber operar um terminal, depurar erros reais ou usar ferramentas profissionais."
-2. **A Solução (CodeChat)**: "Uma plataforma imersiva 'Modo Raiz' que ensina desenvolvimento prático diretamente no terminal, unindo rigor técnico a um suporte inteligente."
-3. **O Papel da IA (Diferencial Competitivo)**: "Nossa IA não é um gerador de código que substitui o aluno; ela atua como um professor particular experiente, oferecendo orientação progressiva e ensinando o estudante a pensar de forma crítica."
-4. **Maturidade Técnica (Governança)**: "O projeto segue padrões de engenharia de software de ponta: monorepo modular, contratos tipados, cobertura de testes automatizados e evolução incremental orientada a riscos."
-5. **Demonstração Prática**: Apresentar o protótipo visual em tela cheia do terminal (`apps/web`), demonstrando a imersão e o foco do aluno.
+---
+
+## 9. Posicionamento Comercial Seguro
+
+Recomendado:
+
+- Plataforma digital de apoio à aprendizagem técnica.
+- Ecossistema de aprendizado prático em tecnologia.
+- Laboratório interativo de programação e terminal.
+- Trilhas livres de capacitação técnica.
+- Evidências de competência e portfólio prático.
+
+Evitar:
+
+- Reconhecido pelo MEC.
+- Diploma.
+- Curso técnico oficial.
+- Certificação profissional oficial.
+- Garantia de emprego.
+- Substitui faculdade.
+- Aproveitamento acadêmico garantido.
 
 ---
 
 ## 10. Próxima Fatia Recomendada
 
-As próximas tarefas técnicas planejadas e recomendadas pelo time de engenharia focam em:
-
-- **Implantação do RootScoll Frontend Design System v1**: aplicar tokens, tipografia, focus states, botões, badges, cards, paineis e terminal a partir de `docs/frontend.md`.
-- **Painéis Operacionais Densos v1**: evoluir dashboard, perfil, trilhas e painel lateral da Sala Terminal para controle completo da jornada, ainda com dados mock/local.
-- **Validadores Locais Reais**: implementar avaliador `ValidationRule`/`ExecutionResult` sem Supabase, migrations ou persistência remota.
-- **Governança de escopo**: preservar o foco local e visual; auth real, Supabase e IA real seguem fora do escopo imediato.
+1. **Fechar a fundação visual RootScoll**: revisar diffs do Claude, rodar validações reais, commit e
+   push se aprovado.
+2. **Aprofundar currículo Zero to Junior**: usar Gemini/Antigravity para enriquecer fontes,
+   granularidade aula-a-aula e critérios de avaliação.
+3. **Consolidar posicionamento regulatório**: submeter `regulatory-positioning-brazil-v1.md` a
+   advogado antes de copy pública, certificado/atestado ou venda B2B.
+4. **Próxima fatia de código**: validadores locais formais ou lapidação UI/UX dos painéis densos,
+   sem Supabase, auth real ou IA real.

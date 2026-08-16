@@ -40,23 +40,33 @@ Bloco Pedagogico Local` abaixo)**: durante a Task 8, outra sessao rodou a mesma 
   chegar depois entender por que ha uma nota extensa sobre isso no registro daquela sessao. O
   Codex tambem renomeou `Mentor.tsx` -> `MentorWidget.tsx` nessa revisao (evitar colisao de casing
   com `mentor.ts` no Windows) — ver registro da Task 9 abaixo para como isso foi sincronizado.
-- Estado Git no ultimo registro (apos Task 9 — App Navigation v1 + Shell de Acesso Local): NAO
-  commitado. Modificados: `apps/web/src/App.tsx`, `apps/web/src/styles/app.css`,
-  `apps/web/src/features/terminal/useTerminalSession.ts`,
-  `apps/web/src/features/learning-flow/{LearningFlowApp.tsx,Sidebar.tsx,useLearningFlow.ts}`.
-  Deletados (Task 8, ainda pendentes no working tree): `apps/web/src/features/lessons/{types,
-lessons,lessons.test}.ts`, `apps/web/src/features/terminal/TerminalApp.tsx`. Novos:
-  `apps/web/src/features/learning-flow/*` (Task 8, com `MentorWidget.tsx` no lugar do antigo
-  `Mentor.tsx`), `apps/web/src/features/terminal/TerminalScreen.tsx` (Task 8),
-  `apps/web/src/features/app-shell/*` (Task 9, novo), `docs/product/app-navigation-v1.md` (Task 9,
-  novo), `Cérebro Operacional.md` modificado (este registro).
+- Estado Git no inicio desta sessao (Task 10): working tree limpo em `53699be feat: add RootScoll
+app shell and frontend system` (autor `test <test@example.com>`), tip de `main`/`origin/main`. Este
+  commit publicou intacto (conferido byte a byte contra o que esta sessao havia entregado) todo o
+  trabalho da Task 8 (Estrutura de Bloco Pedagogico Local) e da Task 9 (App Navigation v1 + Shell de
+  Acesso Local) que antes constava aqui como "pendente commit" — **essa pendencia esta resolvida**;
+  alem disso o commit trouxe `docs/frontend.md` (RootScoll Frontend Design System v1), 3 imagens de
+  identidade (`apps/web/src/images/{logo,identidade1,identidade2}.png`) e atualizacoes em
+  `docs/product/app-navigation-v1.md`, `docs/operations/visual-operational-brain.md` e neste arquivo.
+- Estado Git ao final desta sessao (Task 10 — Fundacao visual RootScoll): NAO commitado. Novos:
+  `apps/web/src/styles/tokens.css`, `apps/web/src/styles/typography.css`,
+  `apps/web/src/vite-env.d.ts` e `docs/product/regulatory-positioning-brazil-v1.md`. Tambem seguem
+  em revisao os documentos curriculares Zero to Junior criados por Antigravity
+  (`docs/product/*curriculum*`, `docs/product/zero-to-junior-curriculum-v1.md`). Modificados:
+  `apps/web/src/styles/app.css` (retonalizacao completa + novas classes utilitarias
+  `.btn*`/`.card`/`.badge`/`.input`), `apps/web/index.html` (titulo/meta RootScoll),
+  `apps/web/src/features/app-shell/{LoginScreen.tsx,AppNavigation.tsx}` (texto de marca +
+  `logo.png`), `apps/web/src/features/terminal/useTerminalSession.ts` (linha de sistema do terminal),
+  `apps/web/src/features/learning-flow/LearningFlowApp.tsx` (aria-label), `Cérebro Operacional.md`,
+  `docs/product/learning-catalog-v1.md` e `docs/operations/visual-operational-brain.md`.
 - Lock Git no ultimo registro: a ponte de arquivos desta sessao (`device_bash`) recria
   `.git/index.lock` a cada `git status` rodado por ela e falha ao remove-lo ("Operation not
   permitted") — padrao ja documentado, nao e um lock real de operacao Git em andamento; nao tratar
   como bloqueio.
-- Servidor local visual: `http://127.0.0.1:5174/` (nao reverificado nesta sessao).
-- Ultimo commit funcional publicado: `c61fa72 feat: add first executable local lessons` (inalterado
-  — nenhum commit novo criado por nenhuma sessao ate agora).
+- Servidor local visual: `http://127.0.0.1:5174/` (nao reverificado nesta sessao; validado via
+  `vite preview` no proxy da nuvem — ver registro desta sessao).
+- Ultimo commit funcional publicado: `53699be feat: add RootScoll app shell and frontend system`
+  (sobre `c61fa72 feat: add first executable local lessons`).
 
 ## Grafo operacional
 
@@ -76,18 +86,34 @@ Fundacao monorepo
   -> Estrutura de Bloco Pedagogico Local (LearningBlock: theory/practice/assessment/mentorHints;
      fluxo Teoria -> Pratica -> Avaliacao -> Conclusao; terminal ativo so em pratica/avaliacao;
      barra de progresso; sidebar recolhivel; mentor flutuante com dicas deterministicas —
-     implementado e validado, pendente commit)
+     publicado em 53699be)
   -> App Navigation v1 + Shell de Acesso Local (docs/product/app-navigation-v1.md; shell mock em
      apps/web/src/features/app-shell: login mock -> painel do aluno -> perfil/trilhas -> Sala de
      Aula Terminal como modulo interno via LearningFlowApp; navegacao em memoria,
      navigation-reducer puro; App.tsx agora raiz do shell, nao mais direto no LearningFlowApp —
-     implementado e validado nesta sessao, pendente commit)
+     publicado em 53699be)
   -> RootScoll Frontend Design System v1 (docs/frontend.md; marca oficial RootScoll, tokens,
      tipografia, componentes base, terminal, plataforma autenticada, sala Terminal, mentor e plano
-     de implantacao — documentado nesta sessao, pendente commit)
+     de implantacao — publicado em 53699be)
+  -> Fundacao visual RootScoll — Fase A/B + parte da C do plano de implantacao (docs/frontend.md
+     §23): apps/web/src/styles/{tokens.css,typography.css} novos; app.css inteiro retonalizado
+     (paleta, radius, sombra, foco, tipografia) sem alterar layout/estrutura; classes utilitarias
+     `.btn-primary`/`.btn-secondary`/`.card`/`.badge`/`.input` adicionadas para a proxima fatia;
+     marca RootScoll aplicada em index.html/login/app-nav (+ logo.png); estados
+     ativo/concluido/bloqueado padronizados em 3 cores semanticas (secondary/primary/muted) —
+     implementado e validado nesta sessao, pendente commit
+  -> Posicionamento Regulatorio Brasil v1 (docs/product/regulatory-positioning-brazil-v1.md):
+     RootScoll como plataforma/ecossistema de apoio a aprendizagem tecnica; curso livre/trilha livre
+     com ressalvas; proibicao de promessa MEC/diploma/curso tecnico/emprego; certificados/atestados
+     dependem de parecer juridico antes de producao — documentado, em revisao, pendente commit
   -> Proximas tarefas:
-     -> implantar tokens/tipografia RootScoll em apps/web/src/styles antes da lapidacao profunda
-        dos paineis
+     -> lapidacao UI/UX profunda dos paineis densos (dashboard/perfil/trilhas/sidebar) — Fase D do
+        plano de implantacao (docs/frontend.md §23), deliberadamente fora do escopo desta fatia
+     -> migrar botoes/cards/badges existentes para as classes utilitarias `.btn-primary` /
+        `.btn-secondary` / `.card` / `.badge` / `.input` adicionadas nesta sessao (hoje coexistem
+        com as classes BEM especificas de cada tela, ja retonalizadas mas nao reestruturadas)
+     -> otimizar `logo.png` (1.47 MB) para um icone leve (SVG ou PNG comprimido/redimensionado) —
+        hoje o mesmo arquivo de alta resolucao e usado em navbar (24px) e login (56px)
      -> validadores locais mais ricos (ValidationRule/ExecutionResult reais, hoje so ha checagem
         ad hoc por bloco em `assessment.isComplete`)
      -> mais blocos-piloto / catalogo formal (Learning Catalog v1) ligado a UI
@@ -106,21 +132,22 @@ Fundacao monorepo
 
 ## Marcos confirmados
 
-| Commit  | Descricao                                                       | Estado    |
-| ------- | --------------------------------------------------------------- | --------- |
-| bc52763 | Fundacao do monorepo CodeChat                                   | Publicado |
-| e3ab4af | Domain Model v1 e Engine Contracts v1                           | Publicado |
-| c09bf74 | Planejamento de database e RLS                                  | Publicado |
-| 3ca2096 | Curriculo Fase 0 e contratos de conteudo                        | Publicado |
-| bd82a83 | Prototipo visual fullscreen focado no terminal                  | Publicado |
-| a4c53f7 | Contratos TypeScript iniciais da Fase 1                         | Publicado |
-| cdf220e | Registro de sessao do Cerebro Operacional                       | Publicado |
-| fedb314 | Dashboard executivo do Cerebro Operacional                      | Publicado |
-| 0d29750 | Learning Catalog v1 formalizado (6 trilhas)                     | Publicado |
-| bebc3ea | Runtime Requirements v1                                         | Publicado |
-| 49663d8 | Shell Core / Terminal Engine Minimo (pwd/ls/cd/mkdir)           | Publicado |
-| d6d0252 | Comandos de arquivos do terminal (touch/cat/echo/cp/mv/rm/tree) | Publicado |
-| c61fa72 | Primeira licao executavel local (mkdir/touch em apps/web)       | Publicado |
+| Commit  | Descricao                                                                               | Estado    |
+| ------- | --------------------------------------------------------------------------------------- | --------- |
+| bc52763 | Fundacao do monorepo CodeChat                                                           | Publicado |
+| e3ab4af | Domain Model v1 e Engine Contracts v1                                                   | Publicado |
+| c09bf74 | Planejamento de database e RLS                                                          | Publicado |
+| 3ca2096 | Curriculo Fase 0 e contratos de conteudo                                                | Publicado |
+| bd82a83 | Prototipo visual fullscreen focado no terminal                                          | Publicado |
+| a4c53f7 | Contratos TypeScript iniciais da Fase 1                                                 | Publicado |
+| cdf220e | Registro de sessao do Cerebro Operacional                                               | Publicado |
+| fedb314 | Dashboard executivo do Cerebro Operacional                                              | Publicado |
+| 0d29750 | Learning Catalog v1 formalizado (6 trilhas)                                             | Publicado |
+| bebc3ea | Runtime Requirements v1                                                                 | Publicado |
+| 49663d8 | Shell Core / Terminal Engine Minimo (pwd/ls/cd/mkdir)                                   | Publicado |
+| d6d0252 | Comandos de arquivos do terminal (touch/cat/echo/cp/mv/rm/tree)                         | Publicado |
+| c61fa72 | Primeira licao executavel local (mkdir/touch em apps/web)                               | Publicado |
+| 53699be | App shell RootScoll (Task 8+9) + RootScoll Frontend Design System v1 (docs/frontend.md) | Publicado |
 
 ## Decisoes de governanca
 
@@ -134,33 +161,49 @@ Fundacao monorepo
 
 ## Proximos passos ativos
 
-1. **RootScoll Frontend Design System v1 — documentado nesta sessao, pendente commit**:
-   `docs/frontend.md` passa a ser a fonte oficial de verdade visual do frontend (marca RootScoll,
-   tagline `Learn by doing. Think from the Root.`, Modo Raiz, paleta, tokens semanticos,
-   tipografia, componentes base, terminal, plataforma autenticada, mentor, acessibilidade e plano
-   de implantacao). Proximo passo: implantar tokens/tipografia no CSS antes da lapidacao visual
-   profunda dos paineis.
-2. **App Navigation v1 + Shell de Acesso Local — implementado e validado nesta sessao, pendente
-   commit**: `docs/product/app-navigation-v1.md` (fluxo, papeis, rotas planejadas, menu lateral da
-   sala Terminal, limites) + shell mock em `apps/web/src/features/app-shell/` (login -> painel ->
+1. **Fundacao visual RootScoll — implementada e validada nesta sessao (Task 10), pendente commit**:
+   tokens (`apps/web/src/styles/tokens.css`) e tipografia (`apps/web/src/styles/typography.css`)
+   extraidos de `docs/frontend.md` §4/§6/§7; `app.css` inteiro retonalizado (cores, radius, sombra,
+   foco, fontes) preservando toda a estrutura/layout existente; marca RootScoll aplicada em
+   `index.html`, login e barra de navegacao (com `logo.png`); classes utilitarias
+   `.btn-primary`/`.btn-secondary`/`.card`/`.badge`/`.input` (docs/frontend.md §9) adicionadas para a
+   proxima fatia. Proximo passo: lapidacao UI/UX profunda dos paineis densos (Fase D do plano de
+   implantacao, docs/frontend.md §23) — ver registro de sessao para a lista completa de
+   recomendacoes.
+2. **Posicionamento Regulatorio Brasil v1 — documentado, em revisao, pendente commit**:
+   `docs/product/regulatory-positioning-brazil-v1.md` consolida a tese segura para o Brasil:
+   plataforma/ecossistema de apoio a aprendizagem tecnica, com cursos/trilhas livres apenas sob
+   ressalva, sem promessa de MEC, diploma, curso tecnico, certificacao oficial ou emprego. Antes de
+   copy publica, certificado/atestado ou venda B2B, exige parecer juridico especializado.
+3. **Pesquisa e Curriculo Zero to Junior — em revisao, pendente commit**: revisar a densidade
+   pedagogica dos documentos `docs/product/zero-to-junior-curriculum-v1.md`,
+   `docs/product/curriculum-research-notes-v1.md` e
+   `docs/product/curriculum-implementation-roadmap-v1.md`; a entrega atual estabelece a espinha
+   dorsal das 14 trilhas, mas ainda precisa de fontes e granularidade aula-a-aula.
+4. **RootScoll Frontend Design System v1 — publicado em `53699be`**: `docs/frontend.md` e a fonte
+   oficial de verdade visual do frontend (marca RootScoll, tagline `Learn by doing. Think from the
+Root.`, Modo Raiz, paleta, tokens semanticos, tipografia, componentes base, terminal, plataforma
+   autenticada, mentor, acessibilidade e plano de implantacao). Tokens/tipografia ja implantados no
+   CSS nesta sessao (item 1); falta a lapidacao visual profunda dos paineis.
+5. **App Navigation v1 + Shell de Acesso Local — publicado em `53699be`**:
+   `docs/product/app-navigation-v1.md` (fluxo, papeis, rotas planejadas, menu lateral da sala
+   Terminal, limites) + shell mock em `apps/web/src/features/app-shell/` (login -> painel ->
    perfil/trilhas -> Sala Terminal, navegacao em memoria via `navigation-reducer.ts` puro).
-   `App.tsx` agora renderiza `AppShell`, nao mais `LearningFlowApp` diretamente. Proximo passo:
-   revisao final/commit quando autorizado.
-3. **Estrutura de Bloco Pedagogico Local — implementada e validada na sessao anterior, ainda
-   pendente commit**: `LearningBlock` (theory/practice/assessment/mentorHints) em
+   `App.tsx` renderiza `AppShell`, nao mais `LearningFlowApp` diretamente.
+6. **Estrutura de Bloco Pedagogico Local — publicada em `53699be`**:
+   `LearningBlock` (theory/practice/assessment/mentorHints) em
    `apps/web/src/features/learning-flow`, fluxo Teoria -> Pratica -> Avaliacao -> Conclusao;
    `MentorWidget.tsx` (renomeado de `Mentor.tsx` pelo Codex, evita colisao de casing com
-   `mentor.ts` no Windows); `Sidebar.tsx` evoluida nesta sessao para expor tentativas e "Sair da
-   sala" (ver item 1).
-4. **Validadores locais mais ricos**: a validacao continua sendo uma funcao pura ad hoc por bloco
+   `mentor.ts` no Windows); `Sidebar.tsx` expoe tentativas e "Sair da sala".
+7. **Validadores locais mais ricos**: a validacao continua sendo uma funcao pura ad hoc por bloco
    (`assessment.isComplete`, local a `apps/web`) — nao usa `ValidationRule`/`ExecutionResult` de
    `@codechat/types`, porque nenhum avaliador `(ExecutionResult, ValidationRule) ->
 ValidationOutcome` existe ainda em lugar nenhum do monorepo. Continua pendencia separada.
-5. **Roteador real**: `docs/product/app-navigation-v1.md` planeja rotas (`/login`, `/app`,
+8. **Roteador real**: `docs/product/app-navigation-v1.md` planeja rotas (`/login`, `/app`,
    `/app/perfil`, `/app/trilhas`, `/app/trilhas/:trackId`, `/app/sala/terminal/:blockId`) que hoje
    so existem como estado em memoria (`AppScreen`), sem URL sincronizada nem `react-router`.
    Introduzir isso e decisao de proxima fatia, nao coberta aqui.
-6. **Divergencia de trilhas mock pede revisao do Codex**: a lista de 6 trilhas mock em
+9. **Divergencia de trilhas mock pede revisao do Codex**: a lista de 6 trilhas mock em
    `apps/web/src/features/app-shell/mock-data.ts` (Terminal e SO, Git/GitHub, Web, Programacao,
    **Banco de Dados**, Seguranca) segue o texto literal desta tarefa, mas diverge da Learning
    Catalog v1 ja publicada (`docs/product/learning-catalog-v1.md`), cuja 5ª trilha e
@@ -169,17 +212,177 @@ ValidationOutcome` existe ainda em lugar nenhum do monorepo. Continua pendencia 
    preservada deliberadamente (modulo mock local, nao importa `@codechat/types`), documentada em
    `docs/product/app-navigation-v1.md` e aqui — decisao de qual lista e a fonte de verdade fica
    para o Codex quando o catalogo mock virar catalogo real.
-7. **Decisao pendente do Codex/usuario sobre a sessao paralela substituida na Task 8**: a
-   implementacao descartada propôs proximos passos que NAO foram aprovados como tarefa nesta linha
-   do tempo (integracao Pyodide, painel academico/turmas). Continuam so como contexto, nao
-   compromisso.
-8. **Governanca de escopo**: manter o foco em logicas de execucao/validacao locais e navegacao
-   mock, sem Supabase, migrations, banco de dados real, autenticacao real ou IA real. Risco de
-   processo ja identificado na Task 8 (rodar a mesma tarefa em duas sessoes em paralelo sobre o
-   mesmo working tree nao commitado) permanece registrado como licao — nao se repetiu nesta
-   sessao.
+10. **Decisao pendente do Codex/usuario sobre a sessao paralela substituida na Task 8**: a
+    implementacao descartada propôs proximos passos que NAO foram aprovados como tarefa nesta linha
+    do tempo (integracao Pyodide, painel academico/turmas). Continuam so como contexto, nao
+    compromisso.
+11. **Governanca de escopo**: manter o foco em logicas de execucao/validacao locais e navegacao
+    mock, sem Supabase, migrations, banco de dados real, autenticacao real ou IA real. Risco de
+    processo ja identificado na Task 8 (rodar a mesma tarefa em duas sessoes em paralelo sobre o
+    mesmo working tree nao commitado) permanece registrado como licao — nao se repetiu nesta
+    sessao.
 
 ## Registro de sessoes
+
+### 2026-08-16 (Codex) — Posicionamento Regulatorio Brasil v1
+
+**Documentacao: produto/comercial, MEC, cursos livres, certificados e riscos juridicos**
+
+- Material de pesquisa externa recebido: `Regulação Edtech RootScoll Brasil.md` (Gemini Deep
+  Search).
+- Arquivo criado: `docs/product/regulatory-positioning-brazil-v1.md`.
+- Decisao de produto registrada: RootScoll deve se posicionar inicialmente como plataforma digital
+  de apoio a aprendizagem tecnica / ecossistema de aprendizado pratico, nao como instituicao de
+  ensino formal, escola tecnica, curso tecnico, certificadora oficial ou entidade reconhecida pelo
+  MEC.
+- Linguagem comercial segura registrada: trilhas livres, laboratorio pratico, capacitacao tecnica,
+  evidencias de competencia e portfolio; proibidos `reconhecido pelo MEC`, `diploma`, `curso tecnico
+oficial`, `certificacao profissional oficial`, `garantia de emprego`, `substitui faculdade` e
+  `aproveitamento academico garantido`.
+- Cautela juridica incorporada: a nomenclatura de certificado/atestado deve ser validada por
+  advogado antes de uso publico, porque ha divergencia pratica entre materiais de mercado e paginas
+  institucionais do MEC sobre cursos livres, certificados de conclusao e certificados de
+  participacao.
+- Limites preservados: documento nao implementa backend, auth, Supabase, IA real, certificado real,
+  checkout ou copy publica; e referencia estrategica sujeita a parecer juridico.
+
+### 2026-08-16 (Cowork/cloud) — Execucao: Fundacao Visual RootScoll (Task 10)
+
+**Execucao: primeira fatia de implantacao do frontend RootScoll (tokens, tipografia, estados
+visuais e consistencia de UI)**
+
+- Tarefa aprovada, escopo: aplicar a fundacao visual RootScoll (`docs/frontend.md`) sobre
+  `apps/web` — app shell, login, dashboard, perfil, trilhas, sala Terminal e fluxo de aprendizado —
+  sem redesenhar os paineis densos ainda. Preservar a arquitetura publicada em `53699be`. Sem
+  autenticacao real, Supabase, banco, IA real, migrations, backend, rotas reais complexas, commit ou
+  push. Sem `_to_delete/`. Evitar colisao de casing no Windows.
+- Preflight: `git status -sb`/branch/log/lock confirmados via `device_bash` no inicio da sessao —
+  working tree limpo em `53699be` (tip de `main`/`origin/main`). `git show --stat 53699be` conferido:
+  o commit publicou intacto (diff byte a byte contra o que a sessao anterior havia entregado) todo o
+  trabalho das Tasks 8 e 9, mais `docs/frontend.md`, as 3 imagens de identidade e as atualizacoes de
+  `app-navigation-v1.md`/`visual-operational-brain.md`/`Cérebro Operacional.md`. Nenhum resync
+  necessario no proxy da nuvem (`/tmp/proxy-web`) alem do que ja estava sincronizado.
+- `docs/frontend.md` lido na integra (764 linhas) e usado como fonte literal para todos os valores
+  de token/tipografia/componente abaixo — nenhum valor de cor, raio, sombra ou tamanho foi inventado
+  fora do que o documento especifica.
+
+**Arquivos criados**
+
+- `apps/web/src/styles/tokens.css` — paleta fisica e tokens semanticos (§4), variaveis de fonte
+  (§6), radius (§7), sombra e gradiente de marca, escala de espacamento (§7) como variaveis
+  `--space-1` a `--space-13`, e os tokens de foco (`--focus-ring`/`--focus-ring-offset`, §17).
+- `apps/web/src/styles/typography.css` — aplicacao base de `font-family` em `body`/headings/
+  `code|kbd|pre|samp`, mais a hierarquia utilitaria completa do §6 (`.text-display`, `.text-h1`,
+  `.text-h2`, `.text-h3`, `.text-body`, `.text-small`, `.text-terminal`), copiada verbatim do
+  documento.
+- `apps/web/src/vite-env.d.ts` — `/// <reference types="vite/client" />`, necessario para o
+  TypeScript reconhecer o import de `logo.png` como modulo (nao existia nenhum arquivo de tipos de
+  ambiente Vite no projeto ate agora).
+
+**Arquivos alterados**
+
+- `apps/web/src/styles/app.css` — retonalizacao completa: dois `@import` novos no topo
+  (`tokens.css`/`typography.css`); todo valor de cor hexadecimal/rgba antigo trocado pelo token
+  semantico correspondente (mapeamento: `#f3f0e8`/`#dfdccf` -> `--text-primary`, `#aaa496` ->
+  `--text-secondary`, `#878f7f`/`#6b6558` -> `--text-muted`; traffic-light da titlebar
+  vermelho/amarelo/verde -> `--error`/`--warning`/`--primary`; estados semanticos ativo/concluido/
+  bloqueado padronizados em 3 cores distintas — `--secondary` (cyan, "em andamento"), `--primary`
+  (mint, "concluido"), `--text-muted` (bloqueado) — em `.progress-bar__step*`, `.sidebar__block*` e
+  `.track-row__status*`/`.track-module*`); radius trocado por `--radius-sm/md/lg` conforme a
+  categoria do elemento (chips/badges = sm, botoes/inputs = md, cards/paineis = lg); sombras trocadas
+  por `--shadow-md`/`--shadow-sm`; `:root` deixa de fixar fonte monoespacada global — usa
+  `var(--font-ui)` (Inter) como base, e `.terminal-window` passa a declarar `var(--font-mono)`
+  explicitamente (herdado por titlebar/screen/input, preservando o terminal 100% monoespacado);
+  fundo de `.terminal-app` trocado pela receita oficial do §8 (glow radial + grid tecnico
+  `40px 40px`); regra global `:focus-visible` adicionada (§17) mais um override especifico em
+  `.terminal-input-line__input:focus-visible` (o input do terminal tinha `outline: none`
+  incondicional; agora so remove o outline padrao do navegador, preservando o anel de foco por
+  teclado); `.login-card__field input`/`.input` adotam o padrao `:focus-visible` com
+  `box-shadow` do §9 no lugar do antigo `:focus` generico; `.terminal-cursor` (confirmada morta via
+  grep — nenhuma classe JSX a referencia) teve so a cor levada ao token `--warning`, mantida
+  intacta por nao ser objeto desta tarefa (candidata a remocao na proxima lapidacao); adicionadas
+  `.login-card__logo`/`.app-nav__brand-logo` (dimensionamento do `logo.png`) e uma secao final com
+  as classes utilitarias canonicas do §9 (`.btn`, `.btn-primary`, `.btn-secondary`, `.card`,
+  `.badge`, `.input`) para a proxima fatia migrar os componentes especificos das telas. Nenhuma
+  classe BEM existente foi removida, renomeada ou reestruturada — so retonalizada.
+- `apps/web/index.html` — `<title>` e `meta[name=description]` trocados de "CodeChat" para
+  "RootScoll" (com a tagline oficial `Learn by doing. Think from the Root.`).
+- `apps/web/src/features/app-shell/LoginScreen.tsx` — `aria-label`/`h1` de "CodeChat" para
+  "RootScoll"; `logo.png` importado e exibido acima do titulo (56px, `alt=""` decorativo, o `h1`
+  ja carrega o nome da marca em texto).
+- `apps/web/src/features/app-shell/AppNavigation.tsx` — `.app-nav__brand` de "CodeChat" para
+  "RootScoll", com `logo.png` (24px) ao lado do texto.
+- `apps/web/src/features/terminal/useTerminalSession.ts` — linha de sistema inicial do terminal de
+  `'CodeChat Terminal — Fase 0'` para `'RootScoll Terminal — Modo Raiz'`.
+- `apps/web/src/features/learning-flow/LearningFlowApp.tsx` — `aria-label` de "CodeChat
+  aprendizagem em tela cheia" para "RootScoll aprendizagem em tela cheia".
+
+**Decisoes tecnicas tomadas**
+
+1. **`plena` (hostname do prompt do terminal) NAO alterado** — vem de
+   `docs/product/curriculum-phase-0.md` (documento de produto ja aprovado, linhas 104/115), coberto
+   por testes existentes (`terminal-format.test.ts`). Trocar seria escopo de curriculo/copy, nao de
+   tokens/visual — fora desta tarefa.
+2. **`identidade1.png`/`identidade2.png` NAO usadas na interface** — sao mockup de landing page e
+   folha de estilo de marca (moodboard/referencia), nao ativos prontos para embutir em telas
+   funcionais densas; usa-los feriria "sem poluir a interface" (escopo 5). Somente `logo.png` (icone
+   limpo) foi aplicado, em login (56px) e navbar (24px), dentro dos minimos recomendados pelo §3
+   (`icone isolado: minimo 24px`).
+3. **Migracao das classes BEM para as novas classes utilitarias `.btn-primary`/`.card`/etc. NAO
+   feita nesta fatia** — aplicar as novas classes utilitarias (min-height/padding diferentes das
+   classes BEM compactas atuais) a cada botao/card existente arriscaria alterar densidade/layout das
+   telas, o que a tarefa explicitamente pede para NAO fazer ainda ("nao redesenhar tudo",
+   "nao transformar em redesign profundo dos paineis densos"). As classes canonicas foram
+   adicionadas ao `app.css` e ficam disponiveis para a proxima lapidacao aplicar deliberadamente.
+4. **Base tipografica trocada de monoespacada global para `var(--font-ui)` (Inter)** — o `:root`
+   antigo fixava fonte de terminal em toda a aplicacao (inclusive telas de login/dashboard/perfil,
+   que nao sao terminal). O terminal em si (`.terminal-window` e descendentes) recebeu
+   `font-family: var(--font-mono)` explicito para preservar 100% do visual/comportamento anterior
+   nessa area — nenhuma tela de terminal muda de fonte.
+5. **`.terminal-cursor`/`@keyframes blink` preservados, so a cor retonalizada** — confirmado via
+   grep que nenhum componente usa essa classe (CSS morto). Removê-la seria limpeza de codigo, fora
+   do escopo "aplicar tokens" desta tarefa; mantida como candidata a remocao no proximo ciclo.
+6. **`logo.png` usado como esta (1.47 MB), sem otimizacao** — o asset fornecido pelo usuario e de
+   alta resolucao; redimensiona-lo/comprimi-lo exigiria gerar um novo arquivo binario, o que nao
+   estava no escopo autorizado ("nao substituir por placeholder", §3, mas tambem nada foi pedido
+   sobre reotimizar o arquivo original). Sinalizado como recomendacao para a proxima etapa.
+
+**Validacoes executadas**
+
+- Proxy real de rede na nuvem (`/tmp/proxy-web`, mesma tecnica das sessoes anteriores —
+  `pnpm-workspace.yaml` proprio + `corepack pnpm@10.28.0 install` genuino):
+  - `corepack pnpm@10.28.0 -r --if-present run typecheck` — passou nos 4 pacotes/apps (precisou de
+    `vite-env.d.ts` novo para o import de `logo.png` resolver; sem isso `tsc` falhava com
+    `TS2307` em `AppNavigation.tsx`/`LoginScreen.tsx`).
+  - `corepack pnpm@10.28.0 lint` — passou sem avisos.
+  - `corepack pnpm@10.28.0 test` — passou, **116 testes em 10 arquivos**, nenhum teste alterado ou
+    quebrado por esta fatia (a fatia e puramente visual/tokens, sem mudanca de logica).
+  - `corepack pnpm@10.28.0 format:check` — passou apos `prettier --write` num `pnpm-lock.yaml`
+    reformatado localmente pelo `pnpm install` do proxy (artefato do proprio ambiente de validacao
+    na nuvem, nao toca o `pnpm-lock.yaml` real nem foi transferido) e apos remover um `dist/` de
+    build anterior deste mesmo proxy (idem, artefato local, nunca fez parte do repositorio real).
+  - `corepack pnpm@10.28.0 --filter @codechat/web build` — build de producao concluido; `vite
+preview` confirmou `<title>RootScoll</title>` no HTML servido e as variaveis de token
+    (`--mint-signal`, etc.) presentes no CSS gerado.
+- Tentativa de validacao real via `device_bash` (maquina do usuario): esperada a mesma falha de rede
+  ja documentada nas sessoes anteriores (VM da ponte de arquivos sem acesso a rede externa) —
+  **nao repetida em detalhe aqui por ja estar exaustivamente registrada nas sessoes anteriores**;
+  nenhuma tentativa desta categoria substitui a validacao real do monorepo.
+- Apos a transferencia, checagem de colisao de casing em todo `apps/web/src` (case-insensitive):
+  38 arquivos, nenhuma colisao encontrada.
+- Todos os arquivos novos/alterados transferidos (`SendUserFile` -> `file_uuid` ->
+  `device_commit_files`) tiveram MD5 conferido identico dos dois lados apos a transferencia.
+
+**Limites preservados**
+
+- Sem autenticacao real, Supabase, migrations, backend real ou IA real.
+- Sem rotas reais novas — navegacao continua em memoria (`navigation-reducer.ts`).
+- Sem commit ou push realizados no Git.
+- Nenhum painel denso (dashboard/perfil/trilhas) redesenhado estruturalmente — so retonalizado.
+- Nao criada pasta `_to_delete/`.
+- Nenhum arquivo com nome que difere de outro so por maiuscula/minuscula.
+- Nenhuma dependencia externa adicionada (fontes seguem via `font-family` com fallback de sistema,
+  conforme pedido; nenhum pacote de fonte/CDN instalado).
 
 ### 2026-08-16 (Codex) — RootScoll Frontend Design System v1
 

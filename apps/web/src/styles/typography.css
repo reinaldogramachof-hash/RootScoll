@@ -1,0 +1,87 @@
+/*
+ * RootScoll — Tipografia
+ * Fonte oficial: docs/frontend.md (seção 6)
+ * Sem dependências externas: as três famílias (Space Grotesk, Inter,
+ * IBM Plex Mono) dependem de fontes do sistema/usuário; os fallbacks
+ * abaixo garantem legibilidade quando ausentes.
+ */
+
+body {
+  font-family: var(--font-ui);
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--font-mono);
+}
+
+.text-display {
+  font-family: var(--font-heading);
+  font-size: 5.5rem;
+  font-weight: 600;
+  line-height: 0.98;
+}
+
+.text-h1 {
+  font-family: var(--font-heading);
+  font-size: 4.5rem;
+  font-weight: 600;
+  line-height: 1.05;
+}
+
+.text-h2 {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.text-h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.text-body {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.text-small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-terminal {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 720px) {
+  .text-display {
+    font-size: 3rem;
+  }
+
+  .text-h1 {
+    font-size: 2.5rem;
+  }
+
+  .text-h2 {
+    font-size: 2rem;
+  }
+}

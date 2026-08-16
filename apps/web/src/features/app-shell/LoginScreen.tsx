@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import logo from '../../images/logo.png';
 
 export interface LoginScreenProps {
   readonly onLogin: () => void;
@@ -21,9 +22,10 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
   }
 
   return (
-    <main className="login-screen" aria-label="Acesso ao CodeChat">
+    <main className="login-screen" aria-label="Acesso ao RootScoll">
       <form className="login-card" onSubmit={handleSubmit}>
-        <h1 className="login-card__title">CodeChat</h1>
+        <img className="login-card__logo" src={logo} alt="" aria-hidden="true" />
+        <h1 className="login-card__title">RootScoll</h1>
         <p className="login-card__subtitle">
           Acesso local de demonstração — sem autenticação real.
         </p>

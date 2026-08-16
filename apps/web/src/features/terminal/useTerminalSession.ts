@@ -38,7 +38,7 @@ export function useTerminalSession() {
     createInitialFilesystemState(),
   );
   const [lines, setLines] = useState<readonly TerminalOutputLine[]>(() => [
-    { id: nextLineId(), kind: 'system', text: 'CodeChat Terminal — Fase 0' },
+    { id: nextLineId(), kind: 'system', text: 'RootScoll Terminal — Modo Raiz' },
   ]);
   const [inputValue, setInputValue] = useState('');
 

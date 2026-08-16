@@ -107,10 +107,10 @@ continua reservado para evolução futura.
   `maxAttempts?`.
 - **Tipo**: `ChallengeCatalogEntry`.
 
-## Trilhas e segmentos
+## Trilhas e segmentos (Fase 1 vs Currículo Ideal)
 
 As 6 trilhas estratégicas de `docs/product/product-vision-v1.md` são
-modeladas como `LearningTrackId`:
+modeladas na **Fase 1** como `LearningTrackId`:
 
 | `trackId`               | Nome                                  | Segmentos (`LearningSegment`)                                                 |
 | ----------------------- | ------------------------------------- | ----------------------------------------------------------------------------- |
@@ -120,6 +120,8 @@ modeladas como `LearningTrackId`:
 | `programming`           | Programação                           | `python`, `java`, `php`, `nodejs`                                             |
 | `professional-practice` | Prática Profissional                  | `database`, `deploy`, `testing`, `debugging`                                  |
 | `cybersecurity`         | Segurança Cibernética e da Informação | `cybersecurity`, `information-security`, `secure-development`, `digital-risk` |
+
+> **Decisão Pendente (Codex/Usuário)**: A pesquisa profunda de currículo gerou o documento ideal `docs/product/zero-to-junior-curriculum-v1.md`, que expande essas 6 trilhas genéricas em **14 trilhas granulares**. Por enquanto, este catálogo v1 (em código) permanece com as 6 trilhas para permitir a execução da Fase 1, mas precisará ser refatorado futuramente para comportar as 14 trilhas do currículo ideal.
 
 `LearningSegment` é a taxonomia de granularidade mais fina, usada tanto para
 compor `LearningTrack.segments` quanto para decidir o requisito de runtime de

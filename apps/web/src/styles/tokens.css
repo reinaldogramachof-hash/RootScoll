@@ -1,0 +1,76 @@
+/*
+ * RootScoll — Design Tokens
+ * Fonte oficial: docs/frontend.md (seções 4, 6, 7)
+ * Não redefinir estes valores fora deste arquivo — componentes devem
+ * sempre consumir as variáveis semânticas abaixo, nunca os valores físicos
+ * diretamente, para manter a base pronta para a lapidação UI/UX futura.
+ */
+
+:root {
+  /* ---- Paleta física (RootScoll, doc seção 4) ---- */
+  --root-black: #0b1020;
+  --terminal-slate: #141b2d;
+  --mint-signal: #36e6a5;
+  --cyan-logic: #3ab8ff;
+  --craft-amber: #f2a93b;
+  --cloud-white: #f5f7fb;
+  --steel-gray: #9aa4b2;
+  --border-gray: #263042;
+  --danger: #ff5c6c;
+
+  /* ---- Tokens semânticos ---- */
+  --background: var(--root-black);
+  --background-secondary: var(--terminal-slate);
+  --surface: var(--terminal-slate);
+  --surface-hover: #192236;
+  --border: var(--border-gray);
+  --border-hover: #344158;
+  --text-primary: var(--cloud-white);
+  --text-secondary: var(--steel-gray);
+  --text-muted: #6f7a89;
+  --primary: var(--mint-signal);
+  --primary-hover: #48edb2;
+  --secondary: var(--cyan-logic);
+  --warning: var(--craft-amber);
+  --error: var(--danger);
+  --success: var(--mint-signal);
+
+  /* ---- Gradiente de marca (uso pontual: logo, ícones, bordas especiais,
+     indicadores de progresso, destaques — nunca como fundo dominante) ---- */
+  --gradient-brand: linear-gradient(135deg, #36e6a5 0%, #3ab8ff 100%);
+
+  /* ---- Tipografia (doc seção 6) ---- */
+  --font-heading: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Cascadia Code', Consolas, monospace;
+
+  /* ---- Espaçamento (doc seção 7 — escala de referência em px) ----
+     4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128 */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 48px;
+  --space-10: 64px;
+  --space-11: 80px;
+  --space-12: 96px;
+  --space-13: 128px;
+
+  /* ---- Raio (doc seção 7) ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+
+  /* ---- Sombra (doc seção 7 — preferir bordas/contraste a sombras pesadas) ---- */
+  --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.28);
+  --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.24);
+
+  /* ---- Foco (doc seção 17 — acessibilidade) ---- */
+  --focus-ring: var(--primary);
+  --focus-ring-offset: 3px;
+}

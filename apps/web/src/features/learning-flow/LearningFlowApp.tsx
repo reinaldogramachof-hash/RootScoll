@@ -39,7 +39,7 @@ function LearningFlowApp({ onExitClassroom }: LearningFlowAppProps) {
   const flow = useLearningFlow();
 
   return (
-    <main className="terminal-app" aria-label="CodeChat aprendizagem em tela cheia">
+    <main className="terminal-app" aria-label="RootScoll aprendizagem em tela cheia">
       <section className="terminal-window" aria-label="Bloco pedagógico atual">
         <div className="terminal-titlebar" aria-hidden="true">
           <span />

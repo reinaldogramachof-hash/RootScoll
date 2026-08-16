@@ -1,4 +1,5 @@
 import type { AppScreen } from './types';
+import logo from '../../images/logo.png';
 
 export interface AppNavigationProps {
   readonly screen: AppScreen;
@@ -32,7 +33,10 @@ function AppNavigation({
 }: AppNavigationProps) {
   return (
     <nav className="app-nav" aria-label="Navegação principal">
-      <span className="app-nav__brand">CodeChat</span>
+      <span className="app-nav__brand">
+        <img className="app-nav__brand-logo" src={logo} alt="" aria-hidden="true" />
+        RootScoll
+      </span>
 
       <button
         type="button"
