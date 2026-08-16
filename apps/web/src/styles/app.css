@@ -1073,7 +1073,7 @@ body {
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  padding: 40px 56px;
+  padding: 48px 80px;
   background: linear-gradient(145deg, #f0faf6 0%, #e8f4ff 55%, #f0faf6 100%);
   overflow-y: auto;
   overflow-x: hidden;
@@ -1165,7 +1165,9 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  width: 100%;
+  max-width: 580px;
 }
 
 .login-welcome__feature-item {
@@ -1287,7 +1289,7 @@ body {
   display: block;
   z-index: 1;
   pointer-events: none;
-  opacity: 0.2;
+  opacity: 0.45;
 }
 
 /* ============================================================
