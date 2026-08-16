@@ -60,7 +60,7 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
     }
 
     const draw = () => {
-      ctx.fillStyle = 'rgba(5, 8, 17, 0.1)';
+      ctx.fillStyle = 'rgba(5, 8, 17, 0.14)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.font = `${fontSize}px monospace`;
       for (let i = 0; i < rainDrops.length; i++) {
@@ -69,8 +69,8 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
         const x = i * fontSize;
         const y = rainDrops[i]! * fontSize;
         ctx.fillText(text, x, y);
-        if (y > canvas.height && Math.random() > 0.975) { rainDrops[i] = 0; }
-        rainDrops[i] = rainDrops[i]! + 1;
+        if (y > canvas.height && Math.random() > 0.985) { rainDrops[i] = 0; }
+        rainDrops[i] = rainDrops[i]! + 0.35;
       }
       animationFrameId = requestAnimationFrame(draw);
     };
@@ -136,10 +136,13 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
         <canvas ref={canvasRef} className="login-arena__rain" aria-hidden="true" />
         <form className="login-card" onSubmit={handleSubmit} noValidate>
           <img className="login-card__logo" src={logo} alt="RootScoll" />
-          <div className="login-card__tabs">
-            <button type="button" className={`login-card__tab ${role === 'aluno' ? 'login-card__tab--active' : ''}`} onClick={() => { setRole('aluno'); setEmail(''); }}>Aluno</button>
-            <button type="button" className={`login-card__tab ${role === 'professor' ? 'login-card__tab--active' : ''}`} onClick={() => { setRole('professor'); setEmail(''); }}>Professor</button>
-            <button type="button" className={`login-card__tab ${role === 'parceiros' ? 'login-card__tab--active' : ''}`} onClick={() => { setRole('parceiros'); setEmail(''); }}>Parceiros</button>
+          <div className="login-card__session-picker" aria-label="Sessões de acesso">
+            <span className="login-card__session-label">Sessões</span>
+            <div className="login-card__tabs" role="tablist" aria-label="Sessões de acesso">
+              <button type="button" className={`login-card__tab ${role === 'aluno' ? 'login-card__tab--active' : ''}`} onClick={() => { setRole('aluno'); setEmail(''); }}>Aluno</button>
+              <button type="button" className={`login-card__tab ${role === 'professor' ? 'login-card__tab--active' : ''}`} onClick={() => { setRole('professor'); setEmail(''); }}>Professor</button>
+              <button type="button" className={`login-card__tab ${role === 'parceiros' ? 'login-card__tab--active' : ''}`} onClick={() => { setRole('parceiros'); setEmail(''); }}>Parceiros</button>
+            </div>
           </div>
           <div className="login-card__header">
             <h2 className="login-card__title">
