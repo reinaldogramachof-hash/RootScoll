@@ -452,8 +452,8 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg) 0 0 var(--radius-lg);
   background: rgba(13, 18, 26, 0.88);
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   box-shadow: -16px 0 48px rgba(0, 0, 0, 0.5);
   padding: 16px;
   color: var(--text-primary);
@@ -3276,8 +3276,8 @@ body {
  * ------------------------------------------------------------------------ */
 
 .focus-mode-protected {
-  user-select: none;
   -webkit-user-select: none;
+  user-select: none;
 }
 
 .focus-modal-overlay {
@@ -3291,8 +3291,8 @@ body {
   align-items: center;
   justify-content: center;
   background: rgba(9, 11, 16, 0.92);
-  backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   padding: 24px;
   animation: fadeIn 0.25s ease;
 }
@@ -3391,6 +3391,7 @@ body {
   font-weight: 500;
   line-height: 1.2;
   transition: all 0.25s ease;
+  -webkit-user-select: none;
   user-select: none;
 }
 
