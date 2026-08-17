@@ -49,6 +49,13 @@ export function useLearningFlow() {
     }
   }, [terminal, flowState.step, currentBlock]);
 
+  const restartBlock = useCallback(() => {
+    dispatch({ type: 'start-practice' });
+    terminal.pushLine('system', '--- Exercício Reiniciado por Regra de Integridade ---');
+    terminal.pushLine('comment', `# ${currentBlock.title}`);
+    terminal.pushLine('comment', `# Objetivo: ${currentBlock.practice.objective}`);
+  }, [currentBlock, terminal]);
+
   const concludeAssessment = useCallback(() => {
     dispatch({ type: 'conclude' });
   }, []);
@@ -79,6 +86,7 @@ export function useLearningFlow() {
     attemptCount: flowState.attemptCount,
     mentorHint,
     startPractice,
+    restartBlock,
     concludeAssessment,
     goToNextBlock,
     terminal: {
