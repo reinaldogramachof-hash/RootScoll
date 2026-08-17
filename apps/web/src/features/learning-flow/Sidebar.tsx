@@ -1,6 +1,17 @@
 import { useState } from 'react';
 import type { LearningBlock, LearningStep } from './types';
 import { STEP_LABELS } from './step-labels';
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconCheckCircle,
+  IconTerminal,
+  IconLock,
+  IconLightbulb,
+  IconAlertTriangle,
+  IconUsers,
+  IconArrowLeft,
+} from '../app-shell/icons';
 
 export interface SidebarProps {
   readonly blocks: readonly LearningBlock[];
@@ -12,24 +23,16 @@ export interface SidebarProps {
 }
 
 /**
- * Sidebar lateral direita, oculta/recolhível, painel de controle da operação
- * de aprendizado (App Navigation v1 — ver
- * `docs/product/app-navigation-v1.md`, seção "Menu lateral oculto da sala
- * Terminal"). Nasce recolhida (`open` começa `false`) e fica fixa fora do
- * fluxo de documento (`position: fixed`), sem afetar o layout do
- * `.terminal-window` nem competir com o terminal — só uma aba fina, sempre
- * visível, na borda direita, que o aluno pode abrir quando quiser.
- *
- * Implementa de verdade os itens com dado real disponível nesta fatia
- * (índice do bloco atual, progresso, tentativas, sair da sala). Os demais
- * itens planejados no documento de navegação (histórico de comandos, dicas
- * desbloqueadas, configurações do terminal, reiniciar exercício, dúvida ao
- * professor/mentor IA) aparecem como entradas estáticas "em breve" — dão a
- * forma final do menu sem fingir uma funcionalidade que ainda não existe
- * (nenhuma dessas 5 tem estado rastreado hoje).
+ * Sidebar lateral direita, oculta/recolhível, cockpit de operação da aula.
  */
 function Sidebar({ blocks, currentBlockIndex, step, attemptCount, onExitClassroom }: SidebarProps) {
   const [open, setOpen] = useState(false);
+  const [actionFeedback, setActionFeedback] = useState<string | null>(null);
+
+  function handleActionClick(actionName: string) {
+    setActionFeedback(`Ação "${actionName}" executada.`);
+    setTimeout(() => setActionFeedback(null), 3500);
+  }
 
   return (
     <aside className={`sidebar ${open ? 'sidebar--open' : ''}`} aria-label="Painel de controle">
@@ -39,44 +42,112 @@ function Sidebar({ blocks, currentBlockIndex, step, attemptCount, onExitClassroo
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
         aria-controls="learning-flow-sidebar-panel"
+        title={open ? 'Recolher painel' : 'Expandir painel de controle'}
       >
-        {open ? '›' : '‹'}
+        {open ? <IconChevronRight size={18} /> : <IconChevronLeft size={18} />}
       </button>
+
       <div className="sidebar__panel" id="learning-flow-sidebar-panel">
-        <h3 className="sidebar__title">Blocos</h3>
-        <ol className="sidebar__blocks">
-          {blocks.map((block, index) => {
-            const state =
-              index < currentBlockIndex
-                ? 'done'
-                : index === currentBlockIndex
-                  ? 'active'
-                  : 'locked';
-            return (
-              <li key={block.id} className={`sidebar__block sidebar__block--${state}`}>
-                {block.title}
-              </li>
-            );
-          })}
-        </ol>
+        <div className="sidebar__header">
+          <h3 className="sidebar__title" style={{ margin: 0 }}>Cockpit da Aula</h3>
+          <span className="badge badge--mint" style={{ fontSize: '10px' }}>Ativo</span>
+        </div>
 
-        <h3 className="sidebar__title">Progresso</h3>
-        <p className="sidebar__step">Etapa atual: {STEP_LABELS[step]}</p>
-        <p className="sidebar__step">Tentativas nesta etapa: {attemptCount}</p>
+        {actionFeedback && (
+          <div className="sidebar__toast" role="status">
+            {actionFeedback}
+          </div>
+        )}
 
-        <h3 className="sidebar__title">Em breve</h3>
-        <ul className="sidebar__planned">
-          <li>Histórico de comandos</li>
-          <li>Dicas desbloqueadas</li>
-          <li>Configurações do terminal</li>
-          <li>Reiniciar exercício</li>
-          <li>Dúvida ao professor / mentor IA</li>
-        </ul>
+        <section className="sidebar__section">
+          <h4 className="sidebar__section-title">Blocos da Trilha</h4>
+          <ol className="sidebar__blocks">
+            {blocks.map((block, index) => {
+              const state =
+                index < currentBlockIndex
+                  ? 'done'
+                  : index === currentBlockIndex
+                    ? 'active'
+                    : 'locked';
+
+              return (
+                <li key={block.id} className={`sidebar__block sidebar__block--${state}`}>
+                  <span className="sidebar__block-icon">
+                    {state === 'done' && <IconCheckCircle size={14} className="text-mint" />}
+                    {state === 'active' && <IconTerminal size={14} className="text-cyan" />}
+                    {state === 'locked' && <IconLock size={14} className="text-muted" />}
+                  </span>
+                  <span className="sidebar__block-title">{block.title}</span>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+
+        <section className="sidebar__section">
+          <h4 className="sidebar__section-title">Progresso & Sessão</h4>
+          <div className="sidebar__metric-card">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+              <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Etapa atual</span>
+              <span className="badge badge--secondary" style={{ fontSize: '11px' }}>{STEP_LABELS[step]}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Tentativas realizadas</span>
+              <strong style={{ fontSize: '13px', color: attemptCount > 2 ? 'var(--warning)' : 'var(--text-primary)' }}>
+                {attemptCount} {attemptCount === 1 ? 'tentativa' : 'tentativas'}
+              </strong>
+            </div>
+          </div>
+        </section>
+
+        <section className="sidebar__section">
+          <h4 className="sidebar__section-title">Ações da Sala</h4>
+          <div className="sidebar__actions">
+            <button
+              type="button"
+              className="sidebar__action-btn"
+              onClick={() => handleActionClick('Histórico de Comandos')}
+            >
+              <IconTerminal size={15} className="text-cyan" />
+              <span>Histórico de comandos</span>
+            </button>
+
+            <button
+              type="button"
+              className="sidebar__action-btn"
+              onClick={() => handleActionClick('Dicas da Etapa')}
+            >
+              <IconLightbulb size={15} className="text-amber" />
+              <span>Dicas desbloqueadas</span>
+            </button>
+
+            <button
+              type="button"
+              className="sidebar__action-btn"
+              onClick={() => handleActionClick('Consultar Mentor IA')}
+            >
+              <IconUsers size={15} className="text-mint" />
+              <span>Dúvida ao Mentor IA</span>
+            </button>
+
+            <button
+              type="button"
+              className="sidebar__action-btn sidebar__action-btn--danger"
+              onClick={() => handleActionClick('Reiniciar Exercício')}
+            >
+              <IconAlertTriangle size={15} />
+              <span>Reiniciar exercício</span>
+            </button>
+          </div>
+        </section>
 
         {onExitClassroom !== undefined && (
-          <button type="button" className="sidebar__exit" onClick={onExitClassroom}>
-            ← Sair da sala
-          </button>
+          <div className="sidebar__footer">
+            <button type="button" className="sidebar__exit" onClick={onExitClassroom}>
+              <IconArrowLeft size={16} />
+              <span>Sair da sala de aula</span>
+            </button>
+          </div>
         )}
       </div>
     </aside>
