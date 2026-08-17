@@ -3375,3 +3375,55 @@ body {
   padding: 12px 20px;
   font-size: 14px;
 }
+
+/* Badge animado do Modo Foco na barra de titulo do terminal */
+.focus-indicator-badge {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.focus-indicator-badge--active {
+  background: rgba(54, 230, 165, 0.12);
+  border-color: rgba(54, 230, 165, 0.4);
+  color: var(--mint-signal);
+  box-shadow: 0 0 12px rgba(54, 230, 165, 0.2);
+}
+
+.focus-indicator-badge__icon {
+  flex-shrink: 0;
+}
+
+.focus-indicator-badge__pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: background-color 0.2s ease;
+}
+
+.focus-indicator-badge--active .focus-indicator-badge__pulse {
+  background: var(--mint-signal);
+  box-shadow: 0 0 8px var(--mint-signal);
+  animation: pulse-glow 1.8s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.4);
+  }
+}

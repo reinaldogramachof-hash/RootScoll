@@ -8,7 +8,7 @@ import Sidebar from './Sidebar';
 import MentorWidget from './MentorWidget';
 import { LEARNING_BLOCKS } from './blocks';
 import { useLearningFlow } from './useLearningFlow';
-import { IconShieldCheck, IconAlertTriangle, IconTerminal } from '../app-shell/icons';
+import { IconShieldCheck, IconAlertTriangle, IconTerminal, IconFocusMode } from '../app-shell/icons';
 
 export interface LearningFlowAppProps {
   /**
@@ -124,13 +124,14 @@ function LearningFlowApp({ onExitClassroom }: LearningFlowAppProps) {
           <strong>aluno@plena:~</strong>
 
           {isPractical && (
-            <span
-              className="badge badge--secondary"
-              style={{ marginLeft: 'auto', fontSize: '10px', display: 'flex', alignItems: 'center', gap: '4px' }}
+            <div
+              className={`focus-indicator-badge ${preflightPassed && !focusBlocked ? 'focus-indicator-badge--active' : ''}`}
+              title="Modo Foco em Tela Cheia Ativo"
             >
-              <IconShieldCheck size={12} className="text-mint" />
-              Modo Foco Ativo
-            </span>
+              <span className="focus-indicator-badge__pulse" />
+              <IconFocusMode size={14} className="focus-indicator-badge__icon" />
+              <span>Modo Foco {preflightPassed && !focusBlocked ? 'Ativo' : 'Pausado'}</span>
+            </div>
           )}
         </div>
 
