@@ -1,5 +1,6 @@
 import type { AppScreen, UserRole } from './types';
 import logo from '../../images/logo.svg';
+import { IconChevronRight } from './icons';
 
 export interface AppNavigationProps {
   readonly screen: AppScreen;
@@ -12,7 +13,7 @@ export interface AppNavigationProps {
 }
 
 /**
- * Navegacao superior do shell autenticado. Adapta-se ao papel ativo (aluno, professor, parceiro).
+ * Navegação superior do shell autenticado. Adapta-se ao papel ativo (aluno, professor, parceiro).
  */
 function AppNavigation({
   screen,
@@ -32,7 +33,7 @@ function AppNavigation({
     screen === 'teacher-classroom-detail' || screen === 'partner-talent-detail';
 
   return (
-    <nav className="app-nav" aria-label="Navegacao principal">
+    <nav className="app-nav" aria-label="Navegação principal">
       <span className="app-nav__brand">
         <img className="app-nav__brand-logo" src={logo} alt="" aria-hidden="true" />
         <span>
@@ -52,6 +53,13 @@ function AppNavigation({
         >
           {isTeacher ? 'Turmas & Gargalos' : isPartner ? 'Buscar Talentos' : 'Meu Painel'}
         </button>
+
+        {isDetailActive && (
+          <span className="app-nav__breadcrumb-item" title="Visualizando detalhe">
+            <IconChevronRight size={14} className="text-muted" />
+            <span className="text-mint">Detalhes</span>
+          </span>
+        )}
 
         {!isTeacher && !isPartner && onOpenTracks && (
           <button

@@ -1,4 +1,5 @@
 import type { MockClassroom, MockUser } from './types';
+import { IconUsers, IconTrendingUp, IconAlertTriangle, IconFileText, IconLightbulb } from './icons';
 
 export interface TeacherDashboardProps {
   readonly user: MockUser;
@@ -37,29 +38,44 @@ function TeacherDashboard({ user, classrooms, onOpenClassroom }: TeacherDashboar
         </div>
       </header>
 
-      {/* Métricas Principais */}
+      {/* Métricas Principais com Ícones Vetoriais */}
       <div className="dashboard__metrics" aria-label="Métricas pedagógicas das turmas">
         <div className="dashboard__metric">
-          <span className="dashboard__metric-label">Alunos em Supervisão</span>
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Alunos em Supervisão</span>
+            <IconUsers size={16} className="metric-icon text-cyan" />
+          </div>
           <strong>{totalStudents}</strong>
           <span className="teacher-dashboard__metric-sub">{totalActive} ativos nesta semana</span>
         </div>
+
         <div className="dashboard__metric">
-          <span className="dashboard__metric-label">Progresso Médio</span>
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Progresso Médio</span>
+            <IconTrendingUp size={16} className="metric-icon text-mint" />
+          </div>
           <strong>{avgProgress}%</strong>
           <span className="dashboard__meter" aria-hidden="true">
             <span style={{ width: `${avgProgress}%` }} />
           </span>
         </div>
+
         <div className="dashboard__metric dashboard__metric--warning">
-          <span className="dashboard__metric-label">Alunos com Gargalos</span>
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Alunos com Gargalos</span>
+            <IconAlertTriangle size={16} className="metric-icon text-warning" />
+          </div>
           <strong>{totalAtRisk}</strong>
           <span className="teacher-dashboard__metric-sub text-warning">
             Necessitam de intervenção
           </span>
         </div>
+
         <div className="dashboard__metric dashboard__metric--accent">
-          <span className="dashboard__metric-label">Evidências Práticas</span>
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Evidências Práticas</span>
+            <IconFileText size={16} className="metric-icon text-mint" />
+          </div>
           <strong>{user.evidenceCount}</strong>
           <span className="teacher-dashboard__metric-sub">Validadas no Terminal</span>
         </div>
@@ -74,9 +90,7 @@ function TeacherDashboard({ user, classrooms, onOpenClassroom }: TeacherDashboar
           <div className="teacher-section__header">
             <div>
               <h2 className="teacher-section__title">
-                <span className="teacher-section__icon" aria-hidden="true">
-                  ⚠️
-                </span>
+                <IconAlertTriangle size={20} className="text-warning" style={{ marginRight: 6 }} />
                 Gargalos de Aprendizagem Detectados
               </h2>
               <p className="teacher-section__desc">
@@ -106,7 +120,10 @@ function TeacherDashboard({ user, classrooms, onOpenClassroom }: TeacherDashboar
                   {bottleneck.impactedStudentsCount} alunos travados)
                 </p>
                 <div className="bottleneck-card__action">
-                  <strong>Recomendação Pedagógica:</strong>
+                  <div className="bottleneck-card__action-title">
+                    <IconLightbulb size={15} className="text-warning" style={{ marginRight: 4 }} />
+                    <strong>Recomendação Pedagógica:</strong>
+                  </div>
                   <p>{bottleneck.recommendedAction}</p>
                 </div>
                 <button
@@ -114,7 +131,7 @@ function TeacherDashboard({ user, classrooms, onOpenClassroom }: TeacherDashboar
                   className="btn btn-secondary btn--sm"
                   onClick={() => onOpenClassroom(bottleneck.classroomId)}
                 >
-                  Ver alunos afetados na turma
+                  Ver alunos afetados na turma →
                 </button>
               </div>
             ))}
@@ -146,7 +163,7 @@ function TeacherDashboard({ user, classrooms, onOpenClassroom }: TeacherDashboar
 
               <div className="classroom-card__stats">
                 <div>
-                  <span>Alunos Matriculados:</span>
+                  <span>Matriculados:</span>
                   <strong>{classroom.studentsCount}</strong>
                 </div>
                 <div>
@@ -154,7 +171,7 @@ function TeacherDashboard({ user, classrooms, onOpenClassroom }: TeacherDashboar
                   <strong className="text-mint">{classroom.activeCount}</strong>
                 </div>
                 <div>
-                  <span>Travados / Risco:</span>
+                  <span>Travados:</span>
                   <strong className={classroom.atRiskCount > 0 ? 'text-warning' : ''}>
                     {classroom.atRiskCount}
                   </strong>
@@ -174,7 +191,7 @@ function TeacherDashboard({ user, classrooms, onOpenClassroom }: TeacherDashboar
               <div className="classroom-card__footer">
                 <button
                   type="button"
-                  className="btn btn-primary"
+                  className="btn btn-primary btn--block"
                   onClick={() => onOpenClassroom(classroom.id)}
                 >
                   Gerenciar Turma & Alunos →

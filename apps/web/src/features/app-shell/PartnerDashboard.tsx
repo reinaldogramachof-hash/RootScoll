@@ -1,5 +1,6 @@
 import type { MockTalentProfile, MockUser, PartnerCompany } from './types';
 import TalentSearchResults from './TalentSearchResults';
+import { IconUsers, IconTarget, IconShieldCheck, IconBriefcase } from './icons';
 
 export interface PartnerDashboardProps {
   readonly user: MockUser;
@@ -37,25 +38,40 @@ function PartnerDashboard({
         </div>
       </header>
 
-      {/* Métricas do Ecossistema */}
+      {/* Métricas do Ecossistema com Ícones Vetoriais */}
       <div className="dashboard__metrics" aria-label="Métricas do banco de talentos">
         <div className="dashboard__metric">
-          <span className="dashboard__metric-label">Talentos Disponíveis</span>
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Talentos Disponíveis</span>
+            <IconUsers size={16} className="metric-icon text-cyan" />
+          </div>
           <strong>{talentPool.length}</strong>
           <span className="partner-dashboard__metric-sub">No radar de contratação</span>
         </div>
+
         <div className="dashboard__metric dashboard__metric--accent">
-          <span className="dashboard__metric-label">Prontos para Júnior (85%+)</span>
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Prontos para Júnior (85%+)</span>
+            <IconTarget size={16} className="metric-icon text-mint" />
+          </div>
           <strong>{readyForHireCount}</strong>
           <span className="partner-dashboard__metric-sub text-mint">Alta prontidão técnica</span>
         </div>
+
         <div className="dashboard__metric">
-          <span className="dashboard__metric-label">Evidências Auditadas</span>
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Evidências Auditadas</span>
+            <IconShieldCheck size={16} className="metric-icon text-mint" />
+          </div>
           <strong>{totalEvidences}</strong>
           <span className="partner-dashboard__metric-sub">Scripts e projetos validados</span>
         </div>
+
         <div className="dashboard__metric dashboard__metric--secondary">
-          <span className="dashboard__metric-label">Vagas Ativas na Empresa</span>
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Vagas Ativas na Empresa</span>
+            <IconBriefcase size={16} className="metric-icon text-amber" />
+          </div>
           <strong>{partnerCompany.activeSearches}</strong>
           <span className="partner-dashboard__metric-sub">
             {partnerCompany.shortlistedCount} na shortlist
@@ -71,9 +87,9 @@ function PartnerDashboard({
           <p>
             Diferente de cursos tradicionais onde o aluno copia código ou depende de respostas
             automáticas de IA, os profissionais da RootScoll aprendem a{' '}
-            <strong>operar sistemas de arquivos reais</strong>,
+            <strong>operar sistemas de arquivos reais</strong>,{' '}
             <strong>escrever e ler logs de terminal</strong>,{' '}
-            <strong>versionar com disciplina no Git</strong> e
+            <strong>versionar com disciplina no Git</strong> e{' '}
             <strong>construir arquiteturas limpas</strong>.
           </p>
         </div>

@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import type { MockTalentProfile } from './types';
+import { IconSearch, IconShieldCheck } from './icons';
 
 export interface TalentSearchResultsProps {
   readonly talentPool: readonly MockTalentProfile[];
@@ -41,12 +42,13 @@ function TalentSearchResults({ talentPool, onSelectTalent }: TalentSearchResults
 
   return (
     <div className="talent-search-module">
-      {/* Barra de Filtros e Busca */}
+      {/* Barra de Filtros e Busca com Ícones Vetoriais */}
       <div className="talent-search__filters-panel card">
-        <div className="talent-search__search-bar">
+        <div className="talent-search__search-bar search-input-wrapper">
+          <IconSearch size={18} className="search-input-icon" />
           <input
             type="text"
-            className="input"
+            className="input search-input"
             placeholder="Buscar por habilidade (ex: Linux, React, TypeScript), nome ou cargo..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -100,6 +102,11 @@ function TalentSearchResults({ talentPool, onSelectTalent }: TalentSearchResults
       <div className="talent-search__results-header">
         <h2>{filteredTalents.length} Talentos Encontrados</h2>
         <span className="talent-search__hint">
+          <IconShieldCheck
+            size={14}
+            className="text-mint"
+            style={{ marginRight: 4, display: 'inline-block', verticalAlign: 'middle' }}
+          />
           Evidências de código validadas deterministicamente no terminal
         </span>
       </div>
@@ -165,6 +172,7 @@ function TalentSearchResults({ talentPool, onSelectTalent }: TalentSearchResults
 
         {filteredTalents.length === 0 && (
           <div className="card talent-search__empty">
+            <IconSearch size={28} className="text-muted" style={{ marginBottom: 8 }} />
             <h3>Nenhum talento encontrado com os filtros atuais.</h3>
             <p>Tente ajustar os termos de pesquisa ou remover os filtros de prontidão.</p>
           </div>

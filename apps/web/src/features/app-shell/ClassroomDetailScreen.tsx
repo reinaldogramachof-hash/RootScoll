@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { MockClassroom } from './types';
+import { IconArrowLeft, IconAlertTriangle, IconSearch, IconCheckCircle, IconUsers } from './icons';
 
 export interface ClassroomDetailScreenProps {
   readonly classroom: MockClassroom;
@@ -28,7 +29,8 @@ function ClassroomDetailScreen({ classroom, onBack }: ClassroomDetailScreenProps
       <header className="screen__header">
         <div>
           <button type="button" className="btn btn-secondary btn--sm" onClick={onBack}>
-            ← Voltar para Todas as Turmas
+            <IconArrowLeft size={16} style={{ marginRight: 6 }} />
+            Voltar para Todas as Turmas
           </button>
           <div className="screen__title-wrap" style={{ marginTop: '0.75rem' }}>
             <p className="screen__eyebrow">
@@ -40,10 +42,12 @@ function ClassroomDetailScreen({ classroom, onBack }: ClassroomDetailScreenProps
 
         <div className="classroom-detail__header-stats">
           <div className="classroom-detail__stat-chip">
+            <IconUsers size={16} className="text-cyan" />
             <span>Matriculados:</span>
             <strong>{classroom.studentsCount}</strong>
           </div>
           <div className="classroom-detail__stat-chip">
+            <IconCheckCircle size={16} className="text-mint" />
             <span>Média:</span>
             <strong>{classroom.averageProgress}%</strong>
           </div>
@@ -57,7 +61,9 @@ function ClassroomDetailScreen({ classroom, onBack }: ClassroomDetailScreenProps
           <div className="classroom-detail__bottlenecks-list">
             {classroom.bottlenecks.map((bot) => (
               <div key={bot.id} className={`bottleneck-alert bottleneck-alert--${bot.severity}`}>
-                <div className="bottleneck-alert__icon">⚠️</div>
+                <div className="bottleneck-alert__icon">
+                  <IconAlertTriangle size={20} className="text-warning" />
+                </div>
                 <div className="bottleneck-alert__content">
                   <strong>
                     {bot.moduleTitle} ({bot.failureRate}% falhas)
@@ -73,10 +79,11 @@ function ClassroomDetailScreen({ classroom, onBack }: ClassroomDetailScreenProps
       {/* Gestão Nominal dos Alunos */}
       <section className="classroom-detail__students-section">
         <div className="classroom-detail__controls">
-          <div className="classroom-detail__search">
+          <div className="classroom-detail__search search-input-wrapper">
+            <IconSearch size={16} className="search-input-icon" />
             <input
               type="text"
-              className="input"
+              className="input search-input"
               placeholder="Buscar aluno por nome ou e-mail..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -182,9 +189,10 @@ function ClassroomDetailScreen({ classroom, onBack }: ClassroomDetailScreenProps
           </table>
 
           {filteredStudents.length === 0 && (
-            <p className="classroom-detail__empty">
-              Nenhum aluno encontrado para os filtros selecionados.
-            </p>
+            <div className="classroom-detail__empty">
+              <IconSearch size={24} className="text-muted" style={{ marginBottom: 8 }} />
+              <p>Nenhum aluno encontrado para os filtros selecionados.</p>
+            </div>
           )}
         </div>
 
@@ -217,7 +225,18 @@ function ClassroomDetailScreen({ classroom, onBack }: ClassroomDetailScreenProps
                       <h4 className="text-mint">Competências Validadas no Terminal</h4>
                       <ul className="competency-list competency-list--done">
                         {student.completedCompetencies.map((comp) => (
-                          <li key={comp}>✓ {comp}</li>
+                          <li key={comp}>
+                            <IconCheckCircle
+                              size={14}
+                              className="text-mint"
+                              style={{
+                                marginRight: 6,
+                                display: 'inline-block',
+                                verticalAlign: 'middle',
+                              }}
+                            />
+                            {comp}
+                          </li>
                         ))}
                       </ul>
                     </div>
@@ -225,7 +244,18 @@ function ClassroomDetailScreen({ classroom, onBack }: ClassroomDetailScreenProps
                       <h4 className="text-warning">Competências Pendentes / Em Foco</h4>
                       <ul className="competency-list competency-list--pending">
                         {student.pendingCompetencies.map((comp) => (
-                          <li key={comp}>⏳ {comp}</li>
+                          <li key={comp}>
+                            <IconAlertTriangle
+                              size={14}
+                              className="text-warning"
+                              style={{
+                                marginRight: 6,
+                                display: 'inline-block',
+                                verticalAlign: 'middle',
+                              }}
+                            />
+                            {comp}
+                          </li>
                         ))}
                       </ul>
                     </div>

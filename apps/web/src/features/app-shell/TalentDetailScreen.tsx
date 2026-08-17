@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { MockTalentProfile } from './types';
+import { IconArrowLeft, IconShieldCheck, IconCheckCircle, IconFileText } from './icons';
 
 export interface TalentDetailScreenProps {
   readonly talent: MockTalentProfile;
@@ -19,7 +20,8 @@ function TalentDetailScreen({ talent, onBack }: TalentDetailScreenProps) {
       <header className="screen__header">
         <div>
           <button type="button" className="btn btn-secondary btn--sm" onClick={onBack}>
-            ← Voltar para Busca de Talentos
+            <IconArrowLeft size={16} style={{ marginRight: 6 }} />
+            Voltar para Busca de Talentos
           </button>
           <div className="screen__title-wrap" style={{ marginTop: '0.75rem' }}>
             <p className="screen__eyebrow">Ecossistema RootScoll • {talent.currentPhase}</p>
@@ -110,10 +112,17 @@ function TalentDetailScreen({ talent, onBack }: TalentDetailScreenProps) {
 
             <button
               type="button"
-              className={`btn btn--block ${shortlisted ? 'btn-secondary' : 'btn-primary'}`}
+              className={`btn btn--block ${shortlisted ? 'btn-secondary' : 'btn-primary btn-primary--glow'}`}
               onClick={() => setShortlisted(!shortlisted)}
             >
-              {shortlisted ? '✓ Salvo na Shortlist' : '★ Adicionar à Shortlist'}
+              {shortlisted ? (
+                <>
+                  <IconCheckCircle size={16} style={{ marginRight: 6 }} />
+                  Salvo na Shortlist
+                </>
+              ) : (
+                '★ Adicionar à Shortlist'
+              )}
             </button>
 
             <button
@@ -125,7 +134,14 @@ function TalentDetailScreen({ talent, onBack }: TalentDetailScreenProps) {
                 alert(`Convite para entrevista técnica enviado com sucesso para ${talent.name}!`);
               }}
             >
-              {invited ? '✓ Convite Enviado' : '✉ Convidar para Entrevista'}
+              {invited ? (
+                <>
+                  <IconCheckCircle size={16} style={{ marginRight: 6 }} />
+                  Convite Enviado
+                </>
+              ) : (
+                '✉ Convidar para Entrevista'
+              )}
             </button>
 
             <button
@@ -134,11 +150,15 @@ function TalentDetailScreen({ talent, onBack }: TalentDetailScreenProps) {
               style={{ marginTop: '0.75rem' }}
               onClick={() => alert('Dossiê técnico exportado em PDF formatado (simulação).')}
             >
-              📄 Exportar Dossiê de Evidências
+              <IconFileText
+                size={16}
+                style={{ marginRight: 6, display: 'inline-block', verticalAlign: 'middle' }}
+              />
+              Exportar Dossiê de Evidências
             </button>
 
             <div className="talent-actions__guarantee">
-              <span className="guarantee-icon">🛡️</span>
+              <IconShieldCheck size={20} className="text-mint" style={{ flexShrink: 0 }} />
               <small>
                 Validação RootScoll: Código executado no ambiente de terminal com verificação de
                 saída e histórico de comandos.
