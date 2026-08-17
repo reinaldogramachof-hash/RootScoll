@@ -44,7 +44,7 @@ describe('navigationReducer', () => {
     }
   });
 
-  it('open-profile leva dashboard, teacher-dashboard e partner-dashboard -> profile', () => {
+  it('open-profile leva dashboard, teacher-dashboard, partner-dashboard e tracks -> profile', () => {
     expect(navigationReducer({ screen: 'dashboard' }, { type: 'open-profile' }).screen).toBe(
       'profile',
     );
@@ -54,20 +54,27 @@ describe('navigationReducer', () => {
     expect(
       navigationReducer({ screen: 'partner-dashboard' }, { type: 'open-profile' }).screen,
     ).toBe('profile');
+    expect(navigationReducer({ screen: 'tracks' }, { type: 'open-profile' }).screen).toBe(
+      'profile',
+    );
   });
 
-  it('open-profile fora de dashboards e ignorado', () => {
-    const state: NavState = { screen: 'tracks' };
+  it('open-profile fora de telas permitidas e ignorado', () => {
+    const state: NavState = { screen: 'terminal-classroom' };
     expect(navigationReducer(state, { type: 'open-profile' })).toEqual(state);
   });
 
-  it('open-tracks leva dashboard -> tracks', () => {
-    const next = navigationReducer({ screen: 'dashboard' }, { type: 'open-tracks' });
-    expect(next.screen).toBe('tracks');
+  it('open-tracks leva dashboard e profile -> tracks', () => {
+    expect(navigationReducer({ screen: 'dashboard' }, { type: 'open-tracks' }).screen).toBe(
+      'tracks',
+    );
+    expect(navigationReducer({ screen: 'profile' }, { type: 'open-tracks' }).screen).toBe(
+      'tracks',
+    );
   });
 
-  it('open-tracks fora de dashboard e ignorado', () => {
-    const state: NavState = { screen: 'profile' };
+  it('open-tracks fora de dashboard e profile e ignorado', () => {
+    const state: NavState = { screen: 'terminal-classroom' };
     expect(navigationReducer(state, { type: 'open-tracks' })).toEqual(state);
   });
 

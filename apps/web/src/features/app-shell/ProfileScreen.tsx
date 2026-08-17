@@ -1,4 +1,14 @@
 import type { MockUser } from './types';
+import {
+  IconArrowLeft,
+  IconAward,
+  IconChart,
+  IconFileText,
+  IconTrendingUp,
+  IconTarget,
+  IconShieldCheck,
+  IconUsers,
+} from './icons';
 
 export interface ProfileScreenProps {
   readonly user: MockUser;
@@ -14,65 +24,114 @@ const ROLE_LABELS: Record<MockUser['role'], string> = {
 };
 
 /**
- * Perfil de aprendizado local: somente leitura nesta fatia. Não edita dados
- * porque ainda não existe persistência ou autenticação real.
+ * Perfil de aprendizado local: cockpit de identificação e portfólio pedagógico do aluno.
  */
 function ProfileScreen({ user, onBack }: ProfileScreenProps) {
   return (
-    <div className="screen profile-screen">
-      <div className="screen__header">
-        <div>
-          <p className="screen__eyebrow">Perfil de aprendizado</p>
+    <div className="screen dashboard profile-screen">
+      <header className="screen__header dashboard__header">
+        <div className="screen__title-wrap">
+          <p className="screen__eyebrow">Perfil do Estudante</p>
           <h1 className="screen__title">{user.name}</h1>
         </div>
-        <span className="screen__status">{ROLE_LABELS[user.role]}</span>
-      </div>
+        <div className="teacher-dashboard__header-badge">
+          <span className="badge badge--mint">{ROLE_LABELS[user.role]}</span>
+        </div>
+      </header>
 
-      <div className="profile-screen__summary">
-        <div>
-          <span>Fase atual</span>
+      <div className="dashboard__metrics" aria-label="Resumo do perfil">
+        <div className="dashboard__metric">
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Fase Atual</span>
+            <IconAward size={16} className="metric-icon text-cyan" />
+          </div>
           <strong>{user.currentPhase}</strong>
+          <span>Etapa do currículo</span>
         </div>
-        <div>
-          <span>Progresso geral</span>
+
+        <div className="dashboard__metric">
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Progresso Geral</span>
+            <IconChart size={16} className="metric-icon text-mint" />
+          </div>
           <strong>{user.overallProgress}%</strong>
+          <span className="dashboard__meter" aria-hidden="true">
+            <span style={{ width: `${user.overallProgress}%` }} />
+          </span>
         </div>
-        <div>
-          <span>Evidencias</span>
+
+        <div className="dashboard__metric dashboard__metric--accent">
+          <div className="metric-header-row">
+            <span className="dashboard__metric-label">Evidências</span>
+            <IconFileText size={16} className="metric-icon text-amber" />
+          </div>
           <strong>{user.evidenceCount}</strong>
+          <span>Registros validados</span>
         </div>
       </div>
 
-      <dl className="profile-screen__list">
-        <div className="profile-screen__row">
-          <dt>E-mail</dt>
-          <dd>{user.email}</dd>
-        </div>
-        <div className="profile-screen__row">
-          <dt>Papel</dt>
-          <dd>{ROLE_LABELS[user.role]}</dd>
-        </div>
-        <div className="profile-screen__row">
-          <dt>Trilha atual</dt>
-          <dd>{user.currentTrackId}</dd>
-        </div>
-        <div className="profile-screen__row">
-          <dt>Competencia em foco</dt>
-          <dd>{user.currentCompetency}</dd>
-        </div>
-      </dl>
+      <div className="dashboard__grid">
+        <section className="dashboard__section dashboard__section--primary">
+          <div>
+            <p className="dashboard__section-eyebrow">Informações de Aprendizado</p>
+            <h2 className="dashboard__section-title" style={{ fontSize: '18px', marginBottom: '16px' }}>
+              Foco & Credenciais
+            </h2>
 
-      <section className="profile-screen__panel">
-        <h2>Portfólio local</h2>
-        <p>
-          As evidências desta fatia ainda são registros mock. A meta visual é preparar o espaço para
-          comandos executados, explicações do aluno e avaliações por bloco.
-        </p>
-      </section>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <IconUsers size={16} className="text-cyan" />
+                <div>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block' }}>E-mail institucional</span>
+                  <strong style={{ color: 'var(--text-primary)', fontSize: '14px' }}>{user.email}</strong>
+                </div>
+              </div>
 
-      <button type="button" className="screen__back" onClick={onBack}>
-        Voltar ao painel
-      </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <IconTrendingUp size={16} className="text-mint" />
+                <div>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block' }}>Trilha ativa</span>
+                  <strong style={{ color: 'var(--text-primary)', fontSize: '14px' }}>{user.currentTrackId}</strong>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <IconTarget size={16} className="text-amber" />
+                <div>
+                  <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'block' }}>Competência em foco</span>
+                  <strong style={{ color: 'var(--text-primary)', fontSize: '14px' }}>{user.currentCompetency}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="dashboard__section dashboard__section--secondary">
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+              <h2 className="dashboard__section-title">Portfólio Local</h2>
+              <span className="badge badge--secondary">Em preparação</span>
+            </div>
+
+            <div style={{ background: 'rgba(54, 230, 165, 0.05)', border: '1px solid rgba(54, 230, 165, 0.15)', borderRadius: 'var(--radius-md)', padding: '14px', marginTop: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                <IconShieldCheck size={18} className="text-mint" />
+                <strong style={{ fontSize: '13px', color: 'var(--text-primary)' }}>Evidências de Prática</strong>
+              </div>
+              <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-secondary)', lineHeight: '1.5' }}>
+                As evidências desta versão consolidam registros dos comandos executados na Sala Terminal, justificativas pedagógicas e diagnósticos do Mentor IA.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div style={{ marginTop: '24px' }}>
+        <button type="button" className="btn btn-secondary" onClick={onBack}>
+          <IconArrowLeft size={16} style={{ marginRight: '8px' }} />
+          Voltar ao painel
+        </button>
+      </div>
     </div>
   );
 }

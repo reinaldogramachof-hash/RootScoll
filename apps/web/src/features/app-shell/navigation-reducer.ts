@@ -56,7 +56,8 @@ export function navigationReducer(state: NavState, event: NavEvent): NavState {
       if (
         state.screen !== 'dashboard' &&
         state.screen !== 'teacher-dashboard' &&
-        state.screen !== 'partner-dashboard'
+        state.screen !== 'partner-dashboard' &&
+        state.screen !== 'tracks'
       ) {
         return state;
       }
@@ -64,7 +65,7 @@ export function navigationReducer(state: NavState, event: NavEvent): NavState {
     }
 
     case 'open-tracks': {
-      if (state.screen !== 'dashboard') {
+      if (state.screen !== 'dashboard' && state.screen !== 'profile') {
         return state;
       }
       return { ...state, screen: 'tracks' };
