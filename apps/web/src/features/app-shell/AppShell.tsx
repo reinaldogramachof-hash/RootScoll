@@ -4,20 +4,15 @@ import LoginScreen from './LoginScreen';
 import StudentDashboard from './StudentDashboard';
 import ProfileScreen from './ProfileScreen';
 import TracksScreen from './TracksScreen';
+import TeacherDashboard from './TeacherDashboard';
+import ClassroomDetailScreen from './ClassroomDetailScreen';
+import PartnerDashboard from './PartnerDashboard';
+import TalentDetailScreen from './TalentDetailScreen';
 import { useAppNavigation } from './useAppNavigation';
 
 /**
- * Raiz do shell de aplicação (App Navigation v1 — ver
- * `docs/product/app-navigation-v1.md`): sucessora de
- * `../learning-flow/LearningFlowApp.tsx` como componente raiz de
- * `apps/web/src/App.tsx`. Login mock -> Painel do Aluno -> Perfil/Trilhas ->
- * Sala de Aula Terminal, tudo em memória via `useAppNavigation`.
- *
- * A Sala Terminal (`LearningFlowApp`) é renderizada SEM a `AppNavigation`
- * ao redor — preserva o visual fullscreen terminal já aprovado, que não deve
- * competir com a barra de navegação do shell. Todas as outras telas
- * (painel/perfil/trilhas) ficam dentro do wrapper `.app-shell`, com a barra
- * de navegação sempre visível no topo.
+ * Raiz do shell de aplicação (App Navigation v1): renderiza telas conforme o papel
+ * do usuário ativo (aluno, professor, parceiro) e o estado da navegação.
  */
 function AppShell() {
   const nav = useAppNavigation();
@@ -36,6 +31,7 @@ function AppShell() {
     <div className="app-shell">
       <AppNavigation
         screen={nav.screen}
+        role={nav.activeRole}
         userName={nav.user.name}
         onOpenDashboard={nav.backToDashboard}
         onOpenProfile={nav.openProfile}
@@ -51,6 +47,36 @@ function AppShell() {
           onOpenProfile={nav.openProfile}
           onEnterClassroom={nav.enterClassroom}
         />
+      )}
+
+      {nav.screen === 'teacher-dashboard' && (
+        <TeacherDashboard
+          user={nav.user}
+          classrooms={nav.classrooms}
+          onOpenClassroom={nav.openClassroomDetail}
+          onOpenProfile={nav.openProfile}
+        />
+      )}
+
+      {nav.screen === 'teacher-classroom-detail' && nav.selectedClassroom && (
+        <ClassroomDetailScreen
+          classroom={nav.selectedClassroom}
+          onBack={nav.openTeacherDashboard}
+        />
+      )}
+
+      {nav.screen === 'partner-dashboard' && (
+        <PartnerDashboard
+          user={nav.user}
+          partnerCompany={nav.partnerCompany}
+          talentPool={nav.talentPool}
+          onSelectTalent={nav.openTalentDetail}
+          onOpenProfile={nav.openProfile}
+        />
+      )}
+
+      {nav.screen === 'partner-talent-detail' && nav.selectedTalent && (
+        <TalentDetailScreen talent={nav.selectedTalent} onBack={nav.openPartnerDashboard} />
       )}
 
       {nav.screen === 'profile' && <ProfileScreen user={nav.user} onBack={nav.backToDashboard} />}

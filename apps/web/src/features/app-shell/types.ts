@@ -9,16 +9,23 @@
  * fatia.
  */
 
-/** As 5 telas locais do shell — sem roteador real, navegação em memória. */
-export type AppScreen = 'login' | 'dashboard' | 'profile' | 'tracks' | 'terminal-classroom';
+/** As telas locais do shell — sem roteador real, navegação em memória. */
+export type AppScreen =
+  | 'login'
+  | 'dashboard'
+  | 'profile'
+  | 'tracks'
+  | 'terminal-classroom'
+  | 'teacher-dashboard'
+  | 'teacher-classroom-detail'
+  | 'partner-dashboard'
+  | 'partner-talent-detail';
 
 /**
  * Papéis previstos pelo produto (ver `docs/product/app-navigation-v1.md`,
- * seção "Papéis previstos"). Só `'aluno'` é usado pelo usuário mock desta
- * fatia — os demais existem no tipo para o shell já ser compatível quando
- * outros papéis chegarem, sem exigir uma migração de tipos depois.
+ * seção "Papéis previstos").
  */
-export type UserRole = 'aluno' | 'professor' | 'admin' | 'mentor-ia';
+export type UserRole = 'aluno' | 'professor' | 'admin' | 'mentor-ia' | 'parceiro';
 
 /** Usuário mock local — sem autenticação real, sem Supabase. */
 export interface MockUser {
@@ -56,4 +63,87 @@ export interface Track {
   readonly evidence: string;
   readonly status: TrackStatus;
   readonly modules: readonly TrackModule[];
+}
+
+/* ==========================================================================
+   Tipos para o Painel do Professor (Gestão Didática)
+   ========================================================================== */
+
+export interface MockStudentSummary {
+  readonly id: string;
+  readonly name: string;
+  readonly email: string;
+  readonly currentPhase: string;
+  readonly currentTrack: string;
+  readonly progress: number;
+  readonly evidenceCount: number;
+  readonly status: 'ativo' | 'em-risco' | 'concluido' | 'inativo';
+  readonly lastActive: string;
+  readonly completedCompetencies: readonly string[];
+  readonly pendingCompetencies: readonly string[];
+  readonly currentBottleneck?: string;
+}
+
+export interface MockBottleneck {
+  readonly id: string;
+  readonly trackTitle: string;
+  readonly moduleTitle: string;
+  readonly failureRate: number; // Porcentagem (ex: 42%)
+  readonly impactedStudentsCount: number;
+  readonly severity: 'alta' | 'media' | 'baixa';
+  readonly recommendedAction: string;
+}
+
+export interface MockClassroom {
+  readonly id: string;
+  readonly name: string;
+  readonly code: string;
+  readonly trackTitle: string;
+  readonly studentsCount: number;
+  readonly averageProgress: number;
+  readonly activeCount: number;
+  readonly atRiskCount: number;
+  readonly students: readonly MockStudentSummary[];
+  readonly bottlenecks: readonly MockBottleneck[];
+}
+
+/* ==========================================================================
+   Tipos para o Painel do Parceiro (Recrutamento de Talentos / RH)
+   ========================================================================== */
+
+export interface MockTalentEvidence {
+  readonly title: string;
+  readonly description: string;
+  readonly date: string;
+  readonly track: string;
+}
+
+export interface MockTalentTrackProgress {
+  readonly trackId: string;
+  readonly title: string;
+  readonly progress: number;
+}
+
+export interface MockTalentProfile {
+  readonly id: string;
+  readonly name: string;
+  readonly headline: string;
+  readonly location: string;
+  readonly currentPhase: string;
+  readonly overallProgress: number;
+  readonly evidenceCount: number;
+  readonly readinessScore: number; // 0-100 (Prontidão para Júnior)
+  readonly availability:
+    'Disponível imediatamente' | 'Em formação (estágio)' | 'Em transição de carreira';
+  readonly topSkills: readonly string[];
+  readonly bio: string;
+  readonly trackProgresses: readonly MockTalentTrackProgress[];
+  readonly evidences: readonly MockTalentEvidence[];
+}
+
+export interface PartnerCompany {
+  readonly name: string;
+  readonly segment: string;
+  readonly activeSearches: number;
+  readonly shortlistedCount: number;
 }

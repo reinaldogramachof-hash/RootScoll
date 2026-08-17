@@ -1,72 +1,83 @@
-import type { AppScreen } from './types';
+import type { AppScreen, UserRole } from './types';
 import logo from '../../images/logo.svg';
 
 export interface AppNavigationProps {
   readonly screen: AppScreen;
+  readonly role?: UserRole;
   readonly userName: string;
   readonly onOpenDashboard: () => void;
   readonly onOpenProfile: () => void;
-  readonly onOpenTracks: () => void;
+  readonly onOpenTracks?: () => void;
   readonly onLogout: () => void;
 }
 
-const NAV_LABELS: Partial<Record<AppScreen, string>> = {
-  dashboard: 'Painel',
-  profile: 'Perfil',
-  tracks: 'Trilhas',
-};
-
 /**
- * Navegacao superior do shell autenticado. A Sala Terminal segue fullscreen e
- * nao recebe esta barra para manter o foco do ambiente de pratica.
+ * Navegacao superior do shell autenticado. Adapta-se ao papel ativo (aluno, professor, parceiro).
  */
 function AppNavigation({
   screen,
+  role = 'aluno',
   userName,
   onOpenDashboard,
   onOpenProfile,
   onOpenTracks,
   onLogout,
 }: AppNavigationProps) {
+  const isTeacher = role === 'professor';
+  const isPartner = role === 'parceiro';
+
+  const isDashboardActive =
+    screen === 'dashboard' || screen === 'teacher-dashboard' || screen === 'partner-dashboard';
+  const isDetailActive =
+    screen === 'teacher-classroom-detail' || screen === 'partner-talent-detail';
+
   return (
     <nav className="app-nav" aria-label="Navegacao principal">
       <span className="app-nav__brand">
         <img className="app-nav__brand-logo" src={logo} alt="" aria-hidden="true" />
         <span>
           RootScoll
-          <small>Escola Raiz</small>
+          <small>
+            {isTeacher ? 'Gestão Didática' : isPartner ? 'Portal de Parceiros' : 'Escola Raiz'}
+          </small>
         </span>
       </span>
 
-      <div className="app-nav__links" role="tablist" aria-label="Painéis do aluno">
+      <div className="app-nav__links" role="tablist" aria-label="Painéis de navegação">
         <button
           type="button"
-          className={`app-nav__link ${screen === 'dashboard' ? 'app-nav__link--active' : ''}`}
+          className={`app-nav__link ${isDashboardActive || isDetailActive ? 'app-nav__link--active' : ''}`}
           onClick={onOpenDashboard}
-          aria-selected={screen === 'dashboard'}
+          aria-selected={isDashboardActive || isDetailActive}
         >
-          {NAV_LABELS.dashboard}
+          {isTeacher ? 'Turmas & Gargalos' : isPartner ? 'Buscar Talentos' : 'Meu Painel'}
         </button>
-        <button
-          type="button"
-          className={`app-nav__link ${screen === 'tracks' ? 'app-nav__link--active' : ''}`}
-          onClick={onOpenTracks}
-          aria-selected={screen === 'tracks'}
-        >
-          {NAV_LABELS.tracks}
-        </button>
+
+        {!isTeacher && !isPartner && onOpenTracks && (
+          <button
+            type="button"
+            className={`app-nav__link ${screen === 'tracks' ? 'app-nav__link--active' : ''}`}
+            onClick={onOpenTracks}
+            aria-selected={screen === 'tracks'}
+          >
+            Trilhas
+          </button>
+        )}
+
         <button
           type="button"
           className={`app-nav__link ${screen === 'profile' ? 'app-nav__link--active' : ''}`}
           onClick={onOpenProfile}
           aria-selected={screen === 'profile'}
         >
-          {NAV_LABELS.profile}
+          {isPartner ? 'Empresa' : 'Perfil'}
         </button>
       </div>
 
       <div className="app-nav__meta">
-        <span className="app-nav__status">MVP local</span>
+        <span className={`app-nav__status app-nav__status--${role}`}>
+          {isTeacher ? 'Professor' : isPartner ? 'RH Parceiro' : 'Aluno'}
+        </span>
         <span className="app-nav__user">{userName}</span>
         <button type="button" className="app-nav__logout" onClick={onLogout}>
           Sair

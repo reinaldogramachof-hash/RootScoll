@@ -121,31 +121,34 @@ timeline
     App Shell : Bloco pedagógico local : Login mock : Painel : Perfil : Trilhas : Sala Terminal
     Identidade : Frontend Design System v1 : Tokens : Tipografia : Fundação visual RootScoll
     Pesquisa Estratégica : Zero to Junior v2 : Posicionamento regulatório Brasil
+    Portais Especializados : Painel do Professor : Painel de Parceiros RH : Seletor de Sessões
 ```
 
 ---
 
 ## 6. Marcos Técnicos
 
-| Marco Técnico                         | Commit / Referência                                | Status     | Impacto no Projeto                                                                |
-| :------------------------------------ | :------------------------------------------------- | :--------- | :-------------------------------------------------------------------------------- |
-| Fundação do Monorepo                  | `bc52763`                                          | Publicado  | Estrutura modular com pnpm workspaces e TypeScript.                               |
-| Domain Model v1 e Engine Contracts v1 | `e3ab4af`                                          | Publicado  | Entidades pedagógicas e contratos de execução.                                    |
-| Planejamento de Database e RLS        | `c09bf74`                                          | Publicado  | Modelo conceitual sem acoplamento prematuro.                                      |
-| Currículo Fase 0                      | `3ca2096`                                          | Publicado  | Primeiras lições e gramática de validação.                                        |
-| Protótipo Visual Fullscreen           | `bd82a83`                                          | Publicado  | Direção visual inicial aprovada.                                                  |
-| Contratos TypeScript Fase 1           | `a4c53f7`                                          | Publicado  | `ExecutionResult`, `ValidationRule`, filesystem virtual.                          |
-| Dashboard Executivo                   | `fedb314`                                          | Publicado  | Cérebro visual e dashboard navegável.                                             |
-| Product Vision v1                     | `docs/product/product-vision-v1.md`                | Publicado  | Norte de produto, IA pedagógica e trilhas estratégicas.                           |
-| Learning Catalog v1                   | `0d29750`                                          | Publicado  | 6 trilhas macro, segmentos e contratos `Track -> Course -> Module -> Lesson`.     |
-| Runtime Requirements v1               | `bebc3ea`                                          | Publicado  | Perfis conceituais por adapter/runtime.                                           |
-| Shell Core Mínimo                     | `49663d8`                                          | Publicado  | `pwd`, `ls`, `cd`, `mkdir` em filesystem virtual.                                 |
-| Comandos de Arquivos do Terminal      | `d6d0252`                                          | Publicado  | `touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`.                                 |
-| Primeira Lição Executável Local       | `c61fa72`                                          | Publicado  | `apps/web` conectado ao `terminal-engine`.                                        |
-| App Shell RootScoll + Frontend System | `53699be`                                          | Publicado  | App shell, fluxo pedagógico local, imagens e `docs/frontend.md`.                  |
-| Currículo Zero to Junior v2           | `docs/product/zero-to-junior-curriculum-v2.md`     | Em revisão | 6 macrotrilhas + 14 trilhas internas, competências, 20 blocos MVP, projetos e IA. |
-| Fundação Visual RootScoll             | `apps/web/src/styles/{tokens,typography}.css`      | Em revisão | Tokens, tipografia, foco e retokenização visual; pendente commit.                 |
-| Posicionamento Regulatório Brasil     | `docs/product/regulatory-positioning-brazil-v1.md` | Em revisão | Tese comercial/regulatória segura para Brasil; exige parecer jurídico futuro.     |
+| Marco Técnico                         | Commit / Referência                                | Status     | Impacto no Projeto                                                                   |
+| :------------------------------------ | :------------------------------------------------- | :--------- | :----------------------------------------------------------------------------------- |
+| Fundação do Monorepo                  | `bc52763`                                          | Publicado  | Estrutura modular com pnpm workspaces e TypeScript.                                  |
+| Domain Model v1 e Engine Contracts v1 | `e3ab4af`                                          | Publicado  | Entidades pedagógicas e contratos de execução.                                       |
+| Planejamento de Database e RLS        | `c09bf74`                                          | Publicado  | Modelo conceitual sem acoplamento prematuro.                                         |
+| Currículo Fase 0                      | `3ca2096`                                          | Publicado  | Primeiras lições e gramática de validação.                                           |
+| Protótipo Visual Fullscreen           | `bd82a83`                                          | Publicado  | Direção visual inicial aprovada.                                                     |
+| Contratos TypeScript Fase 1           | `a4c53f7`                                          | Publicado  | `ExecutionResult`, `ValidationRule`, filesystem virtual.                             |
+| Dashboard Executivo                   | `fedb314`                                          | Publicado  | Cérebro visual e dashboard navegável.                                                |
+| Product Vision v1                     | `docs/product/product-vision-v1.md`                | Publicado  | Norte de produto, IA pedagógica e trilhas estratégicas.                              |
+| Learning Catalog v1                   | `0d29750`                                          | Publicado  | 6 trilhas macro, segmentos e contratos `Track -> Course -> Module -> Lesson`.        |
+| Runtime Requirements v1               | `bebc3ea`                                          | Publicado  | Perfis conceituais por adapter/runtime.                                              |
+| Shell Core Mínimo                     | `49663d8`                                          | Publicado  | `pwd`, `ls`, `cd`, `mkdir` em filesystem virtual.                                    |
+| Comandos de Arquivos do Terminal      | `d6d0252`                                          | Publicado  | `touch`, `cat`, `echo`, `cp`, `mv`, `rm`, `tree`.                                    |
+| Primeira Lição Executável Local       | `c61fa72`                                          | Publicado  | `apps/web` conectado ao `terminal-engine`.                                           |
+| App Shell RootScoll + Frontend System | `53699be`                                          | Publicado  | App shell, fluxo pedagógico local, imagens e `docs/frontend.md`.                     |
+| Currículo Zero to Junior v2           | `docs/product/zero-to-junior-curriculum-v2.md`     | Em revisão | 6 macrotrilhas + 14 trilhas internas, competências, 20 blocos MVP, projetos e IA.    |
+| Fundação Visual RootScoll             | `apps/web/src/styles/{tokens,typography}.css`      | Em revisão | Tokens, tipografia, foco e retokenização visual.                                     |
+| Posicionamento Regulatório Brasil     | `docs/product/regulatory-positioning-brazil-v1.md` | Em revisão | Tese comercial/regulatória segura para Brasil; exige parecer jurídico futuro.        |
+| Painel do Professor (Gestão Didática) | `apps/web/src/features/app-shell/`                 | Validado   | Cockpit de turmas, progresso médio, matriz de competências e gargalos em tempo real. |
+| Painel de Parceiros de RH (Talentos)  | `apps/web/src/features/app-shell/`                 | Validado   | Busca de desenvolvedores júnior, filtros por prontidão e dossiê de evidências.       |
 
 ---
 
@@ -158,8 +161,11 @@ timeline
 3. Documentação de domínio, banco conceitual, runtime e catálogo.
 4. Terminal engine mínimo e comandos de arquivo.
 5. Primeira lição executável local.
-6. App shell local com login mock, painel, perfil, trilhas e sala Terminal.
-7. `docs/frontend.md` como fonte visual oficial RootScoll.
+6. App shell local com login mock multi-papel (Aluno, Professor, Parceiro).
+7. Sala Terminal com fluxo de aprendizado determinístico.
+8. `docs/frontend.md` como fonte visual oficial RootScoll.
+9. Painel do Professor com diagnóstico de gargalos e gestão nominal de turmas.
+10. Painel de Parceiros de RH com motor de busca de talentos e dossiê prático.
 
 ### Em Revisão Local
 
@@ -170,12 +176,11 @@ timeline
 ### Ainda Não Implementado
 
 1. Avaliador formal `(ExecutionResult, ValidationRule) -> ValidationOutcome`.
-2. Roteador real com URLs.
-3. Persistência remota e autenticação real.
-4. Supabase, migrations e RLS real.
-5. IA real.
-6. Dashboard professor/admin.
-7. Certificados/atestados em produção.
+2. Roteador real com URLs (`react-router`).
+3. Persistência remota e autenticação real (Supabase Auth / RLS).
+4. Supabase, migrations e banco de dados relacional em produção.
+5. IA real (mentor adaptativo).
+6. Certificados/atestados em produção (sujeitos a parecer jurídico).
 
 ---
 

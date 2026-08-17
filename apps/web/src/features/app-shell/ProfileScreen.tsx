@@ -10,6 +10,7 @@ const ROLE_LABELS: Record<MockUser['role'], string> = {
   professor: 'Professor',
   admin: 'Admin/Instituicao',
   'mentor-ia': 'Mentor IA',
+  parceiro: 'Parceiro (RH)',
 };
 
 /**

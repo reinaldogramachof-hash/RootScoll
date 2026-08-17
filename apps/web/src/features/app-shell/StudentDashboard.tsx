@@ -16,8 +16,8 @@ export interface StudentDashboardProps {
 function StudentDashboard({
   user,
   currentTrack,
-  onOpenTracks,
-  onOpenProfile,
+  onOpenTracks: _onOpenTracks,
+  onOpenProfile: _onOpenProfile,
   onEnterClassroom,
 }: StudentDashboardProps) {
   const availableModules =
@@ -99,7 +99,6 @@ function StudentDashboard({
             ))}
           </ol>
         </section>
-
       </div>
     </div>
   );

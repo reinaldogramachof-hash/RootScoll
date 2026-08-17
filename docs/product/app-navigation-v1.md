@@ -30,25 +30,19 @@ própria jornada.
 ## Papéis previstos
 
 - **Aluno**: consome o conteúdo, pratica na Sala Terminal, acompanha o
-  próprio progresso. Único papel implementado no shell mock desta fase
-  (`MockUser.role === 'aluno'`).
+  próprio progresso (`MockUser.role === 'aluno'`).
 - **Professor**: acompanha turmas, identifica gargalos de aprendizagem,
-  eventualmente responde dúvidas encaminhadas pelo aluno (ver "dúvida ao
-  professor" no menu da sala, abaixo). Sem tela própria implementada ainda.
+  supervisiona alunos e matriz de competências (`MockUser.role === 'professor'`).
+- **Parceiro (RH / Empresas)**: busca e recruta talentos técnicos com
+  comprovação prática no terminal e portfólio de evidências (`MockUser.role === 'parceiro'`).
 - **Admin/instituição**: gestão de turmas, licenciamento, relatórios
   institucionais (mercados B2B/governo descritos em
-  `docs/product/product-vision-v1.md`, "Norte comercial"). Sem tela própria
-  implementada ainda.
+  `docs/product/product-vision-v1.md`, "Norte comercial").
 - **Mentor IA (futuro)**: não é um usuário humano — é o papel que a política
   de IA pedagógica (`product-vision-v1.md`, "Política de IA pedagógica";
   "AI Pedagogy Policy v1", ainda não formalizada) atribui a um mentor
   automatizado. Hoje representado apenas pelo mentor determinístico da Sala
   Terminal (`features/learning-flow/MentorWidget.tsx`), sem IA real.
-
-O tipo `UserRole` (`apps/web/src/features/app-shell/types.ts`) já modela os 4
-papéis, mas o dado mock desta fase só popula `'aluno'` — os demais existem
-para o shell não precisar de uma migração de tipos quando os outros papéis
-ganharem tela.
 
 ## Rotas/telas planejadas
 
@@ -56,17 +50,20 @@ Não há roteador real nesta fase (sem `react-router`, sem URL sincronizada) —
 a navegação é um estado local em memória
 (`apps/web/src/features/app-shell/navigation-reducer.ts`, `AppScreen`). As
 rotas abaixo são o **plano de produto**, o alvo para quando um roteador real
-entrar; o mapeamento para os 5 estados locais implementados está indicado
+entrar; o mapeamento para os estados locais implementados está indicado
 entre parênteses.
 
-| Rota planejada                | Estado local (`AppScreen`)                                                                       | O que a tela responde ao usuário                             |
-| ----------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
-| `/login`                      | `login`                                                                                          | "Como eu entro no CodeChat?"                                 |
-| `/app`                        | `dashboard`                                                                                      | "Onde eu estou na minha jornada? O que eu faço agora?"       |
-| `/app/perfil`                 | `profile`                                                                                        | "Quem sou eu aqui, e qual meu progresso geral?"              |
-| `/app/trilhas`                | `tracks`                                                                                         | "O que existe para eu aprender, e o que já está disponível?" |
-| `/app/trilhas/:trackId`       | _(não implementado — `tracks` cobre a listagem; detalhe por trilha fica para uma próxima fatia)_ | "O que tem dentro desta trilha especificamente?"             |
-| `/app/sala/terminal/:blockId` | `terminal-classroom`                                                                             | "Deixe-me praticar, com o mínimo de distração possível."     |
+| Rota planejada                | Estado local (`AppScreen`) | Papel       | O que a tela responde ao usuário                                     |
+| ----------------------------- | -------------------------- | ----------- | -------------------------------------------------------------------- |
+| `/login`                      | `login`                    | Todos       | "Como eu entro no CodeChat/RootScoll e seleciono minha sessão?"      |
+| `/app`                        | `dashboard`                | Aluno       | "Onde eu estou na minha jornada? O que eu faço agora?"               |
+| `/app/perfil`                 | `profile`                  | Todos       | "Quem sou eu aqui, e qual meu progresso geral ou dados da empresa?"  |
+| `/app/trilhas`                | `tracks`                   | Aluno       | "O que existe para eu aprender, e o que já está disponível?"         |
+| `/app/sala/terminal/:blockId` | `terminal-classroom`       | Aluno       | "Deixe-me praticar, com o mínimo de distração possível."             |
+| `/app/professor`              | `teacher-dashboard`        | Professor   | "Como estão minhas turmas e quais gargalos demandam atenção?"        |
+| `/app/professor/turmas/:id`   | `teacher-classroom-detail` | Professor   | "Qual a situação nominal e matriz de competências desta turma?"      |
+| `/app/parceiro`               | `partner-dashboard`        | Parceiro RH | "Quais talentos do ecossistema atendem às vagas abertas da empresa?" |
+| `/app/parceiro/talentos/:id`  | `partner-talent-detail`    | Parceiro RH | "Quais as evidências práticas e score de prontidão deste talento?"   |
 
 `/app/trilhas/:trackId` está descrita aqui como parte do plano de produto,
 mas **não tem estado local próprio nesta fase** — o catálogo mock tem poucas

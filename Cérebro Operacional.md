@@ -33,42 +33,10 @@
 - Diretorio oficial: `C:\Dev\CodeChat`
 - Branch: `main`
 - Remote: `origin/main`
-- **Nota de colisao de sessoes (historico, ver registro `2026-08-16 (Cowork/cloud) — Estrutura de
-Bloco Pedagogico Local` abaixo)**: durante a Task 8, outra sessao rodou a mesma tarefa em
-  paralelo, direto na maquina do usuario. O usuario decidiu substituir aquela implementacao pela
-  desta linha de execucao (Cowork). Resolvido; sem pendencia ativa — citado aqui so para quem
-  chegar depois entender por que ha uma nota extensa sobre isso no registro daquela sessao. O
-  Codex tambem renomeou `Mentor.tsx` -> `MentorWidget.tsx` nessa revisao (evitar colisao de casing
-  com `mentor.ts` no Windows) — ver registro da Task 9 abaixo para como isso foi sincronizado.
-- Estado Git no inicio desta sessao (Task 10): working tree limpo em `53699be feat: add RootScoll
-app shell and frontend system` (autor `test <test@example.com>`), tip de `main`/`origin/main`. Este
-  commit publicou intacto (conferido byte a byte contra o que esta sessao havia entregado) todo o
-  trabalho da Task 8 (Estrutura de Bloco Pedagogico Local) e da Task 9 (App Navigation v1 + Shell de
-  Acesso Local) que antes constava aqui como "pendente commit" — **essa pendencia esta resolvida**;
-  alem disso o commit trouxe `docs/frontend.md` (RootScoll Frontend Design System v1), 3 imagens de
-  identidade (`apps/web/src/images/{logo,identidade1,identidade2}.png`) e atualizacoes em
-  `docs/product/app-navigation-v1.md`, `docs/operations/visual-operational-brain.md` e neste arquivo.
-- Estado Git ao final desta sessao (Task 10 — Fundacao visual RootScoll): NAO commitado. Novos:
-  `apps/web/src/styles/tokens.css`, `apps/web/src/styles/typography.css`,
-  `apps/web/src/vite-env.d.ts` e `docs/product/regulatory-positioning-brazil-v1.md`. Tambem seguem
-  em revisao os documentos curriculares Zero to Junior v1/v2
-  (`docs/product/*curriculum*`, `docs/product/zero-to-junior-curriculum-v1.md`,
-  `docs/product/zero-to-junior-curriculum-v2.md`, `docs/product/curriculum-research-notes-v2.md`).
-  Modificados:
-  `apps/web/src/styles/app.css` (retonalizacao completa + novas classes utilitarias
-  `.btn*`/`.card`/`.badge`/`.input`), `apps/web/index.html` (titulo/meta RootScoll),
-  `apps/web/src/features/app-shell/{LoginScreen.tsx,AppNavigation.tsx}` (texto de marca +
-  `logo.png`), `apps/web/src/features/terminal/useTerminalSession.ts` (linha de sistema do terminal),
-  `apps/web/src/features/learning-flow/LearningFlowApp.tsx` (aria-label), `Cérebro Operacional.md`,
-  `docs/product/learning-catalog-v1.md` e `docs/operations/visual-operational-brain.md`.
-- Lock Git no ultimo registro: a ponte de arquivos desta sessao (`device_bash`) recria
-  `.git/index.lock` a cada `git status` rodado por ela e falha ao remove-lo ("Operation not
-  permitted") — padrao ja documentado, nao e um lock real de operacao Git em andamento; nao tratar
-  como bloqueio.
-- Servidor local visual: `http://127.0.0.1:5174/` (nao reverificado nesta sessao; validado via
-  `vite preview` no proxy da nuvem — ver registro desta sessao).
-- Ultimo commit funcional publicado: `53699be feat: add RootScoll app shell and frontend system`
-  (sobre `c61fa72 feat: add first executable local lessons`).
+- Estado Git atual: `working tree` limpo em `e08cdf6 Refine dashboard hierarchy and timeline` (autor `test <test@example.com>`), alinhado a `origin/main` e a branch `agents/leitura-raiz-e-subida-servidor`. A branch `main` recebeu fast-forward merge incorporando as atualizações do login (redesign split 60/40, chuva de código) e do dashboard (hierarquia e timeline).
+- Lock Git no ultimo registro: resolvido e liberado.
+- Servidor local visual: `http://127.0.0.1:5173/` (ativo em segundo plano via `pnpm --filter @codechat/web dev`).
+- Ultimo commit funcional publicado: `e08cdf6 Refine dashboard hierarchy and timeline` (sobre `457daeb style: refine login screen`, `f29e67a style(ui): otimiza espacamento...` e `5f567d8 feat(ui): redesign tela de login...`).
 
 ## Grafo operacional
 
@@ -156,6 +124,10 @@ Fundacao monorepo
 | c61fa72 | Primeira licao executavel local (mkdir/touch em apps/web)                               | Publicado |
 | 53699be | App shell RootScoll (Task 8+9) + RootScoll Frontend Design System v1 (docs/frontend.md) | Publicado |
 | 3f99c4b | Fundacao visual RootScoll + docs estrategicos/curriculares                              | Publicado |
+| 5f567d8 | Redesign tela de login com layout split 60/40                                           | Publicado |
+| f29e67a | Otimizacao de espacamento e densidade da chuva de codigos na tela de login              | Publicado |
+| 457daeb | Refinamento de estilo da tela de login                                                  | Publicado |
+| e08cdf6 | Refinamento de hierarquia e timeline do dashboard                                       | Publicado |
 
 ## Decisoes de governanca
 
@@ -232,6 +204,38 @@ ValidationOutcome` existe ainda em lugar nenhum do monorepo. Continua pendencia 
     sessao.
 
 ## Registro de sessoes
+
+### 2026-08-16 (Antigravity) — Painel do Professor & Painel de Parceiros (RH)
+
+**Construção dos portais didático (Professor) e de recrutamento (Parceiros RH):**
+
+- Criado o **Painel do Professor** (`TeacherDashboard.tsx` e `ClassroomDetailScreen.tsx`): cockpit de turmas com métricas agregadas (alunos em supervisão, progresso médio, contagem de risco), diagnóstico de gargalos críticos de aprendizagem com taxas de falha, lista nominal de alunos por turma com matriz de competências validadas vs. pendentes e status de acompanhamento.
+- Criado o **Painel de Parceiros de RH** (`PartnerDashboard.tsx`, `TalentSearchResults.tsx` e `TalentDetailScreen.tsx`): motor de busca e filtragem de talentos por habilidades, disponibilidade e prontidão (_Readiness Score_), além de visualização aprofundada do perfil do candidato com dossiê de evidências auditadas no terminal e ações de recrutamento mock.
+- Evolução do shell de navegação (`AppShell.tsx`, `AppNavigation.tsx`, `LoginScreen.tsx`, `useAppNavigation.ts`, `navigation-reducer.ts`, `types.ts` e `mock-data.ts`):
+  - `UserRole` estendido para suportar `'parceiro'`.
+  - `AppScreen` estendido para `'teacher-dashboard'`, `'teacher-classroom-detail'`, `'partner-dashboard'` e `'partner-talent-detail'`.
+  - Seletor de sessões no login permitindo alternar facilmente entre Aluno, Professor e Parceiro.
+  - Barra superior adapta dinamicamente as abas e o selo de identificação (_Aluno_, _Professor_, _RH Parceiro_).
+- Estilização completa e responsiva em `app.css` aderente aos tokens do Design System RootScoll.
+- Validações executadas com 100% de aprovação:
+  - `pnpm --filter @codechat/web typecheck` (código 0, 0 erros)
+  - `pnpm test` (**123 testes passaram em 11 arquivos**)
+  - `pnpm lint` (código 0, 0 erros, 0 avisos)
+  - `pnpm format:check` (100% formatado via Prettier)
+  - `pnpm --filter @codechat/web build` (build de produção concluído com sucesso)
+- Limites preservados: sem autenticação real, sem backend/Supabase, sem alteração no motor de execução ou na Sala Terminal.
+
+### 2026-08-16 (Antigravity) — Alinhamento de Versao Git e Subida do Servidor Local
+
+**Servidor local e Sincronizacao Git:**
+
+- Servidor local de desenvolvimento iniciado e verificado em `http://127.0.0.1:5173/` (task-38).
+- Identificada e resolvida colisao de portas: um processo residual antigo (PID `2912` da worktree `leitura-raiz-e-subida-servidor`) ocupava a porta `5173`. O processo foi encerrado para liberar a porta oficial `5173`.
+- Identificada divergencia entre a branch `main` e a worktree paralela (`agents/leitura-raiz-e-subida-servidor`).
+- Realizado o `git merge --ff-only agents/leitura-raiz-e-subida-servidor` alinhando a branch `main` ao commit `e08cdf6` (`Refine dashboard hierarchy and timeline`).
+- Validações executadas: `pnpm --filter @codechat/web typecheck` finalizado com sucesso (codigo 0, 0 erros).
+- HMR do Vite recarregou automaticamente as atualizacoes nos arquivos `AppNavigation.tsx`, `LoginScreen.tsx`, `StudentDashboard.tsx` e `app.css`.
+- `Cérebro Operacional.md` atualizado com o snapshot real e historico alinhado.
 
 ### 2026-08-16 (Codex) - Lapidacao UI/UX do acesso ate a Sala Terminal
 

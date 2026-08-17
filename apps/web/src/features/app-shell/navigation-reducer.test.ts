@@ -8,9 +8,19 @@ describe('createInitialNavState', () => {
 });
 
 describe('navigationReducer', () => {
-  it('login leva login -> dashboard', () => {
+  it('login padrao leva login -> dashboard', () => {
     const next = navigationReducer(createInitialNavState(), { type: 'login' });
     expect(next.screen).toBe('dashboard');
+  });
+
+  it('login como professor leva login -> teacher-dashboard', () => {
+    const next = navigationReducer(createInitialNavState(), { type: 'login', role: 'professor' });
+    expect(next.screen).toBe('teacher-dashboard');
+  });
+
+  it('login como parceiro leva login -> partner-dashboard', () => {
+    const next = navigationReducer(createInitialNavState(), { type: 'login', role: 'parceiro' });
+    expect(next.screen).toBe('partner-dashboard');
   });
 
   it('login fora de login e ignorado', () => {
@@ -24,18 +34,29 @@ describe('navigationReducer', () => {
       { screen: 'profile' },
       { screen: 'tracks' },
       { screen: 'terminal-classroom' },
+      { screen: 'teacher-dashboard' },
+      { screen: 'teacher-classroom-detail', selectedClassroomId: 'turma-1' },
+      { screen: 'partner-dashboard' },
+      { screen: 'partner-talent-detail', selectedTalentId: 'talent-1' },
     ];
     for (const state of screens) {
       expect(navigationReducer(state, { type: 'logout' })).toEqual({ screen: 'login' });
     }
   });
 
-  it('open-profile leva dashboard -> profile', () => {
-    const next = navigationReducer({ screen: 'dashboard' }, { type: 'open-profile' });
-    expect(next.screen).toBe('profile');
+  it('open-profile leva dashboard, teacher-dashboard e partner-dashboard -> profile', () => {
+    expect(navigationReducer({ screen: 'dashboard' }, { type: 'open-profile' }).screen).toBe(
+      'profile',
+    );
+    expect(
+      navigationReducer({ screen: 'teacher-dashboard' }, { type: 'open-profile' }).screen,
+    ).toBe('profile');
+    expect(
+      navigationReducer({ screen: 'partner-dashboard' }, { type: 'open-profile' }).screen,
+    ).toBe('profile');
   });
 
-  it('open-profile fora de dashboard e ignorado', () => {
+  it('open-profile fora de dashboards e ignorado', () => {
     const state: NavState = { screen: 'tracks' };
     expect(navigationReducer(state, { type: 'open-profile' })).toEqual(state);
   });
@@ -50,7 +71,39 @@ describe('navigationReducer', () => {
     expect(navigationReducer(state, { type: 'open-tracks' })).toEqual(state);
   });
 
-  it('back-to-dashboard leva profile/tracks/terminal-classroom de volta a dashboard', () => {
+  it('open-classroom-detail define selectedClassroomId e muda para teacher-classroom-detail', () => {
+    const next = navigationReducer(
+      { screen: 'teacher-dashboard' },
+      { type: 'open-classroom-detail', classroomId: 'turma-alfa' },
+    );
+    expect(next.screen).toBe('teacher-classroom-detail');
+    expect(next.selectedClassroomId).toBe('turma-alfa');
+  });
+
+  it('open-talent-detail define selectedTalentId e muda para partner-talent-detail', () => {
+    const next = navigationReducer(
+      { screen: 'partner-dashboard' },
+      { type: 'open-talent-detail', talentId: 'talent-123' },
+    );
+    expect(next.screen).toBe('partner-talent-detail');
+    expect(next.selectedTalentId).toBe('talent-123');
+  });
+
+  it('back-to-dashboard retorna ao dashboard correto por contexto', () => {
+    expect(
+      navigationReducer(
+        { screen: 'teacher-classroom-detail', selectedClassroomId: 'turma-1' },
+        { type: 'back-to-dashboard' },
+      ),
+    ).toEqual({ screen: 'teacher-dashboard', selectedClassroomId: 'turma-1' });
+
+    expect(
+      navigationReducer(
+        { screen: 'partner-talent-detail', selectedTalentId: 't-1' },
+        { type: 'back-to-dashboard' },
+      ),
+    ).toEqual({ screen: 'partner-dashboard', selectedTalentId: 't-1' });
+
     for (const screen of ['profile', 'tracks', 'terminal-classroom'] as const) {
       expect(navigationReducer({ screen }, { type: 'back-to-dashboard' })).toEqual({
         screen: 'dashboard',
