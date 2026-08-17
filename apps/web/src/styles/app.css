@@ -744,9 +744,9 @@ body {
 
 .login-card__logo {
   display: block;
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 4px;
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 16px;
 }
 
 .login-card__title {
@@ -1877,9 +1877,9 @@ body {
 
 .login-card__logo {
   display: block;
-  width: 68px;
-  height: 68px;
-  margin: 0 auto 6px auto;
+  width: 92px;
+  height: 92px;
+  margin: 8px auto 24px auto;
   animation:
     float-gently 4s ease-in-out infinite,
     glow-pulse 3s ease-in-out infinite alternate;
@@ -1889,6 +1889,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-bottom: 20px;
 }
 
 .login-card__session-label {

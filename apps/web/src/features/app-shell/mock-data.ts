@@ -17,6 +17,36 @@ export const MOCK_USER: MockUser = {
   evidenceCount: 2,
   currentTrackId: TERMINAL_TRACK_ID,
   overallProgress: 15,
+  integrityScore: 980,
+  integrityLevel: 'excelente',
+  coins: 450,
+  xp: 1250,
+  integrityLogs: [
+    {
+      id: 'log-1',
+      date: 'Hoje, 19:30',
+      action: 'Módulo de Navegação CLI Concluído',
+      change: +50,
+      type: 'gain',
+      reason: 'Conclusão sem interrupções em modo F11 imersivo.',
+    },
+    {
+      id: 'log-2',
+      date: 'Ontem, 14:15',
+      action: 'Tentativa de Copiar Conteúdo Bloqueada',
+      change: -20,
+      type: 'penalty',
+      reason: 'Ação de cópia bloqueada durante avaliação prática no terminal.',
+    },
+    {
+      id: 'log-3',
+      date: '14/08/2026',
+      action: 'Pontuação Inicial de Confiança',
+      change: +950,
+      type: 'gain',
+      reason: 'Boas-vindas à plataforma em modo de alta integridade.',
+    },
+  ],
 };
 
 export const MOCK_TEACHER: MockUser = {
@@ -28,6 +58,10 @@ export const MOCK_TEACHER: MockUser = {
   evidenceCount: 148,
   currentTrackId: TERMINAL_TRACK_ID,
   overallProgress: 100,
+  integrityScore: 1000,
+  integrityLevel: 'excelente',
+  coins: 5000,
+  xp: 15000,
 };
 
 export const MOCK_PARTNER: MockUser = {
@@ -39,6 +73,10 @@ export const MOCK_PARTNER: MockUser = {
   evidenceCount: 42,
   currentTrackId: TERMINAL_TRACK_ID,
   overallProgress: 100,
+  integrityScore: 1000,
+  integrityLevel: 'excelente',
+  coins: 2500,
+  xp: 8000,
 };
 
 export const MOCK_PARTNER_COMPANY: PartnerCompany = {
@@ -403,6 +441,8 @@ export const MOCK_TALENT_POOL: readonly MockTalentProfile[] = [
     overallProgress: 92,
     evidenceCount: 9,
     readinessScore: 94,
+    integrityScore: 990,
+    integrityLevel: 'excelente',
     availability: 'Disponível imediatamente',
     topSkills: [
       'Linux Terminal',
@@ -451,6 +491,8 @@ export const MOCK_TALENT_POOL: readonly MockTalentProfile[] = [
     overallProgress: 88,
     evidenceCount: 7,
     readinessScore: 89,
+    integrityScore: 960,
+    integrityLevel: 'excelente',
     availability: 'Disponível imediatamente',
     topSkills: [
       'Shell Scripting',
@@ -490,6 +532,8 @@ export const MOCK_TALENT_POOL: readonly MockTalentProfile[] = [
     overallProgress: 95,
     evidenceCount: 11,
     readinessScore: 96,
+    integrityScore: 1000,
+    integrityLevel: 'excelente',
     availability: 'Disponível imediatamente',
     topSkills: ['TypeScript', 'Node.js', 'SQL / Postgres', 'HTML/CSS/JS', 'Testes Automatizados'],
     bio: 'Destaque acadêmico no ecossistema RootScoll. Capacidade comprovada de depuração metódica, modelagem relacional limpa e explicação de arquitetura técnica em entrevistas simuladas.',
@@ -524,6 +568,8 @@ export const MOCK_TALENT_POOL: readonly MockTalentProfile[] = [
     overallProgress: 78,
     evidenceCount: 6,
     readinessScore: 82,
+    integrityScore: 870,
+    integrityLevel: 'bom',
     availability: 'Em formação (estágio)',
     topSkills: [
       'React',
@@ -556,6 +602,8 @@ export const MOCK_TALENT_POOL: readonly MockTalentProfile[] = [
     overallProgress: 81,
     evidenceCount: 6,
     readinessScore: 85,
+    integrityScore: 920,
+    integrityLevel: 'excelente',
     availability: 'Em transição de carreira',
     topSkills: ['Python', 'SQL', 'Bash', 'Tratamento de Dados', 'Git'],
     bio: 'Experiência prévia em operações e logística migrando para desenvolvimento de software. Alta habilidade em automação de tarefas rotineiras e manipulação de arquivos de dados.',
@@ -583,6 +631,8 @@ export const MOCK_TALENT_POOL: readonly MockTalentProfile[] = [
     overallProgress: 86,
     evidenceCount: 8,
     readinessScore: 90,
+    integrityScore: 950,
+    integrityLevel: 'excelente',
     availability: 'Disponível imediatamente',
     topSkills: ['Vitest / Jest', 'TypeScript', 'Node.js', 'Linux CLI', 'Casos de Teste'],
     bio: 'Foco total em qualidade e prevenção de bugs. Escreve testes unitários e de integração com cobertura de cenários de borda e documenta falhas detalhadamente.',

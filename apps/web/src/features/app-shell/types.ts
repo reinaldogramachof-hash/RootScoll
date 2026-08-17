@@ -40,8 +40,27 @@ export interface MockUser {
   readonly evidenceCount: number;
   /** `Track.id` da trilha em andamento. */
   readonly currentTrackId: string;
-  /** Progresso geral do aluno, 0–100. Número mock, não calculado. */
+  /** Progresso geral do aluno, 0–100. Número mock, não calculated. */
   readonly overallProgress: number;
+  /** Pontuação de Integridade/Confiança Comercial (0-1000). */
+  readonly integrityScore: number;
+  /** Nível derivado do score. */
+  readonly integrityLevel: 'ruim' | 'atencao' | 'bom' | 'excelente';
+  /** Saldo de moedas virtuais acumuladas por boas práticas. */
+  readonly coins: number;
+  /** Pontos de experiência (XP) pedagógicos. */
+  readonly xp: number;
+  /** Histórico de extrato de integridade/pontuação. */
+  readonly integrityLogs?: readonly IntegrityLogEntry[];
+}
+
+export interface IntegrityLogEntry {
+  readonly id: string;
+  readonly date: string;
+  readonly action: string;
+  readonly change: number;
+  readonly type: 'gain' | 'penalty';
+  readonly reason: string;
 }
 
 export type TrackStatus = 'available' | 'coming-soon';
@@ -133,6 +152,8 @@ export interface MockTalentProfile {
   readonly overallProgress: number;
   readonly evidenceCount: number;
   readonly readinessScore: number; // 0-100 (Prontidão para Júnior)
+  readonly integrityScore: number; // 0-1000 (Score de Integridade Comercial)
+  readonly integrityLevel: 'ruim' | 'atencao' | 'bom' | 'excelente';
   readonly availability:
     'Disponível imediatamente' | 'Em formação (estágio)' | 'Em transição de carreira';
   readonly topSkills: readonly string[];

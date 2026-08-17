@@ -145,16 +145,19 @@ function TalentSearchResults({ talentPool, onSelectTalent }: TalentSearchResults
 
             <div className="talent-card__metrics">
               <div className="talent-metric">
-                <span>Progresso</span>
-                <strong>{talent.overallProgress}%</strong>
+                <span>Prontidão</span>
+                <strong>{talent.readinessScore}%</strong>
+              </div>
+              <div className="talent-metric">
+                <span>Integridade</span>
+                <strong className="text-mint" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <IconShieldCheck size={12} />
+                  {talent.integrityScore ?? 980} pts
+                </strong>
               </div>
               <div className="talent-metric">
                 <span>Evidências</span>
                 <strong>{talent.evidenceCount} itens</strong>
-              </div>
-              <div className="talent-metric">
-                <span>Status</span>
-                <strong className="text-mint">{talent.availability}</strong>
               </div>
             </div>
 

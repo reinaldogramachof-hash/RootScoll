@@ -152,10 +152,25 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
           </li>
         </ul>
         <div className="login-welcome__terminal" aria-live="polite">
-          <div className="login-welcome__terminal-dots" aria-hidden="true">
-            <span />
-            <span />
-            <span />
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+            <div className="login-welcome__terminal-dots" aria-hidden="true" style={{ margin: 0 }}>
+              <span />
+              <span />
+              <span />
+            </div>
+            <span
+              style={{
+                fontSize: '11px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '5px',
+                color: 'var(--text-muted, #8b949e)',
+              }}
+              title="Para melhor experiência e imersão reativa, utilize a plataforma em Tela Cheia (F11)"
+            >
+              <kbd style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: '#c9d1d9', padding: '1px 5px', borderRadius: '3px', fontFamily: 'monospace', fontWeight: 'bold', fontSize: '10px' }}>F11</kbd>
+              Imersão Reativa
+            </span>
           </div>
           <pre className="login-welcome__terminal-body">
             {terminalText}

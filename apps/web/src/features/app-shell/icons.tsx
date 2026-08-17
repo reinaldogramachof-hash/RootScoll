@@ -353,3 +353,62 @@ export function IconFocusMode({ size = 18, ...props }: IconProps & { size?: numb
     </svg>
   );
 }
+
+export function IconCoins({ size = 18, ...props }: IconProps & { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <circle cx="8" cy="8" r="6" />
+      <path d="M18 8a6 6 0 0 1-6 6" />
+      <path d="M18 12a6 6 0 0 1-6 6" />
+      <path d="M6 14a6 6 0 0 0 6 6" />
+    </svg>
+  );
+}
+
+export function IconZap({ size = 18, ...props }: IconProps & { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+    </svg>
+  );
+}
+
+export function IconHistory({ size = 18, ...props }: IconProps & { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+      <path d="M3 3v5h5" />
+      <polyline points="12 7 12 12 15 15" />
+    </svg>
+  );
+}

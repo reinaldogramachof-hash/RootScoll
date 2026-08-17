@@ -31,10 +31,25 @@ function TalentDetailScreen({ talent, onBack }: TalentDetailScreenProps) {
           </div>
         </div>
 
-        <div className="talent-detail__score-badge card">
-          <span className="score-badge__title">Score de Prontidão</span>
-          <strong className="score-badge__number">{talent.readinessScore}%</strong>
-          <span className="badge badge--primary">{talent.availability}</span>
+        <div style={{ display: 'flex', gap: '12px' }}>
+          <div className="talent-detail__score-badge card">
+            <span className="score-badge__title">Score de Prontidão</span>
+            <strong className="score-badge__number">{talent.readinessScore}%</strong>
+            <span className="badge badge--primary">{talent.availability}</span>
+          </div>
+
+          <div className="talent-detail__score-badge card" style={{ background: 'rgba(0,0,0,0.25)', borderColor: 'rgba(0,255,200,0.25)' }}>
+            <span className="score-badge__title" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <IconShieldCheck size={14} className="text-mint" />
+              Score de Integridade
+            </span>
+            <strong className="score-badge__number" style={{ color: '#00ffd0' }}>
+              {talent.integrityScore ?? 980} <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 'normal' }}>/1000</span>
+            </strong>
+            <span className="badge badge--mint" style={{ textTransform: 'capitalize' }}>
+              🩵 {talent.integrityLevel ?? 'excelente'}
+            </span>
+          </div>
         </div>
       </header>
 
