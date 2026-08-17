@@ -324,7 +324,7 @@ function StudentDashboard({
             zIndex: 9999,
             display: 'flex',
             alignItems: 'center',
-            justify: 'center',
+            justifyContent: 'center',
             background: 'rgba(5, 8, 17, 0.88)',
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)',
@@ -379,7 +379,7 @@ function StudentDashboard({
                     background: 'rgba(255, 255, 255, 0.03)',
                     border: `1px solid ${log.type === 'gain' ? 'rgba(0, 255, 200, 0.2)' : 'rgba(255, 80, 80, 0.25)'}`,
                     display: 'flex',
-                    justify: 'space-between',
+                    justifyContent: 'space-between',
                     alignItems: 'center',
                     gap: '12px',
                   }}
