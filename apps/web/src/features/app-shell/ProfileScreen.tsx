@@ -8,14 +8,14 @@ export interface ProfileScreenProps {
 const ROLE_LABELS: Record<MockUser['role'], string> = {
   aluno: 'Aluno',
   professor: 'Professor',
-  admin: 'Admin/Instituicao',
+  admin: 'Admin/Instituição',
   'mentor-ia': 'Mentor IA',
   parceiro: 'Parceiro (RH)',
 };
 
 /**
- * Perfil de aprendizado local: somente leitura nesta fatia. Nao edita dados
- * porque ainda nao existe persistencia ou autenticacao real.
+ * Perfil de aprendizado local: somente leitura nesta fatia. Não edita dados
+ * porque ainda não existe persistência ou autenticação real.
  */
 function ProfileScreen({ user, onBack }: ProfileScreenProps) {
   return (
@@ -63,10 +63,10 @@ function ProfileScreen({ user, onBack }: ProfileScreenProps) {
       </dl>
 
       <section className="profile-screen__panel">
-        <h2>Portfolio local</h2>
+        <h2>Portfólio local</h2>
         <p>
-          As evidencias desta fatia ainda sao registros mock. A meta visual e preparar o espaco para
-          comandos executados, explicacoes do aluno e avaliacoes por bloco.
+          As evidências desta fatia ainda são registros mock. A meta visual é preparar o espaço para
+          comandos executados, explicações do aluno e avaliações por bloco.
         </p>
       </section>
 

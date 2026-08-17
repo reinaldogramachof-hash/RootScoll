@@ -10,9 +10,9 @@ export interface StudentDashboardProps {
 }
 
 /**
- * Painel do aluno: cockpit local pos-login, sem persistencia real. Mostra a
- * rota ate a Sala Terminal e os sinais pedagogicos necessarios para a proxima
- * lapidacao de produto.
+ * Painel do aluno: cockpit local pós-login, sem persistência real. Mostra a
+ * rota até a Sala Terminal e os sinais pedagógicos necessários para a próxima
+ * lapidação de produto.
  */
 function StudentDashboard({
   user,
@@ -67,7 +67,7 @@ function StudentDashboard({
         </div>
         <div className="dashboard__metric dashboard__metric--accent">
           <div className="metric-header-row">
-            <span className="dashboard__metric-label">Evidencias</span>
+            <span className="dashboard__metric-label">Evidências</span>
             <IconFileText size={16} className="metric-icon text-amber" />
           </div>
           <strong>{user.evidenceCount}</strong>

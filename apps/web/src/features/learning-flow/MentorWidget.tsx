@@ -7,15 +7,15 @@ export interface MentorWidgetProps {
 }
 
 /**
- * Mentor flutuante discreto: mostra a dica deterministica atual
+ * Mentor flutuante discreto: mostra a dica determinística atual
  * (`../learning-flow/mentor.ts`, `selectHint` — sem IA real, regra local por
- * numero de tentativas). Pequeno, no canto, sem parecer um chat principal —
- * so aparece durante a pratica (`visible`) e some quando nao ha dica
+ * número de tentativas). Pequeno, no canto, sem parecer um chat principal —
+ * só aparece durante a prática (`visible`) e some quando não há dica
  * desbloqueada ainda.
  *
- * Dispensar a dica atual (`dismissedHintText`) esconde so aquele texto — uma
- * dica NOVA (tier mais alto, liberada por mais tentativas) volta a aparecer
- * normalmente, ja que `dismissedHintText` so bate com o texto exato ja
+ * Dispensar a dica atual (`dismissedHintText`) esconde só aquele texto — uma
+ * nova tentativa falha com uma nova dica (ex: Hint 1 -> Hint 2) fará a nova dica aparecer
+ * normalmente, já que `dismissedHintText` só bate com o texto exato já
  * dispensado.
  */
 function MentorWidget({ hint, visible }: MentorWidgetProps) {

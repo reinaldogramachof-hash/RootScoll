@@ -103,7 +103,7 @@ describe('flowReducer', () => {
     });
   });
 
-  it('next-block no ultimo bloco e ignorado (nao ha proximo)', () => {
+  it('next-block no último bloco é ignorado (não há próximo)', () => {
     const state: FlowState = {
       blockIndex: 1,
       step: 'conclusion',
@@ -141,7 +141,7 @@ describe('isFlowFinished', () => {
     expect(isFlowFinished(state, BLOCK_COUNT)).toBe(true);
   });
 
-  it('falso se ainda nao chegou em conclusion', () => {
+  it('falso se ainda não chegou em conclusion', () => {
     const state: FlowState = {
       blockIndex: 1,
       step: 'assessment',

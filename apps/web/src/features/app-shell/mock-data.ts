@@ -1,9 +1,9 @@
 import type { MockClassroom, MockTalentProfile, MockUser, PartnerCompany, Track } from './types';
 
 /**
- * Dados mock locais do shell: sem backend, sem Supabase, sem persistencia.
- * A UI usa 6 macrotrilhas como navegacao executiva e preserva as 14 trilhas
- * granulares do curriculo v2 como direcao pedagogica interna.
+ * Dados mock locais do shell: sem backend, sem Supabase, sem persistência.
+ * A UI usa 6 macrotrilhas como navegação executiva e preserva as 14 trilhas
+ * granulares do currículo v2 como direção pedagógica interna.
  */
 
 const TERMINAL_TRACK_ID = 'terminal-os';
@@ -52,7 +52,7 @@ export const TRACKS: readonly Track[] = [
   {
     id: TERMINAL_TRACK_ID,
     title: 'Terminal e Sistemas Operacionais',
-    description: 'Base de linha de comando: navegacao, arquivos, diretorios, stdout e stderr.',
+    description: 'Base de linha de comando: navegação, arquivos, diretórios, stdout e stderr.',
     phase: 'Fase 0',
     progress: 34,
     competencies: ['Navegar entre pastas', 'Criar arquivos', 'Explicar stdout/stderr'],
@@ -61,13 +61,13 @@ export const TRACKS: readonly Track[] = [
     modules: [
       {
         id: 'terminal-os-orientacao',
-        title: 'Orientacao teorica: shell, caminho e diretorio atual',
+        title: 'Orientação teórica: shell, caminho e diretório atual',
         status: 'available',
         mode: 'teoria',
       },
       {
         id: 'terminal-os-navegacao',
-        title: 'Pratica guiada: pwd, ls e cd',
+        title: 'Prática guiada: pwd, ls e cd',
         status: 'available',
         mode: 'pratica',
       },
@@ -85,7 +85,7 @@ export const TRACKS: readonly Track[] = [
       },
       {
         id: 'terminal-os-avaliacao',
-        title: 'Avaliacao curta: explicar e repetir o fluxo',
+        title: 'Avaliação curta: explicar e repetir o fluxo',
         status: 'available',
         mode: 'avaliacao',
       },
@@ -112,11 +112,11 @@ export const TRACKS: readonly Track[] = [
   {
     id: 'web',
     title: 'Desenvolvimento Web',
-    description: 'HTML, CSS, JavaScript, componentes simples e publicacao de paginas.',
+    description: 'HTML, CSS, JavaScript, componentes simples e publicação de páginas.',
     phase: 'Fase 2',
     progress: 0,
-    competencies: ['Estruturar paginas', 'Estilizar interfaces', 'Publicar paginas simples'],
-    evidence: 'Primeira pagina publicada e revisada.',
+    competencies: ['Estruturar páginas', 'Estilizar interfaces', 'Publicar páginas simples'],
+    evidence: 'Primeira página publicada e revisada.',
     status: 'coming-soon',
     modules: [
       {
@@ -129,12 +129,12 @@ export const TRACKS: readonly Track[] = [
   },
   {
     id: 'programming',
-    title: 'Programacao',
-    description: 'Logica, funcoes, estruturas de dados basicas e leitura de erros.',
+    title: 'Programação',
+    description: 'Lógica, funções, estruturas de dados básicas e leitura de erros.',
     phase: 'Fase 3',
     progress: 0,
-    competencies: ['Modelar problemas', 'Criar funcoes', 'Depurar fluxo logico'],
-    evidence: 'Colecao de exercicios resolvidos com explicacao.',
+    competencies: ['Modelar problemas', 'Criar funções', 'Depurar fluxo lógico'],
+    evidence: 'Coleção de exercícios resolvidos com explicação.',
     status: 'coming-soon',
     modules: [
       {
@@ -148,11 +148,11 @@ export const TRACKS: readonly Track[] = [
   {
     id: 'database',
     title: 'Banco de Dados',
-    description: 'Modelagem, consultas, relacoes e operacao basica de dados.',
+    description: 'Modelagem, consultas, relações e operação básica de dados.',
     phase: 'Fase 4',
     progress: 0,
-    competencies: ['Modelar dados', 'Consultar registros', 'Explicar relacoes'],
-    evidence: 'Mini banco consultado por comandos e documentacao curta.',
+    competencies: ['Modelar dados', 'Consultar registros', 'Explicar relações'],
+    evidence: 'Mini banco consultado por comandos e documentação curta.',
     status: 'coming-soon',
     modules: [
       {
@@ -165,18 +165,18 @@ export const TRACKS: readonly Track[] = [
   },
   {
     id: 'security',
-    title: 'Seguranca Cibernetica e da Informacao',
+    title: 'Segurança Cibernética e da Informação',
     description:
       'Radar estrategico aprovado: trilha futura e isolada, sem laboratorios ou validadores formalizados.',
     phase: 'Radar futuro',
     progress: 0,
     competencies: ['Higiene digital', 'Leitura de riscos', 'Postura defensiva'],
-    evidence: 'Checklist de boas praticas, quando a trilha for formalizada.',
+    evidence: 'Checklist de boas práticas, quando a trilha for formalizada.',
     status: 'coming-soon',
     modules: [
       {
         id: 'security-em-breve',
-        title: 'Curriculo ainda nao formalizado',
+        title: 'Currículo ainda não formalizado',
         status: 'coming-soon',
         mode: 'planejado',
       },

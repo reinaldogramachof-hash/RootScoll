@@ -21,7 +21,7 @@ describe('splitLines', () => {
     expect(splitLines('/home/aluno\n')).toEqual(['/home/aluno']);
   });
 
-  it('preserva multiplas linhas, removendo so o \\n final', () => {
+  it('preserva múltiplas linhas, removendo só o \\n final', () => {
     expect(splitLines('abacaxi\nzebra\n')).toEqual(['abacaxi', 'zebra']);
   });
 
@@ -33,7 +33,7 @@ describe('splitLines', () => {
     expect(splitLines('a\n\nb\n')).toEqual(['a', '', 'b']);
   });
 
-  it('nao adiciona linha vazia extra quando o texto nao termina com \\n', () => {
+  it('não adiciona linha vazia extra quando o texto não termina com \\n', () => {
     expect(splitLines('sem-quebra-final')).toEqual(['sem-quebra-final']);
   });
 

@@ -35,29 +35,29 @@ describe('LEARNING_BLOCKS', () => {
 describe('Bloco 1 — criar pasta projetos', () => {
   const block = LEARNING_BLOCKS[0];
   if (block === undefined) {
-    throw new Error('Bloco 1 nao encontrado em LEARNING_BLOCKS');
+    throw new Error('Bloco 1 não encontrado em LEARNING_BLOCKS');
   }
 
-  it('avaliacao nao esta completa no estado inicial', () => {
+  it('avaliação não está completa no estado inicial', () => {
     const initial = createInitialFilesystemState();
     expect(block.assessment.isComplete(initial)).toBe(false);
   });
 
-  it('avaliacao fica completa apos "mkdir projetos"', () => {
+  it('avaliação fica completa após "mkdir projetos"', () => {
     const initial = createInitialFilesystemState();
     const afterMkdir = runCommand(initial, 'mkdir projetos');
     expect(afterMkdir.exitCode).toBe(0);
     expect(block.assessment.isComplete(afterMkdir.filesystem)).toBe(true);
   });
 
-  it('avaliacao nao fica completa com um arquivo de mesmo nome (precisa ser diretorio)', () => {
+  it('avaliação não fica completa com um arquivo de mesmo nome (precisa ser diretório)', () => {
     const initial = createInitialFilesystemState();
     const afterTouch = runCommand(initial, 'touch projetos');
     expect(afterTouch.exitCode).toBe(0);
     expect(block.assessment.isComplete(afterTouch.filesystem)).toBe(false);
   });
 
-  it('comandos de exploracao (pwd, ls) sozinhos nao completam a avaliacao', () => {
+  it('comandos de exploração (pwd, ls) sozinhos não completam a avaliação', () => {
     const initial = createInitialFilesystemState();
     const afterPwd = runCommand(initial, 'pwd');
     const afterLs = runCommand(afterPwd.filesystem, 'ls');
@@ -68,29 +68,29 @@ describe('Bloco 1 — criar pasta projetos', () => {
 describe('Bloco 2 — criar README.md', () => {
   const block = LEARNING_BLOCKS[1];
   if (block === undefined) {
-    throw new Error('Bloco 2 nao encontrado em LEARNING_BLOCKS');
+    throw new Error('Bloco 2 não encontrado em LEARNING_BLOCKS');
   }
 
-  it('avaliacao nao esta completa no estado inicial', () => {
+  it('avaliação não está completa no estado inicial', () => {
     const initial = createInitialFilesystemState();
     expect(block.assessment.isComplete(initial)).toBe(false);
   });
 
-  it('avaliacao fica completa apos "touch README.md"', () => {
+  it('avaliação fica completa após "touch README.md"', () => {
     const initial = createInitialFilesystemState();
     const afterTouch = runCommand(initial, 'touch README.md');
     expect(afterTouch.exitCode).toBe(0);
     expect(block.assessment.isComplete(afterTouch.filesystem)).toBe(true);
   });
 
-  it('avaliacao nao fica completa com um diretorio de mesmo nome (precisa ser arquivo)', () => {
+  it('avaliação não fica completa com um diretório de mesmo nome (precisa ser arquivo)', () => {
     const initial = createInitialFilesystemState();
     const afterMkdir = runCommand(initial, 'mkdir README.md');
     expect(afterMkdir.exitCode).toBe(0);
     expect(block.assessment.isComplete(afterMkdir.filesystem)).toBe(false);
   });
 
-  it('permanece completa apos cat (comando de leitura, nao remove o arquivo)', () => {
+  it('permanece completa após cat (comando de leitura, não remove o arquivo)', () => {
     const initial = createInitialFilesystemState();
     const afterTouch = runCommand(initial, 'touch README.md');
     const afterCat = runCommand(afterTouch.filesystem, 'cat README.md');

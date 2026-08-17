@@ -7,7 +7,7 @@ export interface TracksScreenProps {
 }
 
 /**
- * Catalogo executivo local. A tela preserva as 6 macrotrilhas de navegacao e
+ * Catálogo executivo local. A tela preserva as 6 macrotrilhas de navegação e
  * mostra sinais das trilhas granulares do curriculo v2 sem criar rotas reais.
  */
 function TracksScreen({ tracks, onBack, onEnterClassroom }: TracksScreenProps) {
@@ -22,7 +22,7 @@ function TracksScreen({ tracks, onBack, onEnterClassroom }: TracksScreenProps) {
       </div>
 
       <p className="screen__lead">
-        Navegacao executiva em seis areas, com aprofundamento interno orientado pelo curriculo Zero
+        Navegação executiva em seis áreas, com aprofundamento interno orientado pelo currículo Zero
         to Junior v2.
       </p>
 

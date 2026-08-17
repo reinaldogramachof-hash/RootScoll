@@ -17,7 +17,7 @@ describe('selectHint', () => {
     expect(selectHint(HINTS, 1)?.text).toBe('dica 1');
   });
 
-  it('retorna a dica mais avancada ja desbloqueada, nao a primeira', () => {
+  it('retorna a dica mais avançada já desbloqueada, não a primeira', () => {
     expect(selectHint(HINTS, 2)?.text).toBe('dica 2');
     expect(selectHint(HINTS, 3)?.text).toBe('dica 3');
   });
@@ -30,7 +30,7 @@ describe('selectHint', () => {
     expect(selectHint([], 5)).toBeUndefined();
   });
 
-  it('funciona mesmo se as dicas nao estiverem em ordem', () => {
+  it('funciona mesmo se as dicas não estiverem em ordem', () => {
     const shuffled = [HINTS[2], HINTS[0], HINTS[1]].filter(
       (hint): hint is MentorHint => hint !== undefined,
     );

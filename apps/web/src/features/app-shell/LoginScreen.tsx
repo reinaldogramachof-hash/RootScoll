@@ -117,7 +117,7 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
           <span className="login-welcome__wordmark">RootScoll</span>
         </div>
         <h1 className="login-welcome__headline">
-          Do zero a prontidao
+          Do zero à prontidão
           <br />
           profissional.
         </h1>
@@ -128,8 +128,8 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
               &lt;/&gt;
             </span>
             <div>
-              <strong>Aprendizado pratico</strong>
-              <span>Mao na massa desde o inicio</span>
+              <strong>Aprendizado prático</strong>
+              <span>Mão na massa desde o início</span>
             </div>
           </li>
           <li className="login-welcome__feature-item">
@@ -138,7 +138,7 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
             </span>
             <div>
               <strong>Projetos reais</strong>
-              <span>Portfolio que gera impacto</span>
+              <span>Portfólio que gera impacto</span>
             </div>
           </li>
           <li className="login-welcome__feature-item">
@@ -146,8 +146,8 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
               &gt;_
             </span>
             <div>
-              <strong>Prontidao profissional</strong>
-              <span>Do zero a entrega com confianca</span>
+              <strong>Prontidão profissional</strong>
+              <span>Do zero à entrega com confiança</span>
             </div>
           </li>
         </ul>
@@ -265,7 +265,7 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
               className="login-card__forgot"
               onClick={(e) => {
                 e.preventDefault();
-                alert('Recuperacao de senha nao disponivel.');
+                alert('Recuperação de senha não disponível.');
               }}
             >
               Esqueceu a senha?
