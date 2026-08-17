@@ -56,7 +56,17 @@ function StudentDashboard({
     <div className="screen dashboard student-dashboard">
       <header className="screen__header dashboard__header">
         <div className="screen__title-wrap">
-          <p className="screen__eyebrow">{user.currentPhase}</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <p className="screen__eyebrow" style={{ margin: 0 }}>{user.currentPhase}</p>
+            <span
+              className="badge badge--mint"
+              style={{ fontSize: '10px', display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '2px 6px' }}
+              title="Para máxima imersão e integridade, use a plataforma em tela cheia"
+            >
+              <kbd style={{ background: 'rgba(0,0,0,0.2)', padding: '0 3px', borderRadius: '2px', fontFamily: 'monospace' }}>F11</kbd>
+              Imersão Reativa
+            </span>
+          </div>
           <h1 className="screen__title">Olá, {user.name}</h1>
         </div>
 

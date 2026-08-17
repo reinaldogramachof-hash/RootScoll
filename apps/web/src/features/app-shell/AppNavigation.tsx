@@ -83,6 +83,14 @@ function AppNavigation({
       </div>
 
       <div className="app-nav__meta">
+        <span
+          className="badge badge--secondary"
+          title="Pressione F11 para melhor experiência imersiva"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '11px', padding: '3px 8px' }}
+        >
+          <kbd style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid var(--border)', borderRadius: '3px', padding: '1px 5px', fontFamily: 'monospace', fontSize: '10px' }}>F11</kbd>
+          <span>Tela cheia</span>
+        </span>
         <span className={`app-nav__status app-nav__status--${role}`}>
           {isTeacher ? 'Professor' : isPartner ? 'RH Parceiro' : 'Aluno'}
         </span>
