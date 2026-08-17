@@ -38,9 +38,14 @@ export interface LearningFlowAppProps {
 function LearningFlowApp({ onExitClassroom }: LearningFlowAppProps) {
   const flow = useLearningFlow();
 
+  const isPractical = flow.step === 'practice' || flow.step === 'assessment';
+
   return (
     <main className="terminal-app" aria-label="RootScoll aprendizagem em tela cheia">
-      <section className="terminal-window" aria-label="Bloco pedagógico atual">
+      <section
+        className={`terminal-window ${isPractical ? 'terminal-window--practical' : ''}`}
+        aria-label="Bloco pedagógico atual"
+      >
         <div className="terminal-titlebar" aria-hidden="true">
           <span />
           <span />

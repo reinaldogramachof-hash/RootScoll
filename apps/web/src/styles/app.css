@@ -67,6 +67,7 @@ body {
   background: var(--background);
   box-shadow: var(--shadow-md);
   font-family: var(--font-mono);
+  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .terminal-titlebar {
@@ -77,6 +78,41 @@ body {
   border-bottom: 1px solid var(--border);
   background: var(--surface);
   padding: 0 14px;
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+
+/* Modo Prático - Terminal Real */
+.terminal-window--practical {
+  background: #090b10;
+  border-color: rgba(54, 230, 165, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.75), 0 0 15px rgba(54, 230, 165, 0.08);
+}
+
+.terminal-window--practical .terminal-titlebar {
+  background: #0f141d;
+  border-bottom-color: rgba(54, 230, 165, 0.2);
+}
+
+.terminal-window--practical .terminal-titlebar strong {
+  color: #a0aec0;
+  font-family: var(--font-mono);
+}
+
+.terminal-window--practical .terminal-screen {
+  color: #e2e8f0;
+  background: #090b10;
+}
+
+.terminal-window--practical .terminal-line--prompt,
+.terminal-window--practical .terminal-input-line__prompt {
+  color: #36e6a5;
+  text-shadow: 0 0 8px rgba(54, 230, 165, 0.4);
+  font-weight: 600;
+}
+
+.terminal-window--practical .terminal-input-line__input {
+  color: #f7fafc;
+  caret-color: #36e6a5;
 }
 
 .terminal-titlebar span {
