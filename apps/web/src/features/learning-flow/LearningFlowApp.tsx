@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 import '../../styles/app.css';
 import TerminalScreen from '../terminal/TerminalScreen';
 import ProgressBar from './ProgressBar';
@@ -18,7 +19,9 @@ export interface LearningFlowAppProps {
 }
 
 function LearningFlowApp({ onExitClassroom }: LearningFlowAppProps) {
-  const flow = useLearningFlow();
+  const { lessonId } = useParams<{ lessonId?: string }>();
+  const initialIndex = lessonId ? Math.max(0, LEARNING_BLOCKS.findIndex((b) => b.id === lessonId)) : 0;
+  const flow = useLearningFlow(initialIndex >= 0 ? initialIndex : 0);
 
   const isPractical = flow.step === 'practice' || flow.step === 'assessment';
 
@@ -138,14 +141,10 @@ function LearningFlowApp({ onExitClassroom }: LearningFlowAppProps) {
         <ProgressBar current={flow.progress.current} total={flow.progress.total} step={flow.step} />
 
         <div className="step-content">
-          {flow.step === 'theory' && (
-            <TheoryPanel theory={flow.block.theory} onStart={flow.startPractice} />
-          )}
-
-          {isPractical && (
+          {flow.step !== 'conclusion' && (
             <>
               {/* Modal de Pré-requisito de Foco (Tela Cheia) */}
-              {!preflightPassed && (
+              {isPractical && !preflightPassed && (
                 <div className="focus-modal-overlay">
                   <div className="focus-modal">
                     <div className="focus-modal__icon focus-modal__icon--primary">
@@ -171,7 +170,7 @@ function LearningFlowApp({ onExitClassroom }: LearningFlowAppProps) {
               )}
 
               {/* Modal de Bloqueio de Infração */}
-              {preflightPassed && focusBlocked && (
+              {isPractical && preflightPassed && focusBlocked && (
                 <div className="focus-modal-overlay">
                   <div className="focus-modal focus-modal--warning">
                     <div className="focus-modal__icon focus-modal__icon--warning">
@@ -183,7 +182,7 @@ function LearningFlowApp({ onExitClassroom }: LearningFlowAppProps) {
                     <p className="focus-modal__description">
                       {infractionCount === 1
                         ? 'Você saiu do modo de tela cheia ou trocou de janela. Por regras de integridade, seu exercício foi REINICIADO.'
-                        : 'Atenção extrema: Foi emitida uma notificação de inconformidade didática ao Tutor Responsável. Sua pontuação de integridade foi ajustada (-50 pts).'}
+                        : 'Atenção extrema: Foi emitida uma notificação de inconformidade didática ao Tutor Responsável. Sua pontuação de integridade foi adjusted (-50 pts).'}
                     </p>
                     <div className="focus-modal__stats">
                       <span className="badge badge--warning">Total de Infrações: {infractionCount}</span>
@@ -234,6 +233,7 @@ function LearningFlowApp({ onExitClassroom }: LearningFlowAppProps) {
             />
           )}
         </div>
+
       </section>
 
       <Sidebar

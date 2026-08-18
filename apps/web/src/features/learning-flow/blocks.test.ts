@@ -2,28 +2,21 @@ import { describe, expect, it } from 'vitest';
 import { createInitialFilesystemState, runCommand } from '@codechat/terminal-engine';
 import { LEARNING_BLOCKS } from './blocks';
 
-// ---------------------------------------------------------------------------
-// Testes — validadores locais dos blocos-piloto, contra o filesystem virtual
-// real de @codechat/terminal-engine (mesma cobertura de
-// ../lessons/lessons.test.ts, agora sobre `assessment.isComplete`).
-// ---------------------------------------------------------------------------
-
-describe('LEARNING_BLOCKS', () => {
-  it('define exatamente os 2 blocos-piloto aprovados, com ids estaveis', () => {
-    expect(LEARNING_BLOCKS.map((block) => block.id)).toEqual([
-      'piloto-01-criar-pasta',
-      'piloto-02-criar-readme',
-    ]);
+describe('LEARNING_BLOCKS (20 blocos MVP)', () => {
+  it('define exatamente os 20 blocos MVP do @codechat/content', () => {
+    expect(LEARNING_BLOCKS).toHaveLength(20);
+    expect(LEARNING_BLOCKS[0]?.id).toBe('01-bem-vindo');
+    expect(LEARNING_BLOCKS[19]?.id).toBe('20-css-box-model');
   });
 
-  it('todo bloco tem ao menos 1 paragrafo de teoria e 1 dica de mentor', () => {
+  it('todo bloco tem ao menos 1 parágrafo de teoria e 1 dica de mentor', () => {
     for (const block of LEARNING_BLOCKS) {
       expect(block.theory.paragraphs.length).toBeGreaterThan(0);
       expect(block.mentorHints.length).toBeGreaterThan(0);
     }
   });
 
-  it('dicas de mentor de cada bloco estao em ordem crescente de afterAttempts', () => {
+  it('dicas de mentor de cada bloco estão em ordem crescente de afterAttempts', () => {
     for (const block of LEARNING_BLOCKS) {
       const attempts = block.mentorHints.map((hint) => hint.afterAttempts);
       const sorted = [...attempts].sort((a, b) => a - b);
@@ -32,10 +25,10 @@ describe('LEARNING_BLOCKS', () => {
   });
 });
 
-describe('Bloco 1 — criar pasta projetos', () => {
-  const block = LEARNING_BLOCKS[0];
-  if (block === undefined) {
-    throw new Error('Bloco 1 não encontrado em LEARNING_BLOCKS');
+describe('Bloco 06 — Criando Diretórios (mkdir codigo)', () => {
+  const block = LEARNING_BLOCKS.find((b) => b.id === '06-criando-diretorios');
+  if (!block) {
+    throw new Error('Bloco 06 não encontrado');
   }
 
   it('avaliação não está completa no estado inicial', () => {
@@ -43,32 +36,25 @@ describe('Bloco 1 — criar pasta projetos', () => {
     expect(block.assessment.isComplete(initial)).toBe(false);
   });
 
-  it('avaliação fica completa após "mkdir projetos"', () => {
+  it('avaliação fica completa após "mkdir codigo"', () => {
     const initial = createInitialFilesystemState();
-    const afterMkdir = runCommand(initial, 'mkdir projetos');
+    const afterMkdir = runCommand(initial, 'mkdir codigo');
     expect(afterMkdir.exitCode).toBe(0);
     expect(block.assessment.isComplete(afterMkdir.filesystem)).toBe(true);
   });
 
   it('avaliação não fica completa com um arquivo de mesmo nome (precisa ser diretório)', () => {
     const initial = createInitialFilesystemState();
-    const afterTouch = runCommand(initial, 'touch projetos');
+    const afterTouch = runCommand(initial, 'touch codigo');
     expect(afterTouch.exitCode).toBe(0);
     expect(block.assessment.isComplete(afterTouch.filesystem)).toBe(false);
   });
-
-  it('comandos de exploração (pwd, ls) sozinhos não completam a avaliação', () => {
-    const initial = createInitialFilesystemState();
-    const afterPwd = runCommand(initial, 'pwd');
-    const afterLs = runCommand(afterPwd.filesystem, 'ls');
-    expect(block.assessment.isComplete(afterLs.filesystem)).toBe(false);
-  });
 });
 
-describe('Bloco 2 — criar README.md', () => {
-  const block = LEARNING_BLOCKS[1];
-  if (block === undefined) {
-    throw new Error('Bloco 2 não encontrado em LEARNING_BLOCKS');
+describe('Bloco 07 — Criando Arquivos (touch app.js)', () => {
+  const block = LEARNING_BLOCKS.find((b) => b.id === '07-criando-arquivos');
+  if (!block) {
+    throw new Error('Bloco 07 não encontrado');
   }
 
   it('avaliação não está completa no estado inicial', () => {
@@ -76,25 +62,32 @@ describe('Bloco 2 — criar README.md', () => {
     expect(block.assessment.isComplete(initial)).toBe(false);
   });
 
-  it('avaliação fica completa após "touch README.md"', () => {
+  it('avaliação fica completa após "touch app.js"', () => {
     const initial = createInitialFilesystemState();
-    const afterTouch = runCommand(initial, 'touch README.md');
+    const afterTouch = runCommand(initial, 'touch app.js');
     expect(afterTouch.exitCode).toBe(0);
     expect(block.assessment.isComplete(afterTouch.filesystem)).toBe(true);
   });
 
   it('avaliação não fica completa com um diretório de mesmo nome (precisa ser arquivo)', () => {
     const initial = createInitialFilesystemState();
-    const afterMkdir = runCommand(initial, 'mkdir README.md');
+    const afterMkdir = runCommand(initial, 'mkdir app.js');
     expect(afterMkdir.exitCode).toBe(0);
     expect(block.assessment.isComplete(afterMkdir.filesystem)).toBe(false);
   });
+});
 
-  it('permanece completa após cat (comando de leitura, não remove o arquivo)', () => {
-    const initial = createInitialFilesystemState();
-    const afterTouch = runCommand(initial, 'touch README.md');
-    const afterCat = runCommand(afterTouch.filesystem, 'cat README.md');
-    expect(afterCat.exitCode).toBe(0);
-    expect(block.assessment.isComplete(afterCat.filesystem)).toBe(true);
+describe('Suporte a Múltiplos Passos (Active Practice Steps)', () => {
+  it('todo bloco tem a propriedade steps preenchida com pelo menos 1 passo', () => {
+    for (const block of LEARNING_BLOCKS) {
+      expect(block.steps).toBeDefined();
+      expect(block.steps.length).toBeGreaterThanOrEqual(1);
+      const firstStep = block.steps[0];
+      expect(firstStep).toBeDefined();
+      expect(firstStep?.stepNumber).toBe(1);
+      expect(firstStep?.isComplete).toBeTypeOf('function');
+    }
   });
 });
+
+

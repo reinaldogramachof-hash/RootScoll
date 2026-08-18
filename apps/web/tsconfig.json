@@ -1,7 +1,12 @@
 {
   "extends": "../../packages/config/typescript/react.json",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@codechat/content": ["../../packages/content/src/index.ts"],
+      "@codechat/types": ["../../packages/types/src/index.ts"],
+      "@codechat/terminal-engine": ["../../packages/terminal-engine/src/index.ts"]
+    }
   },
   "include": ["src"]
 }

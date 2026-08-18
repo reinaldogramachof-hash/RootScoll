@@ -1,4 +1,4 @@
-import { useEffect, useRef, type FormEvent } from 'react';
+import React, { useEffect, useRef, type FormEvent } from 'react';
 import type { TerminalOutputLine } from './useTerminalSession';
 
 export interface TerminalScreenProps {
@@ -10,13 +10,38 @@ export interface TerminalScreenProps {
 }
 
 /**
+ * Auxiliar para renderizar inline markdown (`código`, **negrito**) nas linhas do terminal.
+ */
+function renderFormattedLineText(text: string): React.ReactNode {
+  if (!text) return null;
+
+  // Regex para capturar `código` ou **negrito**
+  const tokens = text.split(/(`[^`]+`|\*\*[^*]+\**)/g);
+
+  return tokens.map((token, idx) => {
+    if (token.startsWith('`') && token.endsWith('`') && token.length > 2) {
+      return (
+        <code key={idx} className="terminal-code-chip">
+          {token.slice(1, -1)}
+        </code>
+      );
+    }
+    if (token.startsWith('**') && token.endsWith('**') && token.length > 4) {
+      return (
+        <strong key={idx} className="terminal-strong">
+          {token.slice(2, -2)}
+        </strong>
+      );
+    }
+    return token;
+  });
+}
+
+/**
  * Tela de terminal (linhas + linha de input) — extraída de
  * `TerminalApp.tsx` (Fase 1) para ser reutilizável por
- * `../learning-flow/LearningFlowApp.tsx`, que só a renderiza nas etapas
- * `practice`/`assessment` (ver Implementation Report desta fatia, "Decisões
- * técnicas": "o terminal só deve ficar ativo na etapa prática/avaliação
- * prática"). Puramente apresentacional — toda a mecânica de sessão continua
- * em `useTerminalSession`.
+ * `../learning-flow/LearningFlowApp.tsx`.
+ * Suporta renderização de terminal contínuo com formato rico.
  */
 function TerminalScreen({
   lines,
@@ -52,7 +77,7 @@ function TerminalScreen({
     <div className="terminal-screen" ref={screenRef} onClick={focusInput}>
       {lines.map((line) => (
         <p className={`terminal-line terminal-line--${line.kind}`} key={line.id}>
-          {line.text}
+          {renderFormattedLineText(line.text)}
         </p>
       ))}
 
@@ -80,3 +105,4 @@ function TerminalScreen({
 }
 
 export default TerminalScreen;
+

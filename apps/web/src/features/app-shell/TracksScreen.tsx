@@ -5,13 +5,14 @@ export interface TracksScreenProps {
   readonly tracks: readonly Track[];
   readonly onBack: () => void;
   readonly onEnterClassroom: () => void;
+  readonly onSelectTrack?: (trackId: string) => void;
 }
 
 /**
  * Catálogo executivo local. A tela preserva as 6 macrotrilhas de navegação e
  * mostra sinais das trilhas granulares do currículo v2 sem criar rotas reais.
  */
-function TracksScreen({ tracks, onBack, onEnterClassroom }: TracksScreenProps) {
+function TracksScreen({ tracks, onBack, onEnterClassroom, onSelectTrack }: TracksScreenProps) {
   return (
     <div className="screen dashboard tracks-screen">
       <div className="screen__header dashboard__header">
@@ -86,7 +87,14 @@ function TracksScreen({ tracks, onBack, onEnterClassroom }: TracksScreenProps) {
             </ul>
 
             {track.status === 'available' && (
-              <div style={{ marginTop: '20px' }}>
+              <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => onSelectTrack && onSelectTrack(track.id)}
+                >
+                  Ver Módulos & Lições
+                </button>
                 <button type="button" className="btn btn-primary btn-primary--glow" onClick={onEnterClassroom}>
                   <IconTerminal size={18} style={{ marginRight: '8px' }} />
                   Entrar na Sala Terminal

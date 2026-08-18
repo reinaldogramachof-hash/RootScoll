@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useReducer } from 'react';
+import { useCallback, useMemo, useReducer, useState, useEffect } from 'react';
 import { useTerminalSession } from '../terminal/useTerminalSession';
 import { LEARNING_BLOCKS } from './blocks';
 import { selectHint } from './mentor';
@@ -12,29 +12,50 @@ function reduceFlow(state: FlowState, event: FlowEvent): FlowState {
 
 /**
  * Hook de orquestração do fluxo de aprendizagem: compõe `useTerminalSession`
- * (mecânica de terminal, agnóstica de lição) com `flowReducer` (máquina de
- * estados teoria -> prática -> avaliação -> conclusão) e `selectHint`
- * (mentor determinístico). Único ponto do app que conhece `LEARNING_BLOCKS`.
- *
- * Compõe `useTerminalSession` chamando `terminal.submitCommand()` e
- * inspecionando o `TerminalCommandOutcome` retornado — não injeta um
- * callback em `useTerminalSession` (ver comentário desse hook: evita a
- * dependência circular "hook precisa do próprio retorno de outro hook").
+ * com `flowReducer` e suporte a múltiplos passos de prática contínua no terminal.
  */
-export function useLearningFlow() {
+export function useLearningFlow(initialBlockIndex: number = 0) {
   const terminal = useTerminalSession();
-  const [flowState, dispatch] = useReducer(reduceFlow, undefined, createInitialFlowState);
+  const [flowState, dispatch] = useReducer(
+    reduceFlow,
+    undefined,
+    () => createInitialFlowState(initialBlockIndex)
+  );
+
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const currentBlock = LEARNING_BLOCKS[flowState.blockIndex];
   if (currentBlock === undefined) {
     throw new Error(`Bloco pedagógico inexistente no índice ${flowState.blockIndex}`);
   }
 
+  const activeStep = currentBlock.steps[currentStepIndex] || currentBlock.steps[0];
+
   const startPractice = useCallback(() => {
     dispatch({ type: 'start-practice' });
-    terminal.pushLine('comment', `# ${currentBlock.title}`);
-    terminal.pushLine('comment', `# Objetivo: ${currentBlock.practice.objective}`);
+    setCurrentStepIndex(0);
+
+    // Impressão limpa da Teoria e Contexto no próprio Terminal
+    terminal.pushLine('system', `\n=== CODECHAT :: ${currentBlock.title} ===`);
+    currentBlock.theory.paragraphs.forEach((p) => {
+      terminal.pushLine('comment', p);
+    });
+
+    const firstStep = currentBlock.steps[0];
+    if (firstStep) {
+      terminal.pushLine(
+        'system',
+        `\n➜ [Passo 1/${currentBlock.steps.length}] ${firstStep.title ? firstStep.title + ': ' : ''}${firstStep.objective}`
+      );
+    }
   }, [currentBlock, terminal]);
+
+  // Imprimir teoria ao carregar o bloco pela primeira vez
+  useEffect(() => {
+    if (flowState.step === 'theory') {
+      startPractice();
+    }
+  }, [flowState.blockIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const submitCommand = useCallback(() => {
     const outcome = terminal.submitCommand();
@@ -43,17 +64,40 @@ export function useLearningFlow() {
     }
     dispatch({ type: 'command-run' });
 
-    if (flowState.step === 'practice' && currentBlock.assessment.isComplete(outcome.filesystem)) {
-      dispatch({ type: 'assessment-passed' });
-      terminal.pushLine('success', currentBlock.assessment.successMessage);
+    if (flowState.step === 'practice' && activeStep) {
+      const stepPassed = activeStep.isComplete(outcome.filesystem);
+
+      if (stepPassed) {
+        terminal.pushLine('success', `✓ ${activeStep.successMessage}`);
+
+        const nextStepIdx = currentStepIndex + 1;
+        if (nextStepIdx < currentBlock.steps.length) {
+          setCurrentStepIndex(nextStepIdx);
+          const nextStep = currentBlock.steps[nextStepIdx];
+          if (nextStep) {
+            terminal.pushLine(
+              'system',
+              `➜ [Passo ${nextStepIdx + 1}/${currentBlock.steps.length}] ${nextStep.title ? nextStep.title + ': ' : ''}${nextStep.objective}`
+            );
+          }
+        } else {
+          // Todos os passos concluídos!
+          dispatch({ type: 'assessment-passed' });
+          terminal.pushLine('success', `★ ${currentBlock.assessment.successMessage}`);
+        }
+      }
     }
-  }, [terminal, flowState.step, currentBlock]);
+  }, [terminal, flowState.step, activeStep, currentStepIndex, currentBlock]);
 
   const restartBlock = useCallback(() => {
     dispatch({ type: 'start-practice' });
-    terminal.pushLine('system', '--- Exercício Reiniciado por Regra de Integridade ---');
+    setCurrentStepIndex(0);
+    terminal.pushLine('system', '\n--- Exercício Reiniciado por Regra de Integridade ---');
     terminal.pushLine('comment', `# ${currentBlock.title}`);
-    terminal.pushLine('comment', `# Objetivo: ${currentBlock.practice.objective}`);
+    const firstStep = currentBlock.steps[0];
+    if (firstStep) {
+      terminal.pushLine('system', `➜ [Passo 1/${currentBlock.steps.length}] ${firstStep.objective}`);
+    }
   }, [currentBlock, terminal]);
 
   const concludeAssessment = useCallback(() => {
@@ -62,6 +106,7 @@ export function useLearningFlow() {
 
   const goToNextBlock = useCallback(() => {
     dispatch({ type: 'next-block' });
+    setCurrentStepIndex(0);
   }, []);
 
   const mentorHint: MentorHint | undefined = useMemo(
@@ -80,6 +125,9 @@ export function useLearningFlow() {
   return {
     step: flowState.step,
     block: currentBlock,
+    activeStep,
+    currentStepIndex,
+    totalSteps: currentBlock.steps.length,
     progress,
     finished,
     hasNextBlock,
@@ -98,3 +146,4 @@ export function useLearningFlow() {
     },
   };
 }
+

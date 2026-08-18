@@ -4,14 +4,7 @@ import type { TerminalFilesystemState } from '@codechat/terminal-engine';
  * Estrutura de Bloco Pedagógico Local (Fase 1, sequência de aprendizagem).
  * Evolui `../lessons` (Fase 1 — Primeira Lição Executável Local) para um
  * fluxo de 4 etapas por bloco: teoria -> prática -> avaliação ->
- * feedback/conclusão. Continua sendo, deliberadamente, OUTRO tipo do que
- * `LessonCatalogEntry`/`ChallengeCatalogEntry` (`@codechat/types`, Learning
- * Catalog v1) — mesma justificativa registrada em `../lessons/types.ts` e no
- * Implementation Report da Fase 1: aquele modelo representa um catálogo
- * completo (Track -> Course -> Module -> Lesson -> Challenge) e não tem
- * avaliador implementado; esta fatia continua usando validação local ad hoc,
- * agora só reorganizada em 4 etapas nomeadas. `packages/types` não foi
- * alterado por esta fatia.
+ * feedback/conclusão.
  */
 
 /** As 4 etapas do fluxo de um bloco pedagógico, na ordem em que ocorrem. */
@@ -31,6 +24,18 @@ export interface PracticeContent {
 }
 
 /**
+ * Passo de prática individual dentro de um bloco pedagógico (suporta lições ativas com múltiplos passos).
+ */
+export interface PracticeStep {
+  readonly id: string;
+  readonly stepNumber: number;
+  readonly title?: string;
+  readonly objective: string;
+  readonly successMessage: string;
+  readonly isComplete: (filesystem: TerminalFilesystemState) => boolean;
+}
+
+/**
  * Avaliação local do bloco: mesma validação pura usada em `../lessons`
  * (`isComplete`), agora nomeada como `assessment` para refletir a etapa
  * dedicada do fluxo. Continua lendo apenas o estado do filesystem virtual
@@ -44,10 +49,7 @@ export interface AssessmentContent {
 /**
  * Dica determinística do mentor discreto, revelada progressivamente conforme
  * o aluno tenta comandos na prática/avaliação sem sucesso — sem IA real, só
- * regras locais (ver `./mentor.ts`, `selectHint`). Formato inspirado no
- * campo `dicas` do schema real de lição
- * (`docs/product/curriculum-phase-0.md`: `{ apos_tentativas, texto,
- * revela_resposta? }`).
+ * regras locais.
  */
 export interface MentorHint {
   /** Dica exibida somente após este número de tentativas de comando (>= 1). */
@@ -55,13 +57,15 @@ export interface MentorHint {
   readonly text: string;
 }
 
-/** Um bloco pedagógico completo: teoria -> prática -> avaliação -> mentor. */
+/** Um bloco pedagógico completo: teoria -> prática (com múltiplos passos) -> avaliação -> mentor. */
 export interface LearningBlock {
   readonly id: string;
   readonly title: string;
   readonly theory: TheoryContent;
   readonly practice: PracticeContent;
+  readonly steps: readonly PracticeStep[];
   readonly assessment: AssessmentContent;
   /** Dicas do mentor, em ordem crescente de `afterAttempts`. */
   readonly mentorHints: readonly MentorHint[];
 }
+

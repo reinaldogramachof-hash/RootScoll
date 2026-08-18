@@ -1,77 +1,91 @@
 import { getNode } from '@codechat/terminal-engine';
-import type { LearningBlock } from './types';
+import type { TerminalFilesystemState } from '@codechat/terminal-engine';
+import type { ValidationRule } from '@codechat/types';
+import { MVP_LESSONS } from '@codechat/content';
+import type { RichLessonCatalogEntry } from '@codechat/content';
+import type { LearningBlock, PracticeStep } from './types';
 
 /**
- * Blocos pedagógicos-piloto da Fase 0, Nível 2 (Arquivos e diretórios) — ver
- * `docs/product/curriculum-phase-0.md`. Reorganiza as 2 lições da fatia
- * anterior (`../lessons/lessons.ts`) no novo fluxo de 4 etapas (teoria ->
- * prática -> avaliação -> conclusão), acrescentando `theory` e `mentorHints`
- * novos — o `practice.objective`/`suggestedCommands` e o
- * `assessment.successMessage`/`isComplete` são os mesmos das lições
- * originais, só renomeados/reagrupados. Continua provando o fluxo fim-a-fim
- * local, não o schema completo de lição nem o Learning Catalog v1.
- *
- * Caminhos usam `/home/aluno` porque `createInitialFilesystemState` de
- * `@codechat/terminal-engine` já fixa esse `cwd` inicial — mesma decisão
- * documentada em `../lessons/lessons.ts` e no Implementation Report da Fase
- * 1.
+ * Valida um conjunto de regras contra o estado atual do sistema de arquivos virtual.
  */
-export const LEARNING_BLOCKS: readonly LearningBlock[] = [
-  {
-    id: 'piloto-01-criar-pasta',
-    title: 'Bloco 1 — Criar uma pasta',
+export function evaluateRules(rules: readonly ValidationRule[], filesystem: TerminalFilesystemState): boolean {
+  return rules.every((rule) => {
+    if (rule.kind === 'file-exists') {
+      const node = getNode(filesystem.root, rule.path);
+      return node !== undefined && node.kind === rule.as;
+    }
+    if (rule.kind === 'file-not-exists') {
+      return getNode(filesystem.root, rule.path) === undefined;
+    }
+    if (rule.kind === 'file-content') {
+      const node = getNode(filesystem.root, rule.path);
+      if (!node || node.kind !== 'file') return false;
+      if (rule.match === 'contains') return node.content.includes(rule.value);
+      if (rule.match === 'equals') return node.content.trim() === rule.value.trim();
+      return true;
+    }
+    if (rule.kind === 'cwd') {
+      return filesystem.cwd === rule.path;
+    }
+    return true;
+  });
+}
+
+/**
+ * Converte uma RichLessonCatalogEntry do pacote @codechat/content em um LearningBlock
+ * executável pelo componente de Sala Terminal (LearningFlowApp).
+ */
+export function convertRichLessonToBlock(lesson: RichLessonCatalogEntry): LearningBlock {
+  const steps: PracticeStep[] = lesson.steps && lesson.steps.length > 0
+    ? lesson.steps.map((s) => ({
+        id: `${lesson.lessonId}-step-${s.stepNumber}`,
+        stepNumber: s.stepNumber,
+        title: s.title,
+        objective: s.taskText,
+        successMessage: s.successMessage,
+        isComplete: (filesystem) => evaluateRules(s.validationRules, filesystem),
+      }))
+    : [
+        {
+          id: `${lesson.lessonId}-step-1`,
+          stepNumber: 1,
+          objective: lesson.taskText,
+          successMessage: lesson.successMessage,
+          isComplete: (filesystem) => evaluateRules(lesson.challenge.validationRules, filesystem),
+        },
+      ];
+
+  return {
+    id: lesson.lessonId,
+    title: `${lesson.order}. ${lesson.title}`,
     theory: {
-      title: 'Organizando arquivos com pastas',
+      title: lesson.title,
       paragraphs: [
-        'No terminal, uma pasta (diretório) agrupa arquivos e outras pastas, como uma gaveta dentro do seu espaço de trabalho.',
-        "O comando 'mkdir' (make directory) cria uma pasta nova no lugar onde você está.",
-        "Use 'ls' para listar o que existe no diretório atual e 'pwd' para confirmar em qual pasta você está.",
+        lesson.briefing,
+        ...lesson.theoryMarkdown
+          .split('\n\n')
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0 && !p.startsWith('#')),
       ],
     },
     practice: {
-      objective: "Crie uma pasta chamada 'projetos' no seu diretório pessoal.",
-      suggestedCommands: ['mkdir projetos', 'ls', 'pwd'],
+      objective: lesson.taskText,
+      suggestedCommands: lesson.hints.map((h) => h.text),
     },
+    steps,
     assessment: {
-      successMessage: "[ok] pasta 'projetos' criada em /home/aluno.",
-      isComplete: (filesystem) => getNode(filesystem.root, '/home/aluno/projetos')?.kind === 'dir',
+      successMessage: lesson.successMessage,
+      isComplete: (filesystem) => evaluateRules(lesson.challenge.validationRules, filesystem),
     },
-    mentorHints: [
-      { afterAttempts: 1, text: "Dica: o comando para criar uma pasta é 'mkdir <nome>'." },
-      { afterAttempts: 2, text: 'Tente exatamente: mkdir projetos' },
-      {
-        afterAttempts: 3,
-        text: "Depois de criar, confira com 'ls' — a pasta 'projetos' deve aparecer na lista.",
-      },
-    ],
-  },
-  {
-    id: 'piloto-02-criar-readme',
-    title: 'Bloco 2 — Criar um arquivo',
-    theory: {
-      title: 'Criando arquivos vazios',
-      paragraphs: [
-        "O comando 'touch' cria um arquivo novo, vazio, se ele ainda não existir.",
-        "Arquivos '.md' (Markdown) são comuns para documentação — 'README.md' costuma descrever um projeto.",
-        "Depois de criar o arquivo, 'cat' mostra o conteúdo dele no terminal (mesmo que esteja vazio).",
-      ],
-    },
-    practice: {
-      objective: "Crie um arquivo chamado 'README.md' no seu diretório pessoal.",
-      suggestedCommands: ['touch README.md', 'ls', 'cat README.md'],
-    },
-    assessment: {
-      successMessage: "[ok] arquivo 'README.md' criado em /home/aluno.",
-      isComplete: (filesystem) =>
-        getNode(filesystem.root, '/home/aluno/README.md')?.kind === 'file',
-    },
-    mentorHints: [
-      { afterAttempts: 1, text: "Dica: o comando para criar um arquivo vazio é 'touch <nome>'." },
-      { afterAttempts: 2, text: 'Tente exatamente: touch README.md' },
-      {
-        afterAttempts: 3,
-        text: "Depois de criar, confira com 'ls' — o arquivo 'README.md' deve aparecer na lista.",
-      },
-    ],
-  },
-];
+    mentorHints: lesson.hints.map((h) => ({
+      afterAttempts: h.afterAttempts,
+      text: h.text,
+    })),
+  };
+}
+
+/**
+ * Os 20 blocos MVP provenientes do pacote oficial @codechat/content.
+ */
+export const LEARNING_BLOCKS: readonly LearningBlock[] = MVP_LESSONS.map(convertRichLessonToBlock);
+

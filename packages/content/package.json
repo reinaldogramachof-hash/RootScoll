@@ -1,0 +1,16 @@
+{
+  "name": "@codechat/content",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Catálogo estático de conteúdo, cursos, módulos e lições pedagógicas do RootScoll.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@codechat/types": "workspace:*"
+  }
+}

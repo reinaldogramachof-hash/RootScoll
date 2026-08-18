@@ -34,8 +34,8 @@ export type FlowEvent =
   | { readonly type: 'conclude' }
   | { readonly type: 'next-block' };
 
-export function createInitialFlowState(): FlowState {
-  return { blockIndex: 0, step: 'theory', attemptCount: 0, assessmentPassed: false };
+export function createInitialFlowState(blockIndex: number = 0): FlowState {
+  return { blockIndex, step: 'theory', attemptCount: 0, assessmentPassed: false };
 }
 
 /**
