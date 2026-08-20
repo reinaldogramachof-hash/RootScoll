@@ -117,7 +117,7 @@ function StudentDashboard({
       </header>
 
       {/* Seção Principal de Gamificação & Integridade */}
-      <section className="dashboard__section integrity-card" style={{ marginBottom: '24px', background: 'var(--bg-surface-elevated, #161b22)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '12px', padding: '20px' }}>
+      <section className="dashboard__section integrity-card" style={{ marginBottom: '24px', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '20px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px', marginBottom: '16px' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
@@ -141,13 +141,13 @@ function StudentDashboard({
         </div>
 
         <div className="dashboard__metrics" style={{ margin: 0, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
-          <div className="dashboard__metric" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(0,255,200,0.15)' }}>
+          <div className="dashboard__metric">
             <div className="metric-header-row">
               <span className="dashboard__metric-label">Score de Confiança</span>
               <IconShieldCheck size={16} className="text-mint" />
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-              <strong style={{ fontSize: '24px', color: 'var(--color-mint, #00ffd0)' }}>{user.integrityScore ?? 980}</strong>
+              <strong style={{ fontSize: '24px', color: 'var(--primary)' }}>{user.integrityScore ?? 980}</strong>
               <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>/ 1000 pts</span>
             </div>
             <div style={{ marginTop: '6px' }}>
@@ -155,25 +155,26 @@ function StudentDashboard({
             </div>
           </div>
 
-          <div className="dashboard__metric" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,200,0,0.15)' }}>
+          <div className="dashboard__metric">
             <div className="metric-header-row">
               <span className="dashboard__metric-label">Moedas Virtuais</span>
               <IconCoins size={16} className="text-amber" />
             </div>
-            <strong style={{ fontSize: '24px', color: '#ffc107' }}>🪙 {user.coins ?? 450}</strong>
+            <strong style={{ fontSize: '24px', color: 'var(--warning)' }}>🪙 {user.coins ?? 450}</strong>
             <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Recompensas por disciplina</span>
           </div>
 
-          <div className="dashboard__metric" style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(0,200,255,0.15)' }}>
+          <div className="dashboard__metric">
             <div className="metric-header-row">
               <span className="dashboard__metric-label">Experiência (XP)</span>
               <IconZap size={16} className="text-cyan" />
             </div>
-            <strong style={{ fontSize: '24px', color: '#00d8ff' }}>⚡ {user.xp ?? 1250} XP</strong>
+            <strong style={{ fontSize: '24px', color: 'var(--secondary)' }}>⚡ {user.xp ?? 1250} XP</strong>
             <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>Evolução pedagógica</span>
           </div>
         </div>
       </section>
+
 
       {/* Métricas pedagógicas legadas */}
       <div className="dashboard__metrics" aria-label="Resumo de progresso">
@@ -325,6 +326,7 @@ function StudentDashboard({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            /* intencional: backdrop escuro de modal com desfoque, ver docs/frontend.md */
             background: 'rgba(5, 8, 17, 0.88)',
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)',
@@ -342,16 +344,16 @@ function StudentDashboard({
               flexDirection: 'column',
               padding: '28px',
               borderRadius: '16px',
-              background: 'var(--bg-surface-elevated, #161b22)',
-              border: '1px solid rgba(0, 255, 200, 0.2)',
-              boxShadow: '0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 255, 200, 0.08)',
+              background: 'var(--surface)',
+              border: '1px solid var(--border)',
+              boxShadow: 'var(--shadow-md)',
             }}
             onClick={(e) => e.stopPropagation()}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <IconShieldCheck size={24} className="text-mint" />
-                <h3 id="integrity-modal-title" style={{ margin: 0, fontSize: '20px', fontWeight: 600, color: '#fff' }}>
+                <h3 id="integrity-modal-title" style={{ margin: 0, fontSize: '20px', fontWeight: 600, color: 'var(--text-primary)' }}>
                   Extrato de Integridade & Transparência
                 </h3>
               </div>
@@ -365,7 +367,7 @@ function StudentDashboard({
               </button>
             </div>
 
-            <p style={{ fontSize: '13px', color: 'var(--text-muted, #8b949e)', marginBottom: '20px', lineHeight: '1.5' }}>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '20px', lineHeight: '1.5' }}>
               Abaixo estão os registros detalhados das suas ações de disciplina, boas práticas no modo F11 imersivo e sinalizações de integridade computadas pelo sistema anti-cheat.
             </p>
 
@@ -376,8 +378,8 @@ function StudentDashboard({
                   style={{
                     padding: '14px 16px',
                     borderRadius: '10px',
-                    background: 'rgba(255, 255, 255, 0.03)',
-                    border: `1px solid ${log.type === 'gain' ? 'rgba(0, 255, 200, 0.2)' : 'rgba(255, 80, 80, 0.25)'}`,
+                    background: 'var(--surface-hover)',
+                    border: '1px solid var(--border)',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
@@ -386,19 +388,19 @@ function StudentDashboard({
                 >
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
-                      <strong style={{ fontSize: '14px', color: '#fff', fontWeight: 600 }}>{log.action}</strong>
-                      <span style={{ fontSize: '11px', color: 'var(--text-muted, #8b949e)' }}>{log.date}</span>
+                      <strong style={{ fontSize: '14px', color: 'var(--text-primary)', fontWeight: 600 }}>{log.action}</strong>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{log.date}</span>
                     </div>
-                    <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted, #8b949e)', lineHeight: '1.4' }}>{log.reason}</p>
+                    <p style={{ margin: 0, fontSize: '12px', color: 'var(--text-muted)', lineHeight: '1.4' }}>{log.reason}</p>
                   </div>
                   <span
                     style={{
                       fontWeight: 700,
                       fontSize: '15px',
-                      color: log.type === 'gain' ? '#00ffd0' : '#ff5555',
+                      color: log.type === 'gain' ? 'var(--success)' : 'var(--error)',
                       padding: '4px 10px',
                       borderRadius: '6px',
-                      background: log.type === 'gain' ? 'rgba(0, 255, 208, 0.12)' : 'rgba(255, 85, 85, 0.12)',
+                      background: log.type === 'gain' ? 'rgba(54, 230, 165, 0.12)' : 'rgba(255, 92, 108, 0.12)',
                       whiteSpace: 'nowrap',
                     }}
                   >
@@ -408,8 +410,8 @@ function StudentDashboard({
               ))}
             </div>
 
-            <div style={{ paddingTop: '16px', borderTop: '1px solid rgba(255, 255, 255, 0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
-              <span style={{ fontSize: '12px', color: 'var(--text-muted, #8b949e)' }}>
+            <div style={{ paddingTop: '16px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+              <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
                 🔒 Seu Score atual é compartilhado com recrutadores parceiros.
               </span>
               <button

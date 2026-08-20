@@ -33,7 +33,8 @@
 - Diretorio oficial: `C:\Dev\CodeChat`
 - Branch: `main`
 - Remote: `origin/main`
-- Estado Git atual: Atualizando Cérebro Operacional para inclusão do currículo RootScoll "Zero to Junior" (6 trilhas, 14 etapas, 9 estágios por bloco, políticas de IA e validadores cross-platform).
+- Estado Git atual: Lapidação completa de White Mode [data-theme='light'] nos 6 painéis (TeacherDashboard, ClassroomDetailScreen, PartnerDashboard, TalentSearchResults, TalentDetailScreen, TrackDetailScreen) e adição do token semântico --surface-subtle concluída e validada.
+
 - Lock Git: Ausente.
 - Servidor local visual: `http://127.0.0.1:5173/` (ativo em segundo plano).
 - Último commit publicado: `35afb8c` (ou commit anterior de login/integridade).

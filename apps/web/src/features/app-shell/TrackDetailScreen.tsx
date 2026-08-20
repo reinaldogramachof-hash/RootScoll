@@ -79,8 +79,8 @@ export function TrackDetailScreen({ trackId, onBack, onSelectLesson }: TrackDeta
                     <div
                       key={mod.moduleId}
                       style={{
-                        background: 'rgba(255, 255, 255, 0.03)',
-                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        background: 'var(--surface-hover)',
+                        border: '1px solid var(--border)',
                         borderRadius: 'var(--radius-md)',
                         padding: '16px',
                       }}
@@ -93,8 +93,8 @@ export function TrackDetailScreen({ trackId, onBack, onSelectLesson }: TrackDeta
                           <div
                             key={lesson.lessonId}
                             style={{
-                              background: 'var(--surface-color, rgba(0,0,0,0.2))',
-                              border: '1px solid var(--border-color, rgba(255,255,255,0.1))',
+                              background: 'var(--surface-subtle)',
+                              border: '1px solid var(--border)',
                               borderRadius: 'var(--radius-sm)',
                               padding: '12px',
                               display: 'flex',

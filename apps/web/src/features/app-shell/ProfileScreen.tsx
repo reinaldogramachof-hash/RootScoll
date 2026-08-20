@@ -113,7 +113,7 @@ function ProfileScreen({ user, onBack }: ProfileScreenProps) {
               <span className="badge badge--secondary">Em preparação</span>
             </div>
 
-            <div style={{ background: 'rgba(54, 230, 165, 0.05)', border: '1px solid rgba(54, 230, 165, 0.15)', borderRadius: 'var(--radius-md)', padding: '14px', marginTop: '8px' }}>
+            <div style={{ background: 'var(--surface-hover)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '14px', marginTop: '8px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                 <IconShieldCheck size={18} className="text-mint" />
                 <strong style={{ fontSize: '13px', color: 'var(--text-primary)' }}>Evidências de Prática</strong>
@@ -122,6 +122,7 @@ function ProfileScreen({ user, onBack }: ProfileScreenProps) {
                 As evidências desta versão consolidam registros dos comandos executados na Sala Terminal, justificativas pedagógicas e diagnósticos do Mentor IA.
               </p>
             </div>
+
           </div>
         </section>
       </div>

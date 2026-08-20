@@ -23,6 +23,7 @@
   --background-secondary: var(--terminal-slate);
   --surface: var(--terminal-slate);
   --surface-hover: #192236;
+  --surface-subtle: rgba(0, 0, 0, 0.2);
   --border: var(--border-gray);
   --border-hover: #344158;
   --text-primary: var(--cloud-white);
@@ -74,3 +75,31 @@
   --focus-ring: var(--primary);
   --focus-ring-offset: 3px;
 }
+
+/* ---- Modo Claro (White Mode) ---- */
+[data-theme='light'] {
+  --background: #f4f6fa;
+  --background-secondary: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #f1f5f9;
+  --surface-subtle: #f8fafc;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  /* Cores de destaque ajustadas para bom contraste em fundo claro */
+  --primary: #059669;
+  --primary-hover: #047857;
+  --secondary: #0284c7;
+  --warning: #d97706;
+  --error: #e11d48;
+  --success: #059669;
+
+  --shadow-md: 0 12px 32px rgba(15, 23, 42, 0.08);
+  --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.05);
+
+  --focus-ring: var(--primary);
+}
+

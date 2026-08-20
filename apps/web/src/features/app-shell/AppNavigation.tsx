@@ -1,11 +1,13 @@
 import type { AppScreen, UserRole } from './types';
 import logo from '../../images/logo.svg';
-import { IconChevronRight } from './icons';
+import { IconChevronRight, IconSun, IconMoon } from './icons';
 
 export interface AppNavigationProps {
   readonly screen: AppScreen;
   readonly role?: UserRole;
   readonly userName: string;
+  readonly theme?: 'dark' | 'light';
+  readonly onToggleTheme?: () => void;
   readonly onOpenDashboard: () => void;
   readonly onOpenProfile: () => void;
   readonly onOpenTracks?: () => void;
@@ -19,6 +21,8 @@ function AppNavigation({
   screen,
   role = 'aluno',
   userName,
+  theme = 'dark',
+  onToggleTheme,
   onOpenDashboard,
   onOpenProfile,
   onOpenTracks,
@@ -83,12 +87,38 @@ function AppNavigation({
       </div>
 
       <div className="app-nav__meta">
+        {onToggleTheme && (
+          <button
+            type="button"
+            className="app-nav__theme-toggle"
+            onClick={onToggleTheme}
+            title={theme === 'dark' ? 'Alternar para Modo Claro' : 'Alternar para Modo Escuro'}
+            aria-label={theme === 'dark' ? 'Alternar para Modo Claro' : 'Alternar para Modo Escuro'}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '6px',
+              padding: '6px 10px',
+              borderRadius: 'var(--radius-sm)',
+              border: '1px solid var(--border)',
+              background: 'var(--surface)',
+              color: 'var(--text-primary)',
+              cursor: 'pointer',
+              fontSize: '12px',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            {theme === 'dark' ? <IconSun size={14} /> : <IconMoon size={14} />}
+            <span>{theme === 'dark' ? 'Claro' : 'Escuro'}</span>
+          </button>
+        )}
         <span
           className="badge badge--secondary"
           title="Pressione F11 para melhor experiência imersiva"
           style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: '11px', padding: '3px 8px' }}
         >
-          <kbd style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid var(--border)', borderRadius: '3px', padding: '1px 5px', fontFamily: 'monospace', fontSize: '10px' }}>F11</kbd>
+          <kbd style={{ background: 'var(--border)', border: '1px solid var(--border-hover)', color: 'var(--text-primary)', borderRadius: '3px', padding: '1px 5px', fontFamily: 'monospace', fontSize: '10px' }}>F11</kbd>
           <span>Tela cheia</span>
         </span>
         <span className={`app-nav__status app-nav__status--${role}`}>
@@ -102,5 +132,6 @@ function AppNavigation({
     </nav>
   );
 }
+
 
 export default AppNavigation;

@@ -68,13 +68,14 @@ function TracksScreen({ tracks, onBack, onEnterClassroom, onSelectTrack }: Track
               ))}
             </ul>
 
-            <div className="track-row__evidence-box" style={{ background: 'rgba(255, 171, 0, 0.08)', border: '1px solid rgba(255, 171, 0, 0.2)', padding: '12px', borderRadius: 'var(--radius-md)', marginBottom: '16px' }}>
+            <div className="track-row__evidence-box" style={{ background: 'var(--surface-hover)', border: '1px solid var(--border)', padding: '12px', borderRadius: 'var(--radius-md)', marginBottom: '16px' }}>
               <div style={{ display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
                 <IconTarget size={16} className="text-amber" style={{ marginRight: '6px' }} />
                 <strong className="text-amber" style={{ fontSize: '12px' }}>Evidência Esperada</strong>
               </div>
               <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>{track.evidence}</p>
             </div>
+
 
             <h3 style={{ fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '8px' }}>Módulos</h3>
             <ul className="track-row__modules">

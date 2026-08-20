@@ -158,13 +158,19 @@ function LoginScreen({ onLogin }: LoginScreenProps) {
               <span />
               <span />
             </div>
+            {/* intencional: este bloco fica dentro de .login-welcome__terminal, que tem
+                fundo fixo #0d1117 (chrome de terminal, sempre escuro por design,
+                independente do tema do app) — por isso as cores aqui usam valores fixos
+                claros (iguais ao texto do terminal, .login-welcome__terminal-body) em vez
+                de var(--text-primary)/var(--text-muted): esses tokens ficam escuros no
+                light mode e desapareceriam sobre este fundo sempre-escuro. Ver docs/frontend.md */}
             <span
               style={{
                 fontSize: '11px',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '5px',
-                color: 'var(--text-muted, #8b949e)',
+                color: '#c9d1d9',
               }}
               title="Para melhor experiência e imersão reativa, utilize a plataforma em Tela Cheia (F11)"
             >

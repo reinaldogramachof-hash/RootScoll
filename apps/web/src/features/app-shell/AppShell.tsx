@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Routes, Route, useNavigate, useParams, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate, useParams, Navigate, useLocation } from 'react-router-dom';
 import LearningFlowApp from '../learning-flow/LearningFlowApp';
 import AppNavigation from './AppNavigation';
 import LoginScreen from './LoginScreen';
@@ -20,7 +20,17 @@ import {
   MOCK_USER,
   TRACKS,
 } from './mock-data';
-import type { UserRole } from './types';
+import type { AppScreen, UserRole } from './types';
+
+function getScreenFromPath(pathname: string): AppScreen {
+  if (pathname.startsWith('/app/trilhas')) return 'tracks';
+  if (pathname.startsWith('/app/perfil')) return 'profile';
+  if (pathname.startsWith('/app/professor/turmas')) return 'teacher-classroom-detail';
+  if (pathname.startsWith('/app/professor')) return 'teacher-dashboard';
+  if (pathname.startsWith('/app/parceiro/talentos')) return 'partner-talent-detail';
+  if (pathname.startsWith('/app/parceiro')) return 'partner-dashboard';
+  return 'dashboard';
+}
 
 function TrackDetailRouteWrapper({ onBack }: { readonly onBack: () => void }) {
   const { trackId } = useParams<{ trackId: string }>();
@@ -37,8 +47,23 @@ function TrackDetailRouteWrapper({ onBack }: { readonly onBack: () => void }) {
 
 function AppShell() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeRole, setActiveRole] = useState<UserRole>('aluno');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    return (localStorage.getItem('rootscoll_theme') as 'dark' | 'light') || 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('rootscoll_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
+  const currentScreen = getScreenFromPath(location.pathname);
 
   const activeUser =
     activeRole === 'professor'
@@ -78,18 +103,25 @@ function AppShell() {
         element={
           <div className="app-shell">
             <AppNavigation
-              screen="dashboard"
+              screen={currentScreen}
               role={activeRole}
               userName={activeUser.name}
+              theme={theme}
+              onToggleTheme={toggleTheme}
               onOpenDashboard={() => navigate('/app')}
               onOpenProfile={() => navigate('/app/perfil')}
               onOpenTracks={() => navigate('/app/trilhas')}
               onLogout={handleLogout}
             />
 
+
+
             <Routes>
               <Route path="/" element={<Navigate to="/app" replace />} />
-              <Route path="/login" element={<LoginScreen onLogin={handleLogin} />} />
+              {/* Usuário já autenticado navegando manualmente para /login (ex.: link antigo,
+                  botão voltar do navegador): redireciona em vez de renderizar LoginScreen
+                  dentro do shell autenticado, o que vazava a AppNavigation por cima do login. */}
+              <Route path="/login" element={<Navigate to="/app" replace />} />
               <Route
                 path="/app"
                 element={
